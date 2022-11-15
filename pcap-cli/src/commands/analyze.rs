@@ -1,8 +1,12 @@
-use super::{Command, CommandResult, Context};
+use std::{
+    io::{Read, Seek, SeekFrom},
+    sync::Arc,
+};
+
 use libpcap_analyzer::*;
 use libpcap_tools::{PcapDataEngine, PcapEngine};
-use std::io::{Read, Seek, SeekFrom};
-use std::sync::Arc;
+
+use super::{Command, CommandResult, Context};
 
 pub struct AnalyzeCmd;
 impl Command for AnalyzeCmd {

@@ -241,8 +241,9 @@ pub struct GeneveOptionIterable<'a> {
 impl<'a> Iterator for GeneveOptionIterable<'a> {
     type Item = GeneveOptionPacket<'a>;
     fn next(&mut self) -> Option<GeneveOptionPacket<'a>> {
-        use pnet_macros_support::packet::PacketSize;
         use std::cmp::min;
+
+        use pnet_macros_support::packet::PacketSize;
         if !self.buf.is_empty() {
             if let Some(ret) = GeneveOptionPacket::new(self.buf) {
                 let start = min(ret.packet_size(), self.buf.len());

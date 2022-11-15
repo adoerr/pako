@@ -1,5 +1,6 @@
-use crate::duration::Duration;
 use pcap_parser::{data::PacketData, Linktype};
+
+use crate::duration::Duration;
 
 #[derive(Debug, Clone)]
 pub struct Packet<'a> {

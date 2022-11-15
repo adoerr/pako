@@ -3,16 +3,16 @@
 use pcap_info::*;
 
 extern crate clap;
+use std::{
+    convert::TryInto,
+    fs, io,
+    net::{Ipv4Addr, Ipv6Addr},
+    process, str,
+};
+
 use clap::{crate_version, App, Arg};
 use pcap_parser::OptionCode;
 use time::UtcOffset;
-
-use std::convert::TryInto;
-use std::fs;
-use std::io;
-use std::net::{Ipv4Addr, Ipv6Addr};
-use std::process;
-use std::str;
 
 fn main() -> Result<(), io::Error> {
     let matches = App::new("Pcap information tool")

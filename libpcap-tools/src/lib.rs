@@ -28,6 +28,5 @@ pub use error::*;
 pub use five_tuple::*;
 pub use flow::*;
 pub use packet::*;
-pub use three_tuple::ThreeTuple;
-
 pub use pcap_parser;
+pub use three_tuple::ThreeTuple;

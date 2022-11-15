@@ -1,6 +1,3 @@
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE-MIT)
-[![Apache License 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./LICENSE-APACHE)
-[![Github CI](https://github.com/adoerr/pako/workflows/Continuous%20integration/badge.svg)](https://github.com/adoerr/pako/actions)
 
 # 📦 pako - Fun with packet analysis 📦
 
@@ -20,5 +17,5 @@ at your option.
 
 <br>
 <p align="center">
-<b>🚧 pako is under constant construction - a hardhat 👷 is recommended beyond this point 🚧</b>
+<b>🚧 pako is under construction - a hardhat 👷 is recommended beyond this point 🚧</b>
 </p>

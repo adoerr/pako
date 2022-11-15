@@ -1,36 +1,39 @@
-use crate::erspan::ErspanPacket;
-use crate::flow_map::FlowMap;
-use crate::geneve::*;
-use crate::ip_defrag::{DefragEngine, Fragment, IPDefragEngine};
-use crate::layers::LinkLayerType;
-use crate::mpls::*;
-use crate::packet_info::PacketInfo;
-use crate::plugin::*;
-use crate::plugin_registry::*;
-use crate::ppp::{PppPacket, PppProtocolTypes};
-use crate::pppoe::PppoeSessionPacket;
-use crate::tcp_reassembly::{finalize_tcp_streams, TcpStreamError, TcpStreamReassembly};
-use crate::vxlan::*;
+use std::{cmp::min, net::IpAddr, ops::DerefMut, sync::Arc};
+
 use libpcap_tools::*;
+use pcap_parser::{
+    data::{get_packetdata_raw, PacketData},
+    Linktype,
+};
+use pnet_packet::{
+    ethernet::{EtherType, EtherTypes, EthernetPacket},
+    gre::GrePacket,
+    icmp::IcmpPacket,
+    icmpv6::Icmpv6Packet,
+    ip::{IpNextHeaderProtocol, IpNextHeaderProtocols},
+    ipv4::{Ipv4Flags, Ipv4Packet},
+    ipv6::{ExtensionPacket, FragmentPacket, Ipv6Packet},
+    tcp::TcpPacket,
+    udp::UdpPacket,
+    vlan::VlanPacket,
+    Packet as PnetPacket, PacketSize,
+};
 
-use pcap_parser::data::{get_packetdata_raw, PacketData};
-use pcap_parser::Linktype;
-use std::cmp::min;
-use std::net::IpAddr;
-use std::ops::DerefMut;
-use std::sync::Arc;
-
-use pnet_packet::ethernet::{EtherType, EtherTypes, EthernetPacket};
-use pnet_packet::gre::GrePacket;
-use pnet_packet::icmp::IcmpPacket;
-use pnet_packet::icmpv6::Icmpv6Packet;
-use pnet_packet::ip::{IpNextHeaderProtocol, IpNextHeaderProtocols};
-use pnet_packet::ipv4::{Ipv4Flags, Ipv4Packet};
-use pnet_packet::ipv6::{ExtensionPacket, FragmentPacket, Ipv6Packet};
-use pnet_packet::tcp::TcpPacket;
-use pnet_packet::udp::UdpPacket;
-use pnet_packet::vlan::VlanPacket;
-use pnet_packet::{Packet as PnetPacket, PacketSize};
+use crate::{
+    erspan::ErspanPacket,
+    flow_map::FlowMap,
+    geneve::*,
+    ip_defrag::{DefragEngine, Fragment, IPDefragEngine},
+    layers::LinkLayerType,
+    mpls::*,
+    packet_info::PacketInfo,
+    plugin::*,
+    plugin_registry::*,
+    ppp::{PppPacket, PppProtocolTypes},
+    pppoe::PppoeSessionPacket,
+    tcp_reassembly::{finalize_tcp_streams, TcpStreamError, TcpStreamReassembly},
+    vxlan::*,
+};
 
 #[derive(Clone, Debug, Default)]
 pub struct L3Info {

@@ -19,12 +19,10 @@ impl Command for ConfigCmd {
                 ctx.config.set(args[2], args[3]);
                 CommandResult::Ok
             }
-            _ => {
-                CommandResult::Error {
-                    errmsg: Some("usage: builders <subcmd> [<args>]"),
-                    fatal: false,
-                }
-            }
+            _ => CommandResult::Error {
+                errmsg: Some("usage: builders <subcmd> [<args>]"),
+                fatal: false,
+            },
         }
     }
 

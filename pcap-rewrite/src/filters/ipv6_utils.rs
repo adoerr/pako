@@ -1,13 +1,9 @@
 use log::trace;
-
-use pnet_packet::ipv6::ExtensionPacket;
-use pnet_packet::ipv6::FragmentPacket;
-use pnet_packet::ipv6::Ipv6Packet;
-use pnet_packet::Packet;
-use pnet_packet::PacketSize;
-
-use pnet_packet::ip::IpNextHeaderProtocol;
-use pnet_packet::ip::IpNextHeaderProtocols;
+use pnet_packet::{
+    ip::{IpNextHeaderProtocol, IpNextHeaderProtocols},
+    ipv6::{ExtensionPacket, FragmentPacket, Ipv6Packet},
+    Packet, PacketSize,
+};
 
 // TODO: factorize with code at URL below
 // From https://github.com/rusticata/pcap-analyzer/blob/3064dabbc51a19c51181dc223670ead34ce25844/libpcap-analyzer/src/analyzer.rs

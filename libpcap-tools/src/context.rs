@@ -1,6 +1,8 @@
-use crate::duration::Duration;
-use pcap_parser::*;
 use std::convert::TryFrom;
+
+use pcap_parser::*;
+
+use crate::duration::Duration;
 
 /// Block parsing context
 #[derive(Clone, Default)]

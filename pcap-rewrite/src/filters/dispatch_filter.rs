@@ -1,22 +1,26 @@
-use std::io;
-use std::net::IpAddr;
-use std::path::Path;
+use std::{io, net::IpAddr, path::Path};
 
 use libpcap_tools::FiveTuple;
 use pcap_parser::data::PacketData;
-use pnet_packet::ethernet::{EtherType, EtherTypes};
-use pnet_packet::ip::IpNextHeaderProtocol;
-use pnet_packet::PrimitiveValues;
+use pnet_packet::{
+    ethernet::{EtherType, EtherTypes},
+    ip::IpNextHeaderProtocol,
+    PrimitiveValues,
+};
 
-use crate::container::five_tuple_container::FiveTupleC;
-use crate::container::ipaddr_container::IpAddrC;
-use crate::container::ipaddr_proto_port_container::IpAddrProtoPortC;
-use crate::filters::filter::{FResult, Filter, Verdict};
-use crate::filters::filter_utils;
-use crate::filters::filtering_action::FilteringAction;
-use crate::filters::filtering_key::FilteringKey;
-use crate::filters::key_parser_ipv4;
-use crate::filters::key_parser_ipv6;
+use crate::{
+    container::{
+        five_tuple_container::FiveTupleC, ipaddr_container::IpAddrC,
+        ipaddr_proto_port_container::IpAddrProtoPortC,
+    },
+    filters::{
+        filter::{FResult, Filter, Verdict},
+        filter_utils,
+        filtering_action::FilteringAction,
+        filtering_key::FilteringKey,
+        key_parser_ipv4, key_parser_ipv6,
+    },
+};
 
 /// Function to extract key from data
 pub type GetKeyFn<Key> = Box<dyn Fn(&[u8]) -> Result<Key, String>>;

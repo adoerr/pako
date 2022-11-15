@@ -1,6 +1,7 @@
+use std::io;
+
 use libpcap_tools::Packet;
 use pcap_parser::{Linktype, PcapBlockOwned};
-use std::io;
 
 pub trait Writer {
     fn init_file(&mut self, snaplen: usize, linktype: Linktype) -> Result<usize, io::Error>;

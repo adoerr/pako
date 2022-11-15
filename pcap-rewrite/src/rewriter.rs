@@ -1,13 +1,10 @@
-use crate::filters::filter::*;
-use crate::pcap::*;
-use crate::pcapng::*;
-use crate::traits::Writer;
+use std::io::Write;
+
 use libpcap_tools::{Error, Packet, ParseBlockContext, ParseContext, PcapAnalyzer};
 use log::{debug, error, info};
-use pcap_parser::data::*;
-use pcap_parser::Linktype;
-use pcap_parser::{Block, PcapBlockOwned};
-use std::io::Write;
+use pcap_parser::{data::*, Block, Linktype, PcapBlockOwned};
+
+use crate::{filters::filter::*, pcap::*, pcapng::*, traits::Writer};
 
 #[derive(Copy, Clone, Debug)]
 pub enum FileFormat {
@@ -191,10 +188,13 @@ impl PcapAnalyzer for Rewriter {
         if self.run_pre_analysis {
             info!("Pre-analysis done.");
             self.run_pre_analysis = false;
-            
+
             for filter in self.filters.iter_mut() {
                 if let Err(e) = filter.preanalysis_done() {
-                    panic!("Pre-analysis filter returned fatal error in post preanalysis function {}", e);
+                    panic!(
+                        "Pre-analysis filter returned fatal error in post preanalysis function {}",
+                        e
+                    );
                 }
             }
 

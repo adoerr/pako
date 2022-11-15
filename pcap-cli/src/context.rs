@@ -1,6 +1,7 @@
+use std::fs::File;
+
 use libpcap_analyzer::{plugins::PluginsFactory, Analyzer};
 use libpcap_tools::{Config, PcapDataEngine};
-use std::fs::File;
 
 /// Global CLI execution context
 #[derive(Default)]

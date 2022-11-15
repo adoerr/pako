@@ -1,5 +1,6 @@
-use crate::error::Error;
 use std::io::Read;
+
+use crate::error::Error;
 
 /// Interface for all Pcap engines
 pub trait PcapEngine {

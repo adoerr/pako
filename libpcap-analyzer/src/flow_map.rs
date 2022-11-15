@@ -1,9 +1,12 @@
+use std::collections::{
+    hash_map::{Entry, Values},
+    HashMap,
+};
+
 use fnv::FnvHashMap;
 use libpcap_tools::{FiveTuple, Flow, FlowID};
 use rand::prelude::*;
 use rand_chacha::*;
-use std::collections::hash_map::{Entry, Values};
-use std::collections::HashMap;
 
 /// Storage for flows
 ///

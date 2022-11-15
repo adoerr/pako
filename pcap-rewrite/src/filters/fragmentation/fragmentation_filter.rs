@@ -1,29 +1,30 @@
-use std::collections::HashSet;
-use std::io;
-use std::net::IpAddr;
-
-use pcap_parser::data::PacketData;
-use pnet_packet::ethernet::{EtherType, EtherTypes};
-use pnet_packet::ip::IpNextHeaderProtocol;
+use std::{collections::HashSet, io, net::IpAddr};
 
 use libpcap_tools::Packet;
-
-use crate::container::five_tuple_container::FiveTupleC;
-use crate::container::ipaddr_container::IpAddrC;
-use crate::container::ipaddr_proto_port_container::IpAddrProtoPortC;
-use crate::container::two_tuple_proto_ipid_container::TwoTupleProtoIpidC;
-use crate::filters::filter::Filter;
-use crate::filters::filter::{FResult, Verdict};
-use crate::filters::filter_utils;
-use crate::filters::filtering_action::FilteringAction;
-use crate::filters::filtering_key::FilteringKey;
-use crate::filters::key_parser_ipv4;
-use crate::filters::key_parser_ipv6;
-
-use crate::filters::fragmentation::fragmentation_test;
-use crate::filters::fragmentation::two_tuple_proto_ipid_five_tuple::TwoTupleProtoIpidFiveTuple;
+use pcap_parser::data::PacketData;
+use pnet_packet::{
+    ethernet::{EtherType, EtherTypes},
+    ip::IpNextHeaderProtocol,
+};
 
 use super::convert_fn;
+use crate::{
+    container::{
+        five_tuple_container::FiveTupleC, ipaddr_container::IpAddrC,
+        ipaddr_proto_port_container::IpAddrProtoPortC,
+        two_tuple_proto_ipid_container::TwoTupleProtoIpidC,
+    },
+    filters::{
+        filter::{FResult, Filter, Verdict},
+        filter_utils,
+        filtering_action::FilteringAction,
+        filtering_key::FilteringKey,
+        fragmentation::{
+            fragmentation_test, two_tuple_proto_ipid_five_tuple::TwoTupleProtoIpidFiveTuple,
+        },
+        key_parser_ipv4, key_parser_ipv6,
+    },
+};
 
 /// Function to convert TwoTupleProtoIpid/FiveTuple data to key container
 pub type ConvertFn<Container> = Box<dyn Fn(&HashSet<TwoTupleProtoIpidFiveTuple>) -> Container>;

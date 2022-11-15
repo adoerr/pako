@@ -1,7 +1,9 @@
-use pcap_parser::nom::{error::ErrorKind, Err};
-use pcap_parser::PcapError;
-use std::convert::From;
-use std::io;
+use std::{convert::From, io};
+
+use pcap_parser::{
+    nom::{error::ErrorKind, Err},
+    PcapError,
+};
 use thiserror::Error;
 
 #[derive(Debug, Error)]

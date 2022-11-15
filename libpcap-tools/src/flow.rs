@@ -1,7 +1,6 @@
-use crate::Duration;
 use std::hash::{Hash, Hasher};
 
-use crate::five_tuple::FiveTuple;
+use crate::{five_tuple::FiveTuple, Duration};
 
 /// Unique `Flow` identifier
 #[allow(clippy::upper_case_acronyms)]

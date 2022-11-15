@@ -1,19 +1,21 @@
 #![warn(clippy::all)]
 #![allow(clippy::upper_case_acronyms)]
 
+use std::{fs::File, io, path::Path};
+
 use clap::{crate_version, App, Arg};
 use libpcap_tools::Config;
 use log::{debug, error};
-use std::fs::File;
-use std::io;
-use std::path::Path;
-
-use pcap_rewrite::filters::dispatch_filter::DispatchFilterBuilder;
-use pcap_rewrite::filters::filtering_action::FilteringAction;
-use pcap_rewrite::filters::filtering_key::FilteringKey;
-use pcap_rewrite::filters::fragmentation::fragmentation_filter::FragmentationFilterBuilder;
-use pcap_rewrite::rewriter::*;
-use pcap_rewrite::{filters, RewriteOptions};
+use pcap_rewrite::{
+    filters,
+    filters::{
+        dispatch_filter::DispatchFilterBuilder, filtering_action::FilteringAction,
+        filtering_key::FilteringKey,
+        fragmentation::fragmentation_filter::FragmentationFilterBuilder,
+    },
+    rewriter::*,
+    RewriteOptions,
+};
 
 fn load_config(config: &mut Config, filename: &str) -> Result<(), io::Error> {
     debug!("Loading configuration {}", filename);

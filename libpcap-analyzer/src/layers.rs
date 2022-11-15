@@ -1,5 +1,4 @@
-use pnet_packet::ethernet::EtherTypes;
-use pnet_packet::ip::IpNextHeaderProtocols;
+use pnet_packet::{ethernet::EtherTypes, ip::IpNextHeaderProtocols};
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(u16)]

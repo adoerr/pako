@@ -1,15 +1,16 @@
-use std::collections::HashSet;
-use std::iter::FromIterator;
-
-use pnet_packet::ip::IpNextHeaderProtocol;
+use std::{collections::HashSet, iter::FromIterator};
 
 use libpcap_tools::FiveTuple;
+use pnet_packet::ip::IpNextHeaderProtocol;
 
-use crate::container::five_tuple_container::FiveTupleC;
-use crate::container::ipaddr_container::IpAddrC;
-use crate::container::ipaddr_proto_port_container::IpAddrProtoPortC;
-use crate::container::two_tuple_proto_ipid_container::TwoTupleProtoIpidC;
-use crate::filters::fragmentation::two_tuple_proto_ipid_five_tuple::TwoTupleProtoIpidFiveTuple;
+use crate::{
+    container::{
+        five_tuple_container::FiveTupleC, ipaddr_container::IpAddrC,
+        ipaddr_proto_port_container::IpAddrProtoPortC,
+        two_tuple_proto_ipid_container::TwoTupleProtoIpidC,
+    },
+    filters::fragmentation::two_tuple_proto_ipid_five_tuple::TwoTupleProtoIpidFiveTuple,
+};
 
 pub fn convert_data_hs_to_src_ipaddrc(data_hs: &HashSet<TwoTupleProtoIpidFiveTuple>) -> IpAddrC {
     let src_ipaddr_iter = data_hs

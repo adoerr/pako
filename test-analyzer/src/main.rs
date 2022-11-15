@@ -3,19 +3,20 @@
 #[macro_use]
 extern crate log;
 
+use std::{
+    fs::File,
+    io,
+    io::{Error, ErrorKind},
+    path::Path,
+    sync::Arc,
+};
+
 use clap::{crate_version, App, Arg};
 use explugin_example::ExEmptyPluginBuilder;
-use libpcap_analyzer::*;
-use libpcap_analyzer::plugins::PluginsFactory;
+use flate2::read::GzDecoder;
+use libpcap_analyzer::{plugins::PluginsFactory, *};
 use libpcap_tools::{Config, PcapDataEngine, PcapEngine};
 use simplelog::{LevelFilter, SimpleLogger};
-use std::fs::File;
-use std::io;
-use std::io::{Error, ErrorKind};
-use std::path::Path;
-use std::sync::Arc;
-
-use flate2::read::GzDecoder;
 use xz2::read::XzDecoder;
 
 mod display;
@@ -28,21 +29,19 @@ fn load_config(config: &mut Config, filename: &str) -> Result<(), io::Error> {
     config.load_config(file)
 }
 
-const ENV_LOG : &str = "PCAP_ANALYZER_LOG";
+const ENV_LOG: &str = "PCAP_ANALYZER_LOG";
 fn env_get_log_level() -> LevelFilter {
     match std::env::var(ENV_LOG) {
-        Ok(key) => {
-            match key.as_ref() {
-                "off" => LevelFilter::Off,
-                "error" => LevelFilter::Error,
-                "warn" => LevelFilter::Warn,
-                "info" => LevelFilter::Info,
-                "debug" => LevelFilter::Debug,
-                "trace" => LevelFilter::Trace,
-                _ => panic!("Invalid log level '{}'", key),
-            }
+        Ok(key) => match key.as_ref() {
+            "off" => LevelFilter::Off,
+            "error" => LevelFilter::Error,
+            "warn" => LevelFilter::Warn,
+            "info" => LevelFilter::Info,
+            "debug" => LevelFilter::Debug,
+            "trace" => LevelFilter::Trace,
+            _ => panic!("Invalid log level '{}'", key),
         },
-        _ => LevelFilter::Debug
+        _ => LevelFilter::Debug,
     }
 }
 
@@ -101,33 +100,35 @@ fn main() -> Result<(), io::Error> {
     let input_filename = matches.value_of("INPUT").unwrap();
 
     let skip = matches.value_of("skip").unwrap_or("0");
-    let skip = skip.parse::<u32>().map_err(|_| Error::new(
-        ErrorKind::Other,
-        "Invalid value for 'skip' argument",
-    ))?;
+    let skip = skip
+        .parse::<u32>()
+        .map_err(|_| Error::new(ErrorKind::Other, "Invalid value for 'skip' argument"))?;
     config.set("skip_index", skip);
 
     // override config options from command-line arguments
     if let Some(jobs) = matches.value_of("jobs") {
-        let j = jobs.parse::<u32>().map_err(|_| io::Error::new(
-            io::ErrorKind::Other,
-            "Invalid value for 'jobs' argument",
-        ))?;
+        let j = jobs.parse::<u32>().map_err(|_| {
+            io::Error::new(io::ErrorKind::Other, "Invalid value for 'jobs' argument")
+        })?;
         config.set("num_threads", j);
     }
 
     let registry = if let Some(plugin_names) = matches.value_of("plugins") {
         debug!("Restricting plugins to: {}", plugin_names);
         let names: Vec<_> = plugin_names.split(',').collect();
-        factory.build_filter_plugins(
-            |n| {
-                debug!("n: {}", n);
-                names.iter().any(|&x| n.contains(x))
-            },
-            &config,
-        ).expect("Could not build factory")
+        factory
+            .build_filter_plugins(
+                |n| {
+                    debug!("n: {}", n);
+                    names.iter().any(|&x| n.contains(x))
+                },
+                &config,
+            )
+            .expect("Could not build factory")
     } else {
-        factory.build_plugins(&config).expect("Could not build factory")
+        factory
+            .build_plugins(&config)
+            .expect("Could not build factory")
     };
     debug!("test-analyzer instantiated plugins:");
     registry.run_plugins(
@@ -136,16 +137,26 @@ fn main() -> Result<(), io::Error> {
             debug!("  {}", p.name());
             let t = p.plugin_type();
             let mut s = "    layers: ".to_owned();
-            if t & PLUGIN_L2 != 0 { s += "  L2"; }
-            if t & PLUGIN_L3 != 0 { s += "  L3"; }
-            if t & PLUGIN_L4 != 0 { s += "  L4"; }
+            if t & PLUGIN_L2 != 0 {
+                s += "  L2";
+            }
+            if t & PLUGIN_L3 != 0 {
+                s += "  L3";
+            }
+            if t & PLUGIN_L4 != 0 {
+                s += "  L4";
+            }
             debug!("{}", s);
             let mut s = "    events: ".to_owned();
-            if t & PLUGIN_FLOW_NEW != 0 { s += "  FLOW_NEW"; }
-            if t & PLUGIN_FLOW_DEL != 0 { s += "  FLOW_DEL"; }
+            if t & PLUGIN_FLOW_NEW != 0 {
+                s += "  FLOW_NEW";
+            }
+            if t & PLUGIN_FLOW_DEL != 0 {
+                s += "  FLOW_DEL";
+            }
             debug!("{}", s);
         },
-        );
+    );
 
     // let analyzer: Box<dyn PcapAnalyzer> = match config.get_usize("num_threads") {
     //     Some(1) => Box::new(Analyzer::new(registry, &config)),
@@ -187,19 +198,23 @@ fn main() -> Result<(), io::Error> {
 }
 
 fn show_results(analyzer: &Analyzer) {
-    analyzer.registry().run_plugins(|_| true, |p| {
-        let res = p.get_results();
-        // dbg!(&res);
-        if let Some(res) = res {
-            match p.name() {
-                "BasicStats" => display_json_basicstats(res),
-                "CommunityID" => display_json_communityid(res),
-                "FlowsInfo" => display_json_flowsinfo(res),
-                "Rusticata" => display_json_rusticata(res),
-                "TlsStats" => display_json_tlsstats(res),
-                _ => display_generic(p, res),
+    analyzer.registry().run_plugins(
+        |_| true,
+        |p| {
+            let res = p.get_results();
+            // dbg!(&res);
+            if let Some(res) = res {
+                match p.name() {
+                    "BasicStats" => display_json_basicstats(res),
+                    "CommunityID" => display_json_communityid(res),
+                    "FlowsInfo" => display_json_flowsinfo(res),
+                    "Rusticata" => display_json_rusticata(res),
+                    "TlsStats" => display_json_tlsstats(res),
+                    _ => display_generic(p, res),
+                }
+            } else {
+                info!("{}: <no value>", p.name());
             }
-        } else {
-            info!("{}: <no value>", p.name());
-        }    })
+        },
+    )
 }

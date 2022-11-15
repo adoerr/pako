@@ -1,9 +1,9 @@
-use crate::traits::*;
-use libpcap_tools::Packet;
-use pcap_parser::pcapng::*;
-use pcap_parser::ToVec;
-use pcap_parser::{Linktype, PcapBlockOwned};
 use std::io::{self, Error, ErrorKind, Write};
+
+use libpcap_tools::Packet;
+use pcap_parser::{pcapng::*, Linktype, PcapBlockOwned, ToVec};
+
+use crate::traits::*;
 
 /// Writer for the legacy pcap format
 pub struct PcapNGWriter<W>

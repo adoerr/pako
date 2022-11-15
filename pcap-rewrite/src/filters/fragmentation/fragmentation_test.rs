@@ -1,5 +1,4 @@
-use pnet_packet::ipv4::Ipv4Packet;
-use pnet_packet::ipv6::Ipv6Packet;
+use pnet_packet::{ipv4::Ipv4Packet, ipv6::Ipv6Packet};
 
 use crate::filters::ipv6_utils;
 

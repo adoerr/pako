@@ -1,11 +1,14 @@
+use std::{
+    cmp::Ordering,
+    collections::{HashMap, VecDeque},
+    fmt,
+    net::IpAddr,
+    num::Wrapping,
+};
+
 use libpcap_tools::{Duration, Flow, FlowID};
 use pnet_macros_support::packet::Packet as PnetPacket;
 use pnet_packet::tcp::{TcpFlags, TcpPacket};
-use std::cmp::Ordering;
-use std::collections::{HashMap, VecDeque};
-use std::fmt;
-use std::net::IpAddr;
-use std::num::Wrapping;
 
 const EARLY_DETECT_OVERLAP: bool = false;
 

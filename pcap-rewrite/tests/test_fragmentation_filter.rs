@@ -1,11 +1,11 @@
-use pcap_parser::{Capture, PcapCapture};
-use std::env;
-use std::fs;
-use std::fs::File;
-use std::path::Path;
-use std::path::PathBuf;
+use std::{
+    env, fs,
+    fs::File,
+    path::{Path, PathBuf},
+};
 
 use assert_cmd::Command;
+use pcap_parser::{Capture, PcapCapture};
 
 fn count_packet_in_trace(trace_file_path: &Path) -> u32 {
     if trace_file_path.exists() {

@@ -1,14 +1,20 @@
-use crate::analyzer::{handle_l3, run_plugins_v2_link, run_plugins_v2_physical, Analyzer};
-use crate::layers::LinkLayerType;
-use crate::plugin_registry::PluginRegistry;
+use std::{
+    cmp::min,
+    panic::AssertUnwindSafe,
+    sync::{Arc, Barrier},
+    thread,
+};
+
 use crossbeam_channel::{unbounded, Receiver, Sender};
 use libpcap_tools::*;
 use pcap_parser::data::PacketData;
 use pnet_packet::ethernet::{EtherType, EtherTypes, EthernetPacket};
-use std::cmp::min;
-use std::panic::AssertUnwindSafe;
-use std::sync::{Arc, Barrier};
-use std::thread;
+
+use crate::{
+    analyzer::{handle_l3, run_plugins_v2_link, run_plugins_v2_physical, Analyzer},
+    layers::LinkLayerType,
+    plugin_registry::PluginRegistry,
+};
 
 pub enum Job<'a> {
     Exit,
@@ -327,10 +333,11 @@ fn worker(mut a: Analyzer, idx: usize, r: Receiver<Job>, barrier: Arc<Barrier>) 
 
 #[cfg(test)]
 mod tests {
-    use super::Job;
-    use libpcap_tools::Flow;
-    use libpcap_tools::{Packet, ParseContext};
     use std::mem;
+
+    use libpcap_tools::{Flow, Packet, ParseContext};
+
+    use super::Job;
     #[test]
     fn size_of_structs() {
         println!("sizeof ParseContext: {}", mem::size_of::<ParseContext>());

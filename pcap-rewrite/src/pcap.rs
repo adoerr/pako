@@ -1,9 +1,10 @@
-use crate::traits::Writer;
+use std::io::{self, Error, ErrorKind, Write};
+
 use libpcap_tools::Packet;
 use log::debug;
-use pcap_parser::ToVec;
-use pcap_parser::{LegacyPcapBlock, Linktype, PcapBlockOwned};
-use std::io::{self, Error, ErrorKind, Write};
+use pcap_parser::{LegacyPcapBlock, Linktype, PcapBlockOwned, ToVec};
+
+use crate::traits::Writer;
 
 /// Writer for the legacy pcap format
 pub struct PcapWriter<W>

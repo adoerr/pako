@@ -1,11 +1,12 @@
 //! Plugin to get/save information on flows
 
-use crate::plugin::Plugin;
-use crate::{output, plugin_builder, PLUGIN_FLOW_DEL, PLUGIN_FLOW_NEW};
+use std::any::Any;
+
 use indexmap::IndexMap;
 use libpcap_tools::{Flow, FlowID};
 use serde_json::{json, Value};
-use std::any::Any;
+
+use crate::{output, plugin::Plugin, plugin_builder, PLUGIN_FLOW_DEL, PLUGIN_FLOW_NEW};
 
 #[derive(Default)]
 pub struct FlowsInfo {

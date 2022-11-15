@@ -1,13 +1,17 @@
-use crate::analyzer::PcapAnalyzer;
-use crate::block_engine::{BlockAnalyzer, BlockEngine};
-use crate::config::Config;
-use crate::context::*;
-use crate::duration::{Duration, MICROS_PER_SEC};
-use crate::engine::PcapEngine;
-use crate::error::Error;
-use crate::packet::Packet;
-use pcap_parser::{Block, PcapBlockOwned};
 use std::io::Read;
+
+use pcap_parser::{Block, PcapBlockOwned};
+
+use crate::{
+    analyzer::PcapAnalyzer,
+    block_engine::{BlockAnalyzer, BlockEngine},
+    config::Config,
+    context::*,
+    duration::{Duration, MICROS_PER_SEC},
+    engine::PcapEngine,
+    error::Error,
+    packet::Packet,
+};
 
 struct PcapDataAnalyzer<A: PcapAnalyzer> {
     data_analyzer: A,

@@ -1,9 +1,11 @@
 // use crate::packet_info::PacketInfo;
-use crate::plugin::*;
-// use libpcap_tools::{Packet, ThreeTuple};
-use multimap::MultiMap;
 // use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
+
+// use libpcap_tools::{Packet, ThreeTuple};
+use multimap::MultiMap;
+
+use crate::plugin::*;
 
 /// Shorthand definition for wrapped plugin
 pub type SafePlugin = Arc<Mutex<dyn Plugin>>;

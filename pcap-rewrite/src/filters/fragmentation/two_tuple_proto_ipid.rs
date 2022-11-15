@@ -1,5 +1,7 @@
-use std::fmt;
-use std::net::{IpAddr, Ipv4Addr};
+use std::{
+    fmt,
+    net::{IpAddr, Ipv4Addr},
+};
 
 /// Network 2-tuple (src/dst IP address) + IP protocol + IP ID
 #[derive(Clone, Debug, Eq, PartialEq, Hash, Ord, PartialOrd)]

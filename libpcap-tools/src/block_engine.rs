@@ -1,8 +1,8 @@
-use crate::config::Config;
-use crate::context::*;
-use crate::error::Error;
-use pcap_parser::{PcapBlockOwned, PcapError};
 use std::io::Read;
+
+use pcap_parser::{PcapBlockOwned, PcapError};
+
+use crate::{config::Config, context::*, error::Error};
 
 pub trait BlockAnalyzer {
     /// Initialization function, called before reading pcap data (optional)

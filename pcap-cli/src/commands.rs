@@ -1,7 +1,8 @@
-use crate::context::Context;
+use std::{collections::HashMap, fs::File};
+
 use lazy_static::lazy_static;
-use std::collections::HashMap;
-use std::fs::File;
+
+use crate::context::Context;
 
 mod analyze;
 mod builders;

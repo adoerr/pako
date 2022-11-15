@@ -75,12 +75,10 @@ impl Command for EngineCmd {
                 }
                 CommandResult::Ok
             }
-            _ => {
-                CommandResult::Error {
-                    errmsg: Some("unknown engine subcmd"),
-                    fatal: false,
-                }
-            }
+            _ => CommandResult::Error {
+                errmsg: Some("unknown engine subcmd"),
+                fatal: false,
+            },
         }
     }
 

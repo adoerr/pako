@@ -1,5 +1,4 @@
-use std::io;
-use std::str::FromStr;
+use std::{io, str::FromStr};
 
 pub struct Config {
     value: toml::Value,

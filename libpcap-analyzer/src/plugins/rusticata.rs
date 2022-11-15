@@ -1,13 +1,15 @@
-use crate::default_plugin_builder;
-use crate::packet_info::PacketInfo;
-use crate::plugin::{Plugin, PluginResult, PLUGIN_FLOW_DEL, PLUGIN_L4};
-use crate::output;
+use std::{any::Any, collections::HashMap};
+
 use fnv::{FnvHashMap, FnvHashSet};
 use libpcap_tools::{Flow, FlowID, Packet};
 use rusticata::prologue::*;
 use serde_json::{Map, Value};
-use std::any::Any;
-use std::collections::HashMap;
+
+use crate::{
+    default_plugin_builder, output,
+    packet_info::PacketInfo,
+    plugin::{Plugin, PluginResult, PLUGIN_FLOW_DEL, PLUGIN_L4},
+};
 
 mod to_json_ext;
 use to_json_ext::ToJsonExt;
@@ -211,7 +213,7 @@ impl Plugin for Rusticata {
         let v = self.get_results_json();
         Some(Box::new(v))
     }
-    
+
     fn save_results(&mut self, path: &str) -> Result<(), &'static str> {
         let results = self.get_results_json();
         // save data to file

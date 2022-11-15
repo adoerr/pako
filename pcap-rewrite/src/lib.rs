@@ -1,6 +1,8 @@
-use std::fs::File;
-use std::io::{self, Read};
-use std::path::Path;
+use std::{
+    fs::File,
+    io::{self, Read},
+    path::Path,
+};
 
 use flate2::read::GzDecoder;
 use libpcap_tools::{Config, PcapDataEngine, PcapEngine};

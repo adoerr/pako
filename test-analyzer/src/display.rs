@@ -1,6 +1,7 @@
+use std::any::Any;
+
 use libpcap_analyzer::Plugin;
 use serde_json::{json, Value};
-use std::any::Any;
 
 pub fn display_json_basicstats(any: Box<dyn Any>) {
     let results = any.downcast::<Value>().expect("Plugin result is not JSON");

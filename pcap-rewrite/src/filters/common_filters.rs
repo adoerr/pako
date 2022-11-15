@@ -1,10 +1,9 @@
-use crate::filters::filter::*;
-use pcap_parser::data::{PacketData, ETHERTYPE_IPV4, ETHERTYPE_IPV6};
-use pnet_packet::ethernet::EthernetPacket;
-use pnet_packet::ipv4::Ipv4Packet;
-use pnet_packet::ipv6::Ipv6Packet;
-use pnet_packet::Packet;
 use std::net::IpAddr;
+
+use pcap_parser::data::{PacketData, ETHERTYPE_IPV4, ETHERTYPE_IPV6};
+use pnet_packet::{ethernet::EthernetPacket, ipv4::Ipv4Packet, ipv6::Ipv6Packet, Packet};
+
+use crate::filters::filter::*;
 
 /// Common filter to select packets matching this IP address either as source or destination
 ///

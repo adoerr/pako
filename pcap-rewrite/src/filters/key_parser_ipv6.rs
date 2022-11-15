@@ -1,16 +1,18 @@
 use std::net::IpAddr;
 
-use pnet_packet::ip::IpNextHeaderProtocol;
-use pnet_packet::ip::IpNextHeaderProtocols;
-use pnet_packet::ipv6::Ipv6Packet;
-use pnet_packet::tcp::TcpPacket;
-use pnet_packet::udp::UdpPacket;
-
-use crate::filters::ipv6_utils;
 use libpcap_tools::FiveTuple;
+use pnet_packet::{
+    ip::{IpNextHeaderProtocol, IpNextHeaderProtocols},
+    ipv6::Ipv6Packet,
+    tcp::TcpPacket,
+    udp::UdpPacket,
+};
 
-use super::fragmentation::two_tuple_proto_ipid::TwoTupleProtoIpid;
-use super::fragmentation::two_tuple_proto_ipid_five_tuple::TwoTupleProtoIpidFiveTuple;
+use super::fragmentation::{
+    two_tuple_proto_ipid::TwoTupleProtoIpid,
+    two_tuple_proto_ipid_five_tuple::TwoTupleProtoIpidFiveTuple,
+};
+use crate::filters::ipv6_utils;
 
 pub fn parse_src_ipaddr(payload: &[u8]) -> Result<IpAddr, String> {
     let ipv6 = Ipv6Packet::new(payload).ok_or("Expected Ipv6 packet but not found")?;

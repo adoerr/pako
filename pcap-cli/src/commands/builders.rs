@@ -15,12 +15,10 @@ impl Command for BuildersCmd {
                 ctx.factory.iter_builders(|name| println!("  {}", name));
                 CommandResult::Ok
             }
-            _ => {
-                CommandResult::Error {
-                    errmsg: Some("usage: builders <subcmd> [<args>]"),
-                    fatal: false,
-                }
-            }
+            _ => CommandResult::Error {
+                errmsg: Some("usage: builders <subcmd> [<args>]"),
+                fatal: false,
+            },
         }
     }
 

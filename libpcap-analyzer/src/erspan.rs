@@ -103,8 +103,9 @@ impl<'a> ::pnet_macros_support::packet::Packet for ErspanPacket<'a> {
 }
 #[cfg(test)]
 mod tests {
-    use super::ErspanPacket;
     use pnet_macros_support::packet::Packet;
+
+    use super::ErspanPacket;
     const DATA: &[u8] = b"\x10\x17\x08\x64\x00\x00\x00\x00\x12\x34";
     #[test]
     fn erspan_test() {

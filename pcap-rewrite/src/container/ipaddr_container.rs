@@ -1,10 +1,7 @@
-use std::collections::HashSet;
-use std::error::Error;
-use std::fs::File;
-use std::iter::FromIterator;
-use std::net::IpAddr;
-use std::path::Path;
-use std::str::FromStr;
+use std::{
+    collections::HashSet, error::Error, fs::File, iter::FromIterator, net::IpAddr, path::Path,
+    str::FromStr,
+};
 
 use csv::ReaderBuilder;
 

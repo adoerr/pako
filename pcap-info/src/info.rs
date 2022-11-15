@@ -1,23 +1,22 @@
-use crate::interface::{pcapng_build_interface, InterfaceInfo};
-use digest::generic_array::GenericArray;
-use smart_default::SmartDefault;
-use std::cmp::min;
-use std::fs::File;
-use std::io::{self, Error, ErrorKind};
-use std::path::Path;
-use std::str;
-use time::{Duration, OffsetDateTime};
-
-use flate2::read::GzDecoder;
-use xz2::read::XzDecoder;
+use std::{
+    cmp::min,
+    fs::File,
+    io::{self, Error, ErrorKind},
+    path::Path,
+    str,
+};
 
 use blake2::Blake2s256;
-use digest::Digest;
+use digest::{generic_array::GenericArray, Digest};
+use flate2::read::GzDecoder;
+use pcap_parser::{create_reader, pcapng::*, Block, PcapBlockOwned, PcapError};
 use sha1::Sha1;
 use sha2::Sha256;
+use smart_default::SmartDefault;
+use time::{Duration, OffsetDateTime};
+use xz2::read::XzDecoder;
 
-use pcap_parser::pcapng::*;
-use pcap_parser::{create_reader, Block, PcapBlockOwned, PcapError};
+use crate::interface::{pcapng_build_interface, InterfaceInfo};
 
 const MICROS_PER_SEC: u64 = 1_000_000;
 const NANOS_PER_SEC: u64 = 1_000_000_000;

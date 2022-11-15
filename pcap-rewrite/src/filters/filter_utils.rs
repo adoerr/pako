@@ -1,7 +1,8 @@
-use pnet_packet::ethernet::{EtherTypes, EthernetPacket};
-use pnet_packet::vlan::VlanPacket;
-use pnet_packet::Packet;
-use pnet_packet::PrimitiveValues;
+use pnet_packet::{
+    ethernet::{EtherTypes, EthernetPacket},
+    vlan::VlanPacket,
+    Packet, PrimitiveValues,
+};
 
 pub fn extract_callback_ethernet<D>(
     get_key_from_ipv4_l3_data: &dyn Fn(&[u8]) -> Result<D, String>,

@@ -1,6 +1,8 @@
-use super::{Command, CommandResult, Context};
-use pcap_parser::{create_reader, pcapng::Block, PcapBlockOwned};
 use std::io::{Read, Seek, SeekFrom};
+
+use pcap_parser::{create_reader, pcapng::Block, PcapBlockOwned};
+
+use super::{Command, CommandResult, Context};
 
 pub struct InfoCmd;
 impl Command for InfoCmd {

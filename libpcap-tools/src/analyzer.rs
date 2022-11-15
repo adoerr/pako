@@ -1,7 +1,6 @@
-use crate::context::*;
-use crate::error::Error;
-use crate::packet::Packet;
 pub use pcap_parser::PcapBlockOwned;
+
+use crate::{context::*, error::Error, packet::Packet};
 
 /// Common trait for pcap/pcap-ng analyzers
 pub trait PcapAnalyzer {

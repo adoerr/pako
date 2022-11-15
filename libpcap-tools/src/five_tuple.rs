@@ -1,7 +1,11 @@
-use crate::three_tuple::ThreeTuple;
+use std::{
+    fmt,
+    net::{IpAddr, Ipv4Addr},
+};
+
 use serde::Serialize;
-use std::fmt;
-use std::net::{IpAddr, Ipv4Addr};
+
+use crate::three_tuple::ThreeTuple;
 
 /// Network 5-tuple: layer 4 protocol (e.g TCP or UDP), source and destination IP/ports
 #[derive(Clone, Debug, Eq, PartialEq, Hash, Ord, PartialOrd, Serialize)]

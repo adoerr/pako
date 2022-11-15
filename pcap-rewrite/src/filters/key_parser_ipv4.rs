@@ -1,16 +1,18 @@
 use std::net::IpAddr;
 
-use pnet_packet::ip::IpNextHeaderProtocol;
-use pnet_packet::ip::IpNextHeaderProtocols;
-use pnet_packet::ipv4::Ipv4Packet;
-use pnet_packet::tcp::TcpPacket;
-use pnet_packet::udp::UdpPacket;
-use pnet_packet::Packet;
-
 use libpcap_tools::FiveTuple;
+use pnet_packet::{
+    ip::{IpNextHeaderProtocol, IpNextHeaderProtocols},
+    ipv4::Ipv4Packet,
+    tcp::TcpPacket,
+    udp::UdpPacket,
+    Packet,
+};
 
-use super::fragmentation::two_tuple_proto_ipid::TwoTupleProtoIpid;
-use super::fragmentation::two_tuple_proto_ipid_five_tuple::TwoTupleProtoIpidFiveTuple;
+use super::fragmentation::{
+    two_tuple_proto_ipid::TwoTupleProtoIpid,
+    two_tuple_proto_ipid_five_tuple::TwoTupleProtoIpidFiveTuple,
+};
 
 pub fn parse_src_ipaddr(payload: &[u8]) -> Result<IpAddr, String> {
     let ipv4 = Ipv4Packet::new(payload).ok_or("Expected Ipv4 packet but not found")?;

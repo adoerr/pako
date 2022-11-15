@@ -1,13 +1,15 @@
-use crate::packet_info::PacketInfo;
-use crate::plugin::{Plugin, PluginResult, PLUGIN_L4};
-use crate::{output, plugin_builder};
+use std::{any::Any, collections::HashMap};
+
 use libpcap_tools::{FiveTuple, Packet};
-use rusticata::tls::*;
-use rusticata::tls_parser::TlsVersion;
-use rusticata::*;
+use rusticata::{tls::*, tls_parser::TlsVersion, *};
 use serde_json::{self, json, Value};
-use std::any::Any;
-use std::collections::HashMap;
+
+use crate::{
+    output,
+    packet_info::PacketInfo,
+    plugin::{Plugin, PluginResult, PLUGIN_L4},
+    plugin_builder,
+};
 
 struct Stats<'a> {
     parser: TlsParser<'a>,

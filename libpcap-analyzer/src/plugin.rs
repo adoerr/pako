@@ -1,8 +1,8 @@
-use crate::analyzer::L3Info;
-use crate::packet_info::PacketInfo;
-use crate::plugin_registry::PluginRegistry;
-use libpcap_tools::{Config, FiveTuple, Flow, Packet, ThreeTuple};
 use std::any::Any;
+
+use libpcap_tools::{Config, FiveTuple, Flow, Packet, ThreeTuple};
+
+use crate::{analyzer::L3Info, packet_info::PacketInfo, plugin_registry::PluginRegistry};
 
 /// Result struct manipulated by all plugins
 ///

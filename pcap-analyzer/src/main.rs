@@ -10,17 +10,18 @@ extern crate flate2;
 extern crate lz4;
 extern crate xz2;
 
-use std::fs::{File, OpenOptions};
-use std::io;
-use std::io::{Error, ErrorKind};
-use std::path::{Path, PathBuf};
-use std::sync::Arc;
+use std::{
+    fs::{File, OpenOptions},
+    io,
+    io::{Error, ErrorKind},
+    path::{Path, PathBuf},
+    sync::Arc,
+};
 
 use flate2::read::GzDecoder;
-use xz2::read::XzDecoder;
-
 use libpcap_analyzer::*;
 use libpcap_tools::{Config, PcapDataEngine, PcapEngine};
+use xz2::read::XzDecoder;
 
 fn load_config(config: &mut Config, filename: &str) -> Result<(), io::Error> {
     debug!("Loading configuration {}", filename);
@@ -50,13 +51,13 @@ fn main() -> io::Result<()> {
         .arg(
             Arg::with_name("list-builders")
                 .help("List plugin builders and exit")
-                .long("list-builders")
+                .long("list-builders"),
         )
         .arg(
             Arg::with_name("list-plugins")
                 .help("List instanciated plugins and exit")
                 .short('l')
-                .long("list-plugins")
+                .long("list-plugins"),
         )
         .arg(
             Arg::with_name("plugins")
@@ -120,10 +121,9 @@ fn main() -> io::Result<()> {
     }
 
     let skip = matches.value_of("skip").unwrap_or("0");
-    let skip = skip.parse::<u32>().map_err(|_| Error::new(
-        ErrorKind::Other,
-        "Invalid value for 'skip' argument",
-    ))?;
+    let skip = skip
+        .parse::<u32>()
+        .map_err(|_| Error::new(ErrorKind::Other, "Invalid value for 'skip' argument"))?;
     config.set("skip_index", skip);
 
     // Open log file
@@ -140,7 +140,11 @@ fn main() -> io::Result<()> {
         .unwrap();
 
     // let _ = simplelog::SimpleLogger::init(simplelog::LevelFilter::Info, simplelog::Config::default());
-    let _ = simplelog::WriteLogger::init(simplelog::LevelFilter::Info, simplelog::Config::default(), f);
+    let _ = simplelog::WriteLogger::init(
+        simplelog::LevelFilter::Info,
+        simplelog::Config::default(),
+        f,
+    );
 
     // Now, really start
     info!("Pcap analyser {}", crate_version!());
@@ -149,15 +153,19 @@ fn main() -> io::Result<()> {
     let registry = if let Some(plugin_names) = matches.value_of("plugins") {
         debug!("Restricting plugins to: {}", plugin_names);
         let names: Vec<_> = plugin_names.split(',').collect();
-        factory.build_filter_plugins(
-            |n| {
-                debug!("n: {}", n);
-                names.iter().any(|&x| n.contains(x))
-            },
-            &config,
-        ).expect("Could not build factory")
+        factory
+            .build_filter_plugins(
+                |n| {
+                    debug!("n: {}", n);
+                    names.iter().any(|&x| n.contains(x))
+                },
+                &config,
+            )
+            .expect("Could not build factory")
     } else {
-        factory.build_plugins(&config).expect("Could not build factory")
+        factory
+            .build_plugins(&config)
+            .expect("Could not build factory")
     };
     // check if asked to list plugins
     if matches.is_present("list-plugins") {
@@ -168,13 +176,23 @@ fn main() -> io::Result<()> {
                 println!("  {}", p.name());
                 let t = p.plugin_type();
                 print!("    layers: ");
-                if t & PLUGIN_L2 != 0 { print!("  L2"); }
-                if t & PLUGIN_L3 != 0 { print!("  L3"); }
-                if t & PLUGIN_L4 != 0 { print!("  L4"); }
+                if t & PLUGIN_L2 != 0 {
+                    print!("  L2");
+                }
+                if t & PLUGIN_L3 != 0 {
+                    print!("  L3");
+                }
+                if t & PLUGIN_L4 != 0 {
+                    print!("  L4");
+                }
                 println!();
                 print!("    events: ");
-                if t & PLUGIN_FLOW_NEW != 0 { print!("  FLOW_NEW"); }
-                if t & PLUGIN_FLOW_DEL != 0 { print!("  FLOW_DEL"); }
+                if t & PLUGIN_FLOW_NEW != 0 {
+                    print!("  FLOW_NEW");
+                }
+                if t & PLUGIN_FLOW_DEL != 0 {
+                    print!("  FLOW_DEL");
+                }
                 println!();
             },
         );

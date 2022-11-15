@@ -1,12 +1,12 @@
-use clap::crate_version;
-use log::LevelFilter;
-use rustyline::error::ReadlineError;
-use rustyline::Editor;
 use std::{
     env,
     fs::File,
     io::{BufRead, BufReader},
 };
+
+use clap::crate_version;
+use log::LevelFilter;
+use rustyline::{error::ReadlineError, Editor};
 
 mod commands;
 mod context;
