@@ -4,11 +4,11 @@ version = "0.1.0"
 authors = ["Pierre Chifflier <chifflier@wzdftpd.net>", "Andreas Doerr <0xad@gmx.net>"]
 edition = "2021"
 description = "pako (main library)"
-categories = ["network-programming"]
-keywords = ["pcap", "network", "tools"]
 readme  = "../README.md"
-license  = "MIT/Apache-2.0"
 repository = "https://github.com/adoerr/pako.git"
+license  = "MIT or Apache-2.0"
+keywords = ["pcap", "network", "tools"]
+categories = ["network-programming"]
 
 [features]
 default = ["release"]
