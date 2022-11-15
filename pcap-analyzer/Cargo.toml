@@ -1,8 +1,8 @@
 [package]
 name = "pcap-analyzer"
 version = "0.1.0"
-authors = ["Pierre Chifflier <chifflier@wzdftpd.net>"]
-edition = "2018"
+authors = ["Pierre Chifflier <chifflier@wzdftpd.net>", "Andreas Doerr <0xad@gmx.net>"]
+edition = "2021"
 
 description = "Pcap file analyzer tool"
 categories = ["network-programming"]
@@ -11,8 +11,7 @@ keywords    = ["pcap", "network", "tools"]
 readme      = "../README.md"
 license     = "MIT/Apache-2.0"
 
-repository    = "https://github.com/rusticata/pcap-analyzer.git"
-homepage      = "https://github.com/rusticata/pcap-analyzer"
+repository    = "https://github.com/adoerr/pako.git"
 
 [badges]
 travis-ci                         = { repository = "rusticata/pcap-analyzer" }

@@ -1,21 +1,14 @@
 [workspace]
 members = [
-  "libpcap-tools",
-  "libpcap-analyzer",
   "explugin-example",
+  "libpcap-analyzer",
+  "libpcap-tools",
   "pcap-analyzer",
   "pcap-cli",
   "pcap-info",
   "pcap-rewrite",
   "test-analyzer",
 ]
-
-[profile.release]
-opt-level = 'z'  # Optimize for size.
-lto = true
-codegen-units = 1
-incremental = false
-# panic = 'abort'
 
 [patch.crates-io]
 # pcap-parser = { git="https://github.com/rusticata/pcap-parser" }
