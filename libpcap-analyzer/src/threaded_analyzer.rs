@@ -245,7 +245,7 @@ fn fan_out(data: &[u8], ethertype: EtherType, n_workers: usize) -> usize {
                 //     }
                 // }
                 // let hash = crate::toeplitz::toeplitz_hash(crate::toeplitz::KEY, &buf[..sz]);
-                let hash = fasthash::metro::hash64(&buf[..sz]);
+                let hash = seahash::hash(&buf[..sz]);
                 // debug!("{:?} -- hash --> 0x{:x}", buf, hash);
                 // ((hash >> 24) ^ (hash & 0xff)) as usize % n_workers
                 hash as usize % n_workers
@@ -277,7 +277,7 @@ fn fan_out(data: &[u8], ethertype: EtherType, n_workers: usize) -> usize {
                 //     }
                 // }
                 // let hash = crate::toeplitz::toeplitz_hash(crate::toeplitz::KEY, &buf[..sz]);
-                let hash = fasthash::metro::hash64(&buf[..sz]);
+                let hash = seahash::hash(&buf[..sz]);
                 // debug!("{:?} -- hash --> 0x{:x}", buf, hash);
                 // ((hash >> 24) ^ (hash & 0xff)) as usize % n_workers
                 hash as usize % n_workers
