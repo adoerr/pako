@@ -3,11 +3,11 @@ members = [
   "explugin-example",
   "libpcap-analyzer",
   "libpcap-tools",
-  "pcap-analyzer",
-  "pcap-cli",
-  "pcap-info",
-  "pcap-rewrite",
-  "test-analyzer",
+  #"pcap-analyzer",
+  #"pcap-cli",
+  "pako-info",
+  #"pcap-rewrite",
+  #"test-analyzer",
 ]
 
 [patch.crates-io]

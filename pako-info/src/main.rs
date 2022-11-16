@@ -1,8 +1,5 @@
 #![warn(clippy::all)]
 
-use pcap_info::*;
-
-extern crate clap;
 use std::{
     convert::TryInto,
     fs, io,
@@ -10,36 +7,33 @@ use std::{
     process, str,
 };
 
-use clap::{crate_version, App, Arg};
+use clap::Parser;
+use pako_info::*;
 use pcap_parser::OptionCode;
 use time::UtcOffset;
 
-fn main() -> Result<(), io::Error> {
-    let matches = App::new("Pcap information tool")
-        .version(crate_version!())
-        .author("Pierre Chifflier")
-        .about("Display information about pcap files")
-        .arg(
-            Arg::with_name("no-check")
-                .help("Do not check file")
-                .short('n')
-                .long("no-check"),
-        )
-        .arg(
-            Arg::with_name("INPUT")
-                .help("Input file name")
-                .required(true)
-                .index(1),
-        )
-        .get_matches();
+#[derive(Parser)]
+#[command(version, about = "Display information about pcap files", long_about = None)]
+struct Cli {
+    /// Skip input file consistency check
+    #[arg(short, long, default_value_t = false)]
+    skip: bool,
 
-    let input_filename = matches.value_of("INPUT").unwrap();
+    /// Input file
+    file: String,
+}
+
+fn main() -> Result<(), io::Error> {
+    let cli = Cli::parse();
+
+    let input_filename = cli.file;
     let options = Options {
-        check_file: !matches.is_present("no-check"),
+        check_file: cli.skip,
     };
 
-    let (rc, info) = pcap_info(input_filename, &options)?;
-    display_pcap_info(input_filename, &info);
+    let (rc, info) = pcap_info(input_filename.as_ref(), &options)?;
+
+    display_pcap_info(input_filename.as_ref(), &info);
 
     process::exit(rc);
 }
