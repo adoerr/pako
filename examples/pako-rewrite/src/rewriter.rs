@@ -6,7 +6,7 @@ use pcap_parser::{data::*, Block, Linktype, PcapBlockOwned};
 
 use crate::{filters::filter::*, pcap::*, pcapng::*, traits::Writer};
 
-#[derive(Copy, Clone, Debug)]
+#[derive(clap::ValueEnum, Copy, Clone, Debug)]
 pub enum FileFormat {
     Pcap,
     PcapNG,

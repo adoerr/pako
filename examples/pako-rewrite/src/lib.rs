@@ -32,7 +32,7 @@ pub struct RewriteOptions {
 ///
 /// # Notes
 ///
-/// `pcap-rewrite` tries to rewrite the file in a single pass. However, some plugins require a pre-analysis pass.
+/// `pako-rewrite` tries to rewrite the file in a single pass. However, some plugins require a pre-analysis pass.
 /// Note that these
 pub fn pcap_rewrite_file<S1: AsRef<str>, S2: AsRef<str>>(
     input_filename: S1,

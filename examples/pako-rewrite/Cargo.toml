@@ -1,0 +1,32 @@
+[package]
+name = "pako-rewrite"
+version = "0.1.0"
+authors = ["Pierre Chifflier <chifflier@wzdftpd.net>", "Andreas Doerr <0xad@gmx.net>"]
+repository = "https://github.com/adoerr/pako.git"
+license = "MIT or Apache-2.0"
+edition = "2021"
+
+[lib]
+name = "pako_rewrite"
+path = "src/lib.rs"
+doc = true
+
+[[bin]]
+name = "pako-rewrite"
+path = "src/main.rs"
+doc = false
+
+[dependencies]
+clap = { version = "4.0", features = ["cargo", "derive"] }
+csv = { version = "1.1.6" }
+flate2 = { version = "1.0", features = ["zlib"], default-features = false }
+log = { version = "0.4", features = ["max_level_debug", "release_max_level_warn"] }
+pcap-parser = { version = "0.14.0", features = ["data", "serialize"] }
+pnet_packet = { version = "0.31.0" }
+simplelog = { version = "0.12", default-features = false }
+xz2 = { version = "0.1.7" }
+
+libpcap-tools = { version = "0.1.0", path = "../../pako-tools" }
+
+[dev-dependencies]
+assert_cmd = "2.0"

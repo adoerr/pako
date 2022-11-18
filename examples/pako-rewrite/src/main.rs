@@ -3,10 +3,10 @@
 
 use std::{fs::File, io, path::Path};
 
-use clap::{crate_version, App, Arg};
+use clap::{crate_version, Parser};
 use libpcap_tools::Config;
 use log::{debug, error};
-use pcap_rewrite::{
+use pako_rewrite::{
     filters,
     filters::{
         dispatch_filter::DispatchFilterBuilder, filtering_action::FilteringAction,
@@ -17,25 +17,7 @@ use pcap_rewrite::{
     RewriteOptions,
 };
 
-fn load_config(config: &mut Config, filename: &str) -> Result<(), io::Error> {
-    debug!("Loading configuration {}", filename);
-    let path = Path::new(&filename);
-    let file = File::open(path).map_err(|e| {
-        error!("Could not open config file '{}'", filename);
-        e
-    })?;
-    config.load_config(file)
-}
-
-fn main() -> io::Result<()> {
-    let matches = App::new("Pcap rewrite tool")
-        .version(crate_version!())
-        .author("Pierre Chifflier")
-        .about("Tool for rewriting pcap files")
-        .arg(
-            Arg::with_name("filters")
-                .help(
-                    "Filters to load (default: none)
+const FILTER_HELP: &str = "Filters to load (default: none)
 Arguments can be specified using : after the filter name.
 Examples:
 -f Source:192.168.1.1
@@ -54,65 +36,67 @@ with k: keep
      d: drop
 
 path: path to a csv formatted file without header that contains filtering keys
-",
-                )
-                .short('f')
-                .long("filters")
-                .multiple(true)
-                .number_of_values(1)
-                .takes_value(true),
-        )
-        .arg(
-            Arg::with_name("config")
-                .help("Configuration file")
-                .short('c')
-                .long("config")
-                .takes_value(true),
-        )
-        .arg(
-            Arg::with_name("output-format")
-                .help("Output format (default: pcap)")
-                .short('o')
-                .long("output-format")
-                .takes_value(true),
-        )
-        .arg(
-            Arg::with_name("INPUT")
-                .help("Input file name")
-                .required(true)
-                .index(1),
-        )
-        .arg(
-            Arg::with_name("OUTPUT")
-                .help("Output file name")
-                .required(true)
-                .index(2),
-        )
-        .get_matches();
+";
+
+fn load_config(config: &mut Config, filename: &str) -> Result<(), io::Error> {
+    debug!("Loading configuration {}", filename);
+    let path = Path::new(&filename);
+    let file = File::open(path).map_err(|e| {
+        error!("Could not open config file '{}'", filename);
+        e
+    })?;
+    config.load_config(file)
+}
+
+#[derive(Parser)]
+#[command(version, about = "Rewrite pcap files", long_about = None)]
+struct Cli {
+    /// Filters to load (default: none
+    #[arg(short, long, long_help = FILTER_HELP)]
+    filters: Option<Vec<String>>,
+
+    /// Configuration file
+    #[arg(short, long)]
+    config: Option<String>,
+
+    /// File output format
+    #[arg(short, long, value_enum , default_value_t = FileFormat::Pcap)]
+    format: FileFormat,
+
+    /// Input file name
+    #[arg(short, long)]
+    input: String,
+
+    /// Output file name
+    #[arg(short, long)]
+    output: String,
+}
+
+fn main() -> io::Result<()> {
+    let cli = Cli::parse();
 
     let _ =
         simplelog::SimpleLogger::init(simplelog::LevelFilter::Debug, simplelog::Config::default());
     debug!("Pcap rewrite tool {}", crate_version!());
 
     let mut config = Config::default();
-    if let Some(filename) = matches.value_of("config") {
-        load_config(&mut config, filename)?;
+
+    if let Some(filename) = cli.config {
+        load_config(&mut config, &filename)?;
     }
 
-    let input_filename = matches.value_of("INPUT").unwrap();
-    let output_filename = matches.value_of("OUTPUT").unwrap();
-    let output_format = match matches.value_of("output-format") {
-        Some("pcap") => FileFormat::Pcap,
-        Some("pcapng") => FileFormat::PcapNG,
-        Some(_) => {
-            error!("Invalid output file format");
-            ::std::process::exit(1);
-        }
-        None => FileFormat::Pcap,
-    };
+    let input_filename = cli.input;
+    let output_filename = cli.output;
+    let output_format = cli.format;
 
     let mut filters: Vec<Box<dyn filters::filter::Filter>> = Vec::new();
-    let filter_names: Vec<&str> = matches.values_of("filters").unwrap_or_default().collect();
+
+    let filter_names = if let Some(filters) = cli.filters {
+        filters
+    } else {
+        vec![]
+    };
+
     for name in &filter_names {
         eprintln!("adding filter: {}", name);
         let args: Vec<_> = name.splitn(2, ':').collect();
@@ -165,7 +149,7 @@ path: path to a csv formatted file without header that contains filtering keys
             }
             _ => {
                 error!("Unexpected filter name");
-                ::std::process::exit(1);
+                std::process::exit(1);
             }
         }
     }
@@ -175,5 +159,5 @@ path: path to a csv formatted file without header that contains filtering keys
         config,
     };
 
-    pcap_rewrite::pcap_rewrite_file(input_filename, output_filename, filters, &options)
+    pako_rewrite::pcap_rewrite_file(input_filename, output_filename, filters, &options)
 }

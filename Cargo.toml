@@ -7,7 +7,7 @@ members = [
   "pako-core",
   "pako-tools",
   "plugins/explugin-example",
-  #"pcap-rewrite",
+  "examples/pako-rewrite",
 ]
 
 [patch.crates-io]
