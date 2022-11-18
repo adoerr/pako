@@ -26,7 +26,7 @@ base16ct = { version = "0.1.1", features = ["alloc"], optional = true }
 base64ct = { version = "1.5.3", features = ["alloc"], optional = true }
 crossbeam-channel = { version = "0.5.6" }
 fnv = { version = "1.0.7" }
-indexmap = { version = "1.1.0", features = ["serde-1"] }
+indexmap = { version = "1.9.2", features = ["serde-1"] }
 lazy_static = { version = "1.2.0" }
 log = { version = "0.4.17" }
 multimap = { version = "0.8.3" }
