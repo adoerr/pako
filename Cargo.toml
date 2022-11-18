@@ -1,11 +1,12 @@
 [workspace]
 members = [
-  "explugin-example",
+  "plugins/explugin-example",
   "libpcap-analyzer",
   "libpcap-tools",
   #"pcap-analyzer",
   #"pcap-cli",
-  "pako-info",
+  "examples/pako-info",
+  #"examples/test-analyzer",
   #"pcap-rewrite",
   #"test-analyzer",
 ]
