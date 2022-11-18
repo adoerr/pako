@@ -6,5 +6,5 @@ authors = ["Pierre Chifflier <chifflier@wzdftpd.net>", "Andreas Doerr <0xad@gmx.
 edition = "2021"
 
 [dependencies]
-libpcap-analyzer = { path = "../../libpcap-analyzer" }
-libpcap-tools = { path = "../../libpcap-tools" }
+libpcap-analyzer = { path = "../../pako-core" }
+libpcap-tools = { path = "../../pako-tools" }

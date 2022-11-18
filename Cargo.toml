@@ -4,11 +4,10 @@ members = [
   #"pcap-cli",
   "examples/pako-info",
   "examples/test-analyzer",
-  "libpcap-analyzer",
-  "libpcap-tools",
+  "pako-core",
+  "pako-tools",
   "plugins/explugin-example",
   #"pcap-rewrite",
-  #"test-analyzer",
 ]
 
 [patch.crates-io]
