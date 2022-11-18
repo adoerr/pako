@@ -17,8 +17,11 @@ use pako_rewrite::{
     RewriteOptions,
 };
 
-const FILTER_HELP: &str = "Filters to load (default: none)
-Arguments can be specified using : after the filter name.
+const FILTER_HELP: &str = "
+Filters to load (default: none)
+
+Arguments can be specified using `:` after the filter name.
+
 Examples:
 -f Source:192.168.1.1
 -f Dispatch:fk%fa%path
@@ -60,7 +63,7 @@ struct Cli {
     config: Option<String>,
 
     /// File output format
-    #[arg(short, long, value_enum , default_value_t = FileFormat::Pcap)]
+    #[arg(short = 't', long, value_enum , default_value_t = FileFormat::Pcap)]
     format: FileFormat,
 
     /// Input file name

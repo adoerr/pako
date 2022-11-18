@@ -29,4 +29,5 @@ xz2 = { version = "0.1.7" }
 libpcap-tools = { version = "0.1.0", path = "../../pako-tools" }
 
 [dev-dependencies]
-assert_cmd = "2.0"
+anyhow = { version = "1.0.66" }
+assert_cmd = { version = "2.0" }
