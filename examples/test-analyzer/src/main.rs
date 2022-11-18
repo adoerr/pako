@@ -11,7 +11,7 @@ use std::{
     sync::Arc,
 };
 
-use clap::{crate_version, App, Arg};
+use clap::{crate_version, Arg, Command};
 use explugin_example::ExEmptyPluginBuilder;
 use flate2::read::GzDecoder;
 use libpcap_analyzer::{plugins::PluginsFactory, *};
@@ -46,42 +46,38 @@ fn env_get_log_level() -> LevelFilter {
 }
 
 fn main() -> Result<(), io::Error> {
-    let matches = App::new("Pcap analyzer test tool")
+    let matches = Command::new("Pcap analyzer test tool")
         .version(crate_version!())
-        .author("Pierre Chifflier")
         .about("Test tool for pcap-analyzer crate")
         .arg(
-            Arg::with_name("config")
+            Arg::new("config")
                 .help("Configuration file")
                 .short('c')
-                .long("config")
-                .takes_value(true),
+                .long("config"),
         )
         .arg(
-            Arg::with_name("jobs")
+            Arg::new("jobs")
                 .help("Number of concurrent jobs to run (default: 1)")
                 .short('j')
-                .long("jobs")
-                .takes_value(true),
+                .long("jobs"),
         )
         .arg(
-            Arg::with_name("plugins")
+            Arg::new("plugins")
                 .help("Plugins to load (default: all)")
                 .short('p')
-                .long("plugins")
-                .takes_value(true),
+                .long("plugins"),
         )
         .arg(
-            Arg::with_name("INPUT")
+            Arg::new("INPUT")
                 .help("Input file name")
                 .required(true)
                 .index(1),
         )
         .arg(
-            Arg::with_name("skip")
+            Arg::new("skip")
                 .help("Skip given number of packets")
                 .long("skip")
-                .takes_value(true),
+                .default_value("0"),
         )
         .get_matches();
 
@@ -94,26 +90,27 @@ fn main() -> Result<(), io::Error> {
     // add external plugins
     factory.add_builder(Box::new(ExEmptyPluginBuilder));
     let mut config = Config::default();
-    if let Some(filename) = matches.value_of("config") {
+    if let Some(filename) = matches.get_one::<String>("config") {
         load_config(&mut config, filename)?;
     }
-    let input_filename = matches.value_of("INPUT").unwrap();
+    let input_filename = matches.get_one::<String>("INPUT").unwrap();
 
-    let skip = matches.value_of("skip").unwrap_or("0");
+    let skip = matches.get_one::<String>("skip").unwrap();
+
     let skip = skip
         .parse::<u32>()
         .map_err(|_| Error::new(ErrorKind::Other, "Invalid value for 'skip' argument"))?;
     config.set("skip_index", skip);
 
     // override config options from command-line arguments
-    if let Some(jobs) = matches.value_of("jobs") {
-        let j = jobs.parse::<u32>().map_err(|_| {
-            io::Error::new(io::ErrorKind::Other, "Invalid value for 'jobs' argument")
-        })?;
+    if let Some(jobs) = matches.get_one::<String>("jobs") {
+        let j = jobs
+            .parse::<u32>()
+            .map_err(|_| Error::new(ErrorKind::Other, "Invalid value for 'jobs' argument"))?;
         config.set("num_threads", j);
     }
 
-    let registry = if let Some(plugin_names) = matches.value_of("plugins") {
+    let registry = if let Some(plugin_names) = matches.get_one::<String>("plugins") {
         debug!("Restricting plugins to: {}", plugin_names);
         let names: Vec<_> = plugin_names.split(',').collect();
         factory
