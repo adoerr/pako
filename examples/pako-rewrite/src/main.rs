@@ -67,11 +67,9 @@ struct Cli {
     format: FileFormat,
 
     /// Input file name
-    #[arg(short, long)]
     input: String,
 
     /// Output file name
-    #[arg(short, long)]
     output: String,
 }
 
