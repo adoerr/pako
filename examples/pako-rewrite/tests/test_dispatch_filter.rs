@@ -11,7 +11,7 @@ use pcap_parser::PcapCapture;
 fn packet_count(file: &Path) -> Result<u32> {
     let packets = fs::read(file)?;
 
-    // empty file -> zero packages
+    // empty file -> zero packets
     if packets.len() == 0 {
         return Ok(0);
     }
@@ -24,36 +24,31 @@ fn packet_count(file: &Path) -> Result<u32> {
         .len() as u32)
 }
 
-fn generic_test(
-    trace_input_file_s: &str,
-    trace_output_file_s: &str,
-    key_file_s: &str,
-    key_s: &str,
-    expected_packet_number: u32,
+fn command_runner(
+    input: PathBuf,
+    output: PathBuf,
+    filter_args: PathBuf,
+    filter: &str,
+    expected_count: u32,
 ) -> Result<()> {
-    let mut trace_input_file_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    trace_input_file_path.push(trace_input_file_s);
+    let mut trace_in = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    trace_in.push(input);
+    let mut trace_out = std::env::temp_dir();
+    trace_out.push(output);
+    let mut key_file = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    key_file.push(filter_args);
 
-    let mut trace_output_file_path = std::env::temp_dir();
-    trace_output_file_path.push(trace_output_file_s);
+    Command::cargo_bin(env!("CARGO_PKG_NAME"))?
+        .arg("-f")
+        .arg(format!("Dispatch:{}%k%{}", filter, key_file.display()))
+        .arg(&trace_in)
+        .arg(&trace_out)
+        .output()?;
 
-    let mut key_file_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    key_file_path.push(key_file_s);
-
-    let mut cmd = Command::cargo_bin(env!("CARGO_PKG_NAME"))?;
-    cmd.arg("-f")
-        .arg(format!("Dispatch:{}%k%{}", key_s, key_file_path.display()))
-        .arg(&trace_input_file_path)
-        .arg(&trace_output_file_path);
-
-    cmd.output()?;
-
-    let output_nb_packet = packet_count(&trace_output_file_path)?;
-
-    fs::remove_file(&trace_output_file_path)?;
-
-    assert_eq!(output_nb_packet, expected_packet_number);
-
+    let count = packet_count(&trace_out)?;
+    // remove temp file
+    fs::remove_file(&trace_out)?;
+    assert_eq!(count, expected_count);
     Ok(())
 }
 
@@ -61,10 +56,10 @@ fn generic_test(
 
 #[test]
 fn test_filter_ipv4_src_ipaddr() -> Result<()> {
-    generic_test(
-        "../assets/nmap_tcp_22_ipv4.pcap",
-        "output_src_ip_addr_ipv4",
-        "../assets/pcap-filter/ipv4_ipaddr",
+    command_runner(
+        "../assets/nmap_tcp_22_ipv4.pcap".into(),
+        "output_src_ip_addr_ipv4".into(),
+        "../assets/pcap-filter/ipv4_ipaddr".into(),
         "si",
         2,
     )
@@ -72,10 +67,10 @@ fn test_filter_ipv4_src_ipaddr() -> Result<()> {
 
 #[test]
 fn test_filter_ipv4_dst_ipaddr() -> Result<()> {
-    generic_test(
-        "../assets/nmap_tcp_22_ipv4.pcap",
-        "output_dst_ip_addr_ipv4",
-        "../assets/pcap-filter/ipv4_ipaddr",
+    command_runner(
+        "../assets/nmap_tcp_22_ipv4.pcap".into(),
+        "output_dst_ip_addr_ipv4".into(),
+        "../assets/pcap-filter/ipv4_ipaddr".into(),
         "di",
         2,
     )
@@ -83,10 +78,10 @@ fn test_filter_ipv4_dst_ipaddr() -> Result<()> {
 
 #[test]
 fn test_filter_ipv4_src_dst_ipaddr() -> Result<()> {
-    generic_test(
-        "../assets/nmap_tcp_22_ipv4.pcap",
-        "output_src_dst_ip_addr_ipv4",
-        "../assets/pcap-filter/ipv4_ipaddr",
+    command_runner(
+        "../assets/nmap_tcp_22_ipv4.pcap".into(),
+        "output_src_dst_ip_addr_ipv4".into(),
+        "../assets/pcap-filter/ipv4_ipaddr".into(),
         "sdi",
         4,
     )
@@ -94,10 +89,10 @@ fn test_filter_ipv4_src_dst_ipaddr() -> Result<()> {
 
 #[test]
 fn test_filter_ipv4_src_ipaddr_proto_dst_port() -> Result<()> {
-    generic_test(
-        "../assets/nmap_tcp_22_ipv4.pcap",
-        "output_src_ipaddr_proto_dst_port_ipv4",
-        "../assets/pcap-filter/ipv4_ipaddr_proto_port",
+    command_runner(
+        "../assets/nmap_tcp_22_ipv4.pcap".into(),
+        "output_src_ipaddr_proto_dst_port_ipv4".into(),
+        "../assets/pcap-filter/ipv4_ipaddr_proto_port".into(),
         "sipdp",
         1,
     )
@@ -105,10 +100,10 @@ fn test_filter_ipv4_src_ipaddr_proto_dst_port() -> Result<()> {
 
 #[test]
 fn test_filter_ipv4_five_tuple() -> Result<()> {
-    generic_test(
-        "../assets/nmap_tcp_22_ipv4.pcap",
-        "output_five_tuple_ipv4",
-        "../assets/pcap-filter/ipv4_five_tuple",
+    command_runner(
+        "../assets/nmap_tcp_22_ipv4.pcap".into(),
+        "output_five_tuple_ipv4".into(),
+        "../assets/pcap-filter/ipv4_five_tuple".into(),
         "sdipsdp",
         2,
     )
@@ -118,10 +113,10 @@ fn test_filter_ipv4_five_tuple() -> Result<()> {
 
 #[test]
 fn test_filter_ipv6_src_ipaddr() -> Result<()> {
-    generic_test(
-        "../assets/nmap_tcp_22_ipv6.pcap",
-        "output_src_ipaddr_ipv6.cap",
-        "../assets/pcap-filter/ipv6_ipaddr",
+    command_runner(
+        "../assets/nmap_tcp_22_ipv6.pcap".into(),
+        "output_src_ipaddr_ipv6.cap".into(),
+        "../assets/pcap-filter/ipv6_ipaddr".into(),
         "si",
         2,
     )
@@ -129,10 +124,10 @@ fn test_filter_ipv6_src_ipaddr() -> Result<()> {
 
 #[test]
 fn test_filter_ipv6_dst_ipaddr() -> Result<()> {
-    generic_test(
-        "../assets/nmap_tcp_22_ipv6.pcap",
-        "output_dst_ipaddr_ipv6.cap",
-        "../assets/pcap-filter/ipv6_ipaddr",
+    command_runner(
+        "../assets/nmap_tcp_22_ipv6.pcap".into(),
+        "output_dst_ipaddr_ipv6.cap".into(),
+        "../assets/pcap-filter/ipv6_ipaddr".into(),
         "di",
         2,
     )
@@ -140,10 +135,10 @@ fn test_filter_ipv6_dst_ipaddr() -> Result<()> {
 
 #[test]
 fn test_filter_ipv6_src_dst_ipaddr() -> Result<()> {
-    generic_test(
-        "../assets/nmap_tcp_22_ipv6.pcap",
-        "output_src_dst_ipaddr_ipv6.cap",
-        "../assets/pcap-filter/ipv6_ipaddr",
+    command_runner(
+        "../assets/nmap_tcp_22_ipv6.pcap".into(),
+        "output_src_dst_ipaddr_ipv6.cap".into(),
+        "../assets/pcap-filter/ipv6_ipaddr".into(),
         "sdi",
         4,
     )
@@ -151,10 +146,10 @@ fn test_filter_ipv6_src_dst_ipaddr() -> Result<()> {
 
 #[test]
 fn test_filter_ipv6_src_ipaddr_proto_dst_port() -> Result<()> {
-    generic_test(
-        "../assets/nmap_tcp_22_ipv6.pcap",
-        "output_src_ipaddr_proto_dst_port_ipv6",
-        "../assets/pcap-filter/ipv6_ipaddr_proto_port",
+    command_runner(
+        "../assets/nmap_tcp_22_ipv6.pcap".into(),
+        "output_src_ipaddr_proto_dst_port_ipv6".into(),
+        "../assets/pcap-filter/ipv6_ipaddr_proto_port".into(),
         "sipdp",
         1,
     )
@@ -162,10 +157,10 @@ fn test_filter_ipv6_src_ipaddr_proto_dst_port() -> Result<()> {
 
 #[test]
 fn test_filter_ipv6_five_tuple() -> Result<()> {
-    generic_test(
-        "../assets/nmap_tcp_22_ipv6.pcap",
-        "output_five_tuple_ipv6",
-        "../assets/pcap-filter/ipv6_five_tuple",
+    command_runner(
+        "../assets/nmap_tcp_22_ipv6.pcap".into(),
+        "output_five_tuple_ipv6".into(),
+        "../assets/pcap-filter/ipv6_five_tuple".into(),
         "sdipsdp",
         2,
     )
