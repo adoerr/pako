@@ -7,7 +7,7 @@ use anyhow::Result;
 use assert_cmd::Command;
 use pcap_parser::PcapCapture;
 
-// Return the number of packets in `file`
+/// Return the number of packets in `file`
 fn packet_count(file: &Path) -> Result<u32> {
     let packets = fs::read(file)?;
 
@@ -24,7 +24,9 @@ fn packet_count(file: &Path) -> Result<u32> {
         .len() as u32)
 }
 
-fn command_runner(
+/// Rewrite the `input` pcap file into `output`. Apply the given filter and
+/// assert that `expected_count` packages have been written into `output`
+fn rewrite(
     input: PathBuf,
     output: PathBuf,
     filter_args: PathBuf,
@@ -33,7 +35,7 @@ fn command_runner(
 ) -> Result<()> {
     let mut trace_in = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     trace_in.push(input);
-    let mut trace_out = std::env::temp_dir();
+    let mut trace_out = env::temp_dir();
     trace_out.push(output);
     let mut key_file = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     key_file.push(filter_args);
@@ -43,7 +45,8 @@ fn command_runner(
         .arg(format!("Dispatch:{}%k%{}", filter, key_file.display()))
         .arg(&trace_in)
         .arg(&trace_out)
-        .output()?;
+        .assert()
+        .success();
 
     let count = packet_count(&trace_out)?;
     // remove temp file
@@ -56,7 +59,7 @@ fn command_runner(
 
 #[test]
 fn test_filter_ipv4_src_ipaddr() -> Result<()> {
-    command_runner(
+    rewrite(
         "../assets/nmap_tcp_22_ipv4.pcap".into(),
         "output_src_ip_addr_ipv4".into(),
         "../assets/pcap-filter/ipv4_ipaddr".into(),
@@ -67,7 +70,7 @@ fn test_filter_ipv4_src_ipaddr() -> Result<()> {
 
 #[test]
 fn test_filter_ipv4_dst_ipaddr() -> Result<()> {
-    command_runner(
+    rewrite(
         "../assets/nmap_tcp_22_ipv4.pcap".into(),
         "output_dst_ip_addr_ipv4".into(),
         "../assets/pcap-filter/ipv4_ipaddr".into(),
@@ -78,7 +81,7 @@ fn test_filter_ipv4_dst_ipaddr() -> Result<()> {
 
 #[test]
 fn test_filter_ipv4_src_dst_ipaddr() -> Result<()> {
-    command_runner(
+    rewrite(
         "../assets/nmap_tcp_22_ipv4.pcap".into(),
         "output_src_dst_ip_addr_ipv4".into(),
         "../assets/pcap-filter/ipv4_ipaddr".into(),
@@ -89,7 +92,7 @@ fn test_filter_ipv4_src_dst_ipaddr() -> Result<()> {
 
 #[test]
 fn test_filter_ipv4_src_ipaddr_proto_dst_port() -> Result<()> {
-    command_runner(
+    rewrite(
         "../assets/nmap_tcp_22_ipv4.pcap".into(),
         "output_src_ipaddr_proto_dst_port_ipv4".into(),
         "../assets/pcap-filter/ipv4_ipaddr_proto_port".into(),
@@ -100,7 +103,7 @@ fn test_filter_ipv4_src_ipaddr_proto_dst_port() -> Result<()> {
 
 #[test]
 fn test_filter_ipv4_five_tuple() -> Result<()> {
-    command_runner(
+    rewrite(
         "../assets/nmap_tcp_22_ipv4.pcap".into(),
         "output_five_tuple_ipv4".into(),
         "../assets/pcap-filter/ipv4_five_tuple".into(),
@@ -113,7 +116,7 @@ fn test_filter_ipv4_five_tuple() -> Result<()> {
 
 #[test]
 fn test_filter_ipv6_src_ipaddr() -> Result<()> {
-    command_runner(
+    rewrite(
         "../assets/nmap_tcp_22_ipv6.pcap".into(),
         "output_src_ipaddr_ipv6.cap".into(),
         "../assets/pcap-filter/ipv6_ipaddr".into(),
@@ -124,7 +127,7 @@ fn test_filter_ipv6_src_ipaddr() -> Result<()> {
 
 #[test]
 fn test_filter_ipv6_dst_ipaddr() -> Result<()> {
-    command_runner(
+    rewrite(
         "../assets/nmap_tcp_22_ipv6.pcap".into(),
         "output_dst_ipaddr_ipv6.cap".into(),
         "../assets/pcap-filter/ipv6_ipaddr".into(),
@@ -135,7 +138,7 @@ fn test_filter_ipv6_dst_ipaddr() -> Result<()> {
 
 #[test]
 fn test_filter_ipv6_src_dst_ipaddr() -> Result<()> {
-    command_runner(
+    rewrite(
         "../assets/nmap_tcp_22_ipv6.pcap".into(),
         "output_src_dst_ipaddr_ipv6.cap".into(),
         "../assets/pcap-filter/ipv6_ipaddr".into(),
@@ -146,7 +149,7 @@ fn test_filter_ipv6_src_dst_ipaddr() -> Result<()> {
 
 #[test]
 fn test_filter_ipv6_src_ipaddr_proto_dst_port() -> Result<()> {
-    command_runner(
+    rewrite(
         "../assets/nmap_tcp_22_ipv6.pcap".into(),
         "output_src_ipaddr_proto_dst_port_ipv6".into(),
         "../assets/pcap-filter/ipv6_ipaddr_proto_port".into(),
@@ -157,7 +160,7 @@ fn test_filter_ipv6_src_ipaddr_proto_dst_port() -> Result<()> {
 
 #[test]
 fn test_filter_ipv6_five_tuple() -> Result<()> {
-    command_runner(
+    rewrite(
         "../assets/nmap_tcp_22_ipv6.pcap".into(),
         "output_five_tuple_ipv6".into(),
         "../assets/pcap-filter/ipv6_five_tuple".into(),
