@@ -10,7 +10,7 @@ edition = "2021"
 clap = { version = "4.0.26", features = ["cargo", "derive"] }
 flate2 = { version = "1.0.24", features = ["zlib"], default-features = false }
 log = { version = "0.4.17", features = ["max_level_debug", "release_max_level_warn"] }
-lz4 = { vversion = "1.23.3" }
+lz4 = { version = "1.23.3" }
 simplelog = { version="0.12.0", default-features = false }
 xz2 = { version = "0.1.7" }
 

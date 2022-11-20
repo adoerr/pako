@@ -48,7 +48,7 @@ impl Command for ExitCmd {
     }
 
     fn help(&self) -> &'static str {
-        "Exit pcap-cli"
+        "Exit pako-repl"
     }
 }
 

@@ -3,8 +3,8 @@ use std::{
     sync::Arc,
 };
 
-use libpcap_analyzer::*;
-use libpcap_tools::{PcapDataEngine, PcapEngine};
+use pako_core::*;
+use pako_tools::{PcapDataEngine, PcapEngine};
 
 use super::{Command, CommandResult, Context};
 

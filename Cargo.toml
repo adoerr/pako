@@ -1,7 +1,7 @@
 [workspace]
 members = [
   "examples/pako-analyzer",
-  #"pcap-cli",
+  "examples/pako-repl",
   "examples/pako-info",
   "examples/pako-rewrite",
   "examples/test-analyzer",

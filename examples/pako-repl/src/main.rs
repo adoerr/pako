@@ -13,7 +13,7 @@ mod context;
 use commands::CommandResult;
 
 fn main() {
-    println!("pcap-cli {}", crate_version!());
+    println!("pako-repl {}", crate_version!());
 
     // Create an Editor with the default configuration options.
     let mut repl = Editor::<()>::new().expect("could not create repl editor");
