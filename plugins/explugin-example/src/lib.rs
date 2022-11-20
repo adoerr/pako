@@ -1,6 +1,6 @@
 //! Example of pako-core plugin, in an external directory
 
-use libpcap_analyzer::{default_plugin_builder, Plugin, PLUGIN_NONE};
+use pako_core::{default_plugin_builder, Plugin, PLUGIN_NONE};
 
 /// Example plugin, without configuration
 #[derive(Default)]

@@ -14,8 +14,8 @@ use std::{
 use clap::{crate_version, Arg, Command};
 use explugin_example::ExEmptyPluginBuilder;
 use flate2::read::GzDecoder;
-use libpcap_analyzer::{plugins::PluginsFactory, *};
 use libpcap_tools::{Config, PcapDataEngine, PcapEngine};
+use pako_core::{plugins::PluginsFactory, *};
 use simplelog::{LevelFilter, SimpleLogger};
 use xz2::read::XzDecoder;
 

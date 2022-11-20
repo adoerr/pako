@@ -1,6 +1,6 @@
 use std::any::Any;
 
-use libpcap_analyzer::Plugin;
+use pako_core::Plugin;
 use serde_json::{json, Value};
 
 pub fn display_json_basicstats(any: Box<dyn Any>) {

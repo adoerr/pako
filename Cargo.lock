@@ -423,8 +423,8 @@ dependencies = [
 name = "explugin-example"
 version = "0.1.0"
 dependencies = [
- "libpcap-analyzer",
  "libpcap-tools",
+ "pako-core",
 ]
 
 [[package]]
@@ -573,34 +573,6 @@ name = "libc"
 version = "0.2.137"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fc7fcc620a3bff7cdd7a365be3376c97191aeaccc2a603e600951e452615bf89"
-
-[[package]]
-name = "libpcap-analyzer"
-version = "0.1.0"
-dependencies = [
- "base16ct",
- "base64ct",
- "crossbeam-channel",
- "fnv",
- "indexmap",
- "lazy_static",
- "libpcap-tools",
- "log",
- "multimap",
- "num_cpus",
- "ospf-parser",
- "pnet_base",
- "pnet_macros_support",
- "pnet_packet",
- "rand",
- "rand_chacha",
- "rusticata",
- "seahash",
- "serde",
- "serde_json",
- "sha1",
- "tls-parser 0.11.0",
-]
 
 [[package]]
 name = "libpcap-tools"
@@ -879,6 +851,34 @@ dependencies = [
  "nom",
  "nom-derive",
  "rusticata-macros",
+]
+
+[[package]]
+name = "pako-core"
+version = "0.1.0"
+dependencies = [
+ "base16ct",
+ "base64ct",
+ "crossbeam-channel",
+ "fnv",
+ "indexmap",
+ "lazy_static",
+ "libpcap-tools",
+ "log",
+ "multimap",
+ "num_cpus",
+ "ospf-parser",
+ "pnet_base",
+ "pnet_macros_support",
+ "pnet_packet",
+ "rand",
+ "rand_chacha",
+ "rusticata",
+ "seahash",
+ "serde",
+ "serde_json",
+ "sha1",
+ "tls-parser 0.11.0",
 ]
 
 [[package]]
@@ -1389,10 +1389,10 @@ dependencies = [
  "clap",
  "explugin-example",
  "flate2",
- "libpcap-analyzer",
  "libpcap-tools",
  "log",
  "lz4",
+ "pako-core",
  "serde_json",
  "simplelog",
  "xz2",
