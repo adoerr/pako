@@ -1,4 +1,4 @@
-use libpcap_tools::Packet;
+use pako_tools::Packet;
 use pcap_parser::data::PacketData;
 
 /// Verdict emitted by a Filter

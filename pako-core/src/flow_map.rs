@@ -4,7 +4,7 @@ use std::collections::{
 };
 
 use fnv::FnvHashMap;
-use libpcap_tools::{FiveTuple, Flow, FlowID};
+use pako_tools::{FiveTuple, Flow, FlowID};
 use rand::prelude::*;
 use rand_chacha::*;
 

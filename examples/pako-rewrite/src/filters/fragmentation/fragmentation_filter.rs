@@ -1,6 +1,6 @@
 use std::{collections::HashSet, io, net::IpAddr};
 
-use libpcap_tools::Packet;
+use pako_tools::Packet;
 use pcap_parser::data::PacketData;
 use pnet_packet::{
     ethernet::{EtherType, EtherTypes},

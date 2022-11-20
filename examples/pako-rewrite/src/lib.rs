@@ -5,8 +5,8 @@ use std::{
 };
 
 use flate2::read::GzDecoder;
-use libpcap_tools::{Config, PcapDataEngine, PcapEngine};
 use log::{error, info};
+use pako_tools::{Config, PcapDataEngine, PcapEngine};
 use xz2::read::XzDecoder;
 
 mod container;

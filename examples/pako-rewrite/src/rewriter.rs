@@ -1,7 +1,7 @@
 use std::io::Write;
 
-use libpcap_tools::{Error, Packet, ParseBlockContext, ParseContext, PcapAnalyzer};
 use log::{debug, error, info};
+use pako_tools::{Error, Packet, ParseBlockContext, ParseContext, PcapAnalyzer};
 use pcap_parser::{data::*, Block, Linktype, PcapBlockOwned};
 
 use crate::{filters::filter::*, pcap::*, pcapng::*, traits::Writer};

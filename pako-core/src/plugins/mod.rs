@@ -2,7 +2,7 @@
 
 use std::collections::HashMap;
 
-use libpcap_tools::Config;
+use pako_tools::Config;
 
 use crate::{Plugin, PluginBuilder, PluginBuilderError, PluginRegistry};
 

@@ -6,7 +6,7 @@ use std::{
     num::Wrapping,
 };
 
-use libpcap_tools::{Duration, Flow, FlowID};
+use pako_tools::{Duration, Flow, FlowID};
 use pnet_macros_support::packet::Packet as PnetPacket;
 use pnet_packet::tcp::{TcpFlags, TcpPacket};
 

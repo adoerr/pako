@@ -6,7 +6,7 @@ use std::{
 };
 
 use crossbeam_channel::{unbounded, Receiver, Sender};
-use libpcap_tools::*;
+use pako_tools::*;
 use pcap_parser::data::PacketData;
 use pnet_packet::ethernet::{EtherType, EtherTypes, EthernetPacket};
 
@@ -335,7 +335,7 @@ fn worker(mut a: Analyzer, idx: usize, r: Receiver<Job>, barrier: Arc<Barrier>) 
 mod tests {
     use std::mem;
 
-    use libpcap_tools::{Flow, Packet, ParseContext};
+    use pako_tools::{Flow, Packet, ParseContext};
 
     use super::Job;
     #[test]

@@ -1,4 +1,4 @@
-use libpcap_tools::Config;
+use pako_tools::Config;
 
 use crate::{
     default_plugin_builder,

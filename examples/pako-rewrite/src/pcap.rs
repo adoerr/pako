@@ -1,7 +1,7 @@
 use std::io::{self, Error, ErrorKind, Write};
 
-use libpcap_tools::Packet;
 use log::debug;
+use pako_tools::Packet;
 use pcap_parser::{LegacyPcapBlock, Linktype, PcapBlockOwned, ToVec};
 
 use crate::traits::Writer;

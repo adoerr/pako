@@ -1,6 +1,6 @@
 use std::{io, net::IpAddr, path::Path};
 
-use libpcap_tools::FiveTuple;
+use pako_tools::FiveTuple;
 use pcap_parser::data::PacketData;
 use pnet_packet::{
     ethernet::{EtherType, EtherTypes},

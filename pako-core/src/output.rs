@@ -1,6 +1,6 @@
 use std::{fs::File, io::Error, path::PathBuf};
 
-use libpcap_tools::Config;
+use pako_tools::Config;
 
 /// Get the base prefix of output directory (or "." if not specified)
 pub fn get_output_dir(config: &Config) -> &str {

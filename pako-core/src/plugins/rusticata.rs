@@ -1,7 +1,7 @@
 use std::{any::Any, collections::HashMap};
 
 use fnv::{FnvHashMap, FnvHashSet};
-use libpcap_tools::{Flow, FlowID, Packet};
+use pako_tools::{Flow, FlowID, Packet};
 use rusticata::prologue::*;
 use serde_json::{Map, Value};
 

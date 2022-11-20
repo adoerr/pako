@@ -5,7 +5,7 @@ use std::{any::Any, net::IpAddr};
 
 use base64ct::{Base64, Encoding};
 use indexmap::IndexMap;
-use libpcap_tools::{Config, FiveTuple, FlowID, Packet};
+use pako_tools::{Config, FiveTuple, FlowID, Packet};
 use serde_json::json;
 use sha1::{Digest, Sha1};
 

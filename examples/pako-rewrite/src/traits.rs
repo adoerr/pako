@@ -1,6 +1,6 @@
 use std::io;
 
-use libpcap_tools::Packet;
+use pako_tools::Packet;
 use pcap_parser::{Linktype, PcapBlockOwned};
 
 pub trait Writer {

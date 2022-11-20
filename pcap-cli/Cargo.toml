@@ -24,7 +24,7 @@ clap = { version = "4.0", features = ["cargo", "derive"] }
 fern = "0.6"
 lazy_static = "1.2"
 libpcap-analyzer = { version="0.1.0", path= "../pako-core" }
-libpcap-tools = { version="0.1.0", path= "../pako-tools" }
+pako-tools = { version="0.1.0", path= "../pako-tools" }
 log = { version = "0.4", features = ["max_level_trace", "release_max_level_warn"] }
 pcap-parser = "0.14"
 rustyline = "10.0"

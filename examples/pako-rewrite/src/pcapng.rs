@@ -1,6 +1,6 @@
 use std::io::{self, Error, ErrorKind, Write};
 
-use libpcap_tools::Packet;
+use pako_tools::Packet;
 use pcap_parser::{pcapng::*, Linktype, PcapBlockOwned, ToVec};
 
 use crate::traits::*;

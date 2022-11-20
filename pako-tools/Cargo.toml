@@ -1,5 +1,5 @@
 [package]
-name = "libpcap-tools"
+name = "pako-tools"
 version = "0.1.0"
 authors = ["Pierre Chifflier <chifflier@wzdftpd.net>", "Andreas Doerr <0xad@gmx.net>"]
 edition = "2021"

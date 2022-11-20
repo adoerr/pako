@@ -3,7 +3,7 @@
 use std::any::Any;
 
 use indexmap::IndexMap;
-use libpcap_tools::{Flow, FlowID};
+use pako_tools::{Flow, FlowID};
 use serde_json::{json, Value};
 
 use crate::{output, plugin::Plugin, plugin_builder, PLUGIN_FLOW_DEL, PLUGIN_FLOW_NEW};

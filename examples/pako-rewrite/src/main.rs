@@ -4,7 +4,6 @@
 use std::{fs::File, io, path::Path};
 
 use clap::{crate_version, Parser};
-use libpcap_tools::Config;
 use log::{debug, error};
 use pako_rewrite::{
     filters,
@@ -16,6 +15,7 @@ use pako_rewrite::{
     rewriter::*,
     RewriteOptions,
 };
+use pako_tools::Config;
 
 const FILTER_HELP: &str = "
 Filters to load (default: none)

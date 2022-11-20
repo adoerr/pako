@@ -1,6 +1,6 @@
 use std::any::Any;
 
-use libpcap_tools::{Config, FiveTuple, Flow, Packet, ThreeTuple};
+use pako_tools::{Config, FiveTuple, Flow, Packet, ThreeTuple};
 
 use crate::{analyzer::L3Info, packet_info::PacketInfo, plugin_registry::PluginRegistry};
 
@@ -9,7 +9,7 @@ use crate::{analyzer::L3Info, packet_info::PacketInfo, plugin_registry::PluginRe
 /// Layer n means the *payload* of layer n
 pub enum PluginResult<'a> {
     None,
-    Error(libpcap_tools::Error),
+    Error(pako_tools::Error),
     /// Layer 2: ethertype and payload
     L2(u16, &'a [u8]),
     /// Layer 3: L3 info (includes l2_proto, src, dst, and next layer proto), and payload
@@ -174,7 +174,7 @@ macro_rules! plugin_builder {
             fn build(
                 &self,
                 registry: &mut $crate::PluginRegistry,
-                config: &libpcap_tools::Config,
+                config: &pako_tools::Config,
             ) -> Result<(), $crate::PluginBuilderError> {
                 let plugin = $build_fn(config);
                 let protos = plugin.plugin_type();

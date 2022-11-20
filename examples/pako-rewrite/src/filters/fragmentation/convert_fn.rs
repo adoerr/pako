@@ -1,6 +1,6 @@
 use std::{collections::HashSet, iter::FromIterator};
 
-use libpcap_tools::FiveTuple;
+use pako_tools::FiveTuple;
 use pnet_packet::ip::IpNextHeaderProtocol;
 
 use crate::{

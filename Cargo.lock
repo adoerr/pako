@@ -423,8 +423,8 @@ dependencies = [
 name = "explugin-example"
 version = "0.1.0"
 dependencies = [
- "libpcap-tools",
  "pako-core",
+ "pako-tools",
 ]
 
 [[package]]
@@ -573,17 +573,6 @@ name = "libc"
 version = "0.2.137"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fc7fcc620a3bff7cdd7a365be3376c97191aeaccc2a603e600951e452615bf89"
-
-[[package]]
-name = "libpcap-tools"
-version = "0.1.0"
-dependencies = [
- "log",
- "pcap-parser",
- "serde",
- "thiserror",
- "toml",
-]
 
 [[package]]
 name = "libz-sys"
@@ -863,11 +852,11 @@ dependencies = [
  "fnv",
  "indexmap",
  "lazy_static",
- "libpcap-tools",
  "log",
  "multimap",
  "num_cpus",
  "ospf-parser",
+ "pako-tools",
  "pnet_base",
  "pnet_macros_support",
  "pnet_packet",
@@ -906,12 +895,23 @@ dependencies = [
  "clap",
  "csv",
  "flate2",
- "libpcap-tools",
  "log",
+ "pako-tools",
  "pcap-parser",
  "pnet_packet",
  "simplelog",
  "xz2",
+]
+
+[[package]]
+name = "pako-tools"
+version = "0.1.0"
+dependencies = [
+ "log",
+ "pcap-parser",
+ "serde",
+ "thiserror",
+ "toml",
 ]
 
 [[package]]
@@ -1389,10 +1389,10 @@ dependencies = [
  "clap",
  "explugin-example",
  "flate2",
- "libpcap-tools",
  "log",
  "lz4",
  "pako-core",
+ "pako-tools",
  "serde_json",
  "simplelog",
  "xz2",

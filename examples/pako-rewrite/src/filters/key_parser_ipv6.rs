@@ -1,6 +1,6 @@
 use std::net::IpAddr;
 
-use libpcap_tools::FiveTuple;
+use pako_tools::FiveTuple;
 use pnet_packet::{
     ip::{IpNextHeaderProtocol, IpNextHeaderProtocols},
     ipv6::Ipv6Packet,

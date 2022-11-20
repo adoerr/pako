@@ -26,7 +26,7 @@ pnet_packet = { version = "0.31.0" }
 simplelog = { version = "0.12", default-features = false }
 xz2 = { version = "0.1.7" }
 
-libpcap-tools = { version = "0.1.0", path = "../../pako-tools" }
+pako-tools = { version = "0.1.0", path = "../../pako-tools" }
 
 [dev-dependencies]
 anyhow = { version = "1.0.66" }
