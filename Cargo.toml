@@ -1,13 +1,13 @@
 [workspace]
 members = [
-  #"pcap-analyzer",
+  "examples/pako-analyzer",
   #"pcap-cli",
   "examples/pako-info",
+  "examples/pako-rewrite",
   "examples/test-analyzer",
   "pako-core",
   "pako-tools",
   "plugins/explugin-example",
-  "examples/pako-rewrite",
 ]
 
 [patch.crates-io]

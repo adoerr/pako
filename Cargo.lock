@@ -843,6 +843,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "pako-analyzer"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "log",
+ "lz4",
+ "pako-core",
+ "pako-tools",
+ "simplelog",
+ "xz2",
+]
+
+[[package]]
 name = "pako-core"
 version = "0.1.0"
 dependencies = [

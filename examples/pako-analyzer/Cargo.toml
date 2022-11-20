@@ -1,0 +1,18 @@
+[package]
+name = "pako-analyzer"
+version = "0.1.0"
+authors = ["Pierre Chifflier <chifflier@wzdftpd.net>", "Andreas Doerr <0xad@gmx.net>"]
+repository = "https://github.com/adoerr/pako.git"
+license = "MIT or Apache-2.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4.0.26", features = ["cargo", "derive"] }
+flate2 = { version = "1.0.24", features = ["zlib"], default-features = false }
+log = { version = "0.4.17", features = ["max_level_debug", "release_max_level_warn"] }
+lz4 = { vversion = "1.23.3" }
+simplelog = { version="0.12.0", default-features = false }
+xz2 = { version = "0.1.7" }
+
+pako-core = { version="0.1.0", path= "../../pako-core" }
+pako-tools = { version="0.1.0", path= "../../pako-tools" }

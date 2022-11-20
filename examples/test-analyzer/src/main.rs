@@ -48,7 +48,7 @@ fn env_get_log_level() -> LevelFilter {
 fn main() -> Result<(), io::Error> {
     let matches = Command::new("Pcap analyzer test tool")
         .version(crate_version!())
-        .about("Test tool for pcap-analyzer crate")
+        .about("Test tool for pako-analyzer crate")
         .arg(
             Arg::new("config")
                 .help("Configuration file")
