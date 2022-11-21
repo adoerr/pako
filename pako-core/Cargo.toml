@@ -6,7 +6,7 @@ edition = "2021"
 description = "pako (main library)"
 readme  = "../README.md"
 repository = "https://github.com/adoerr/pako.git"
-license  = "MIT or Apache-2.0"
+license  = "Apache-2.0 OR MIT"
 keywords = ["pcap", "network", "tools"]
 categories = ["network-programming"]
 
