@@ -176,10 +176,13 @@ impl PluginRegistry {
         layer: u8,
         layer_filter: u16,
         plugin_id: PluginID,
-    ) -> Result<(), &'static str> {
+    ) -> Result<(), PluginBuilderError> {
         if plugin_id >= self.plugins_all.len() {
-            return Err("Invalid Plugin ID");
+            return Err(PluginBuilderError::Registration(
+                "Invalid Plugin ID".to_string(),
+            ));
         }
+
         trace!(
             "registering plugin for layer={} filter=0x{:04x}",
             layer,
@@ -191,6 +194,7 @@ impl PluginRegistry {
             layer_filter,
         };
         self.plugins.insert(plugin_info, plugin.clone());
+
         Ok(())
     }
 

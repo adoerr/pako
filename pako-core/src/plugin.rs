@@ -18,15 +18,11 @@ pub enum PluginResult<'a> {
     L4(FiveTuple, &'a [u8]),
 }
 
-#[derive(Debug)]
+#[derive(Debug, thiserror::Error)]
 pub enum PluginBuilderError {
-    RegistrationFailed(&'static str),
-}
-
-impl From<&'static str> for PluginBuilderError {
-    fn from(s: &'static str) -> Self {
-        PluginBuilderError::RegistrationFailed(s)
-    }
+    /// Registration failed error
+    #[error("Plugin registration error {0:?}")]
+    Registration(String),
 }
 
 /// Plugin builder
