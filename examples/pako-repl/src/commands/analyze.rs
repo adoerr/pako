@@ -1,5 +1,5 @@
 use std::{
-    io::{Read, Seek, SeekFrom},
+    io::{Read, Seek},
     sync::Arc,
 };
 
@@ -33,7 +33,7 @@ impl Command for AnalyzeCmd {
             engine.run(input_reader).expect("running analyzer failed");
             ctx.engine = Some(engine);
         }
-        let _ = file.seek(SeekFrom::Start(0));
+        let _ = file.rewind();
         CommandResult::Ok
     }
 

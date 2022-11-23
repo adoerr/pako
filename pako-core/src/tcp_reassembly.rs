@@ -162,9 +162,9 @@ impl TcpStream {
         }
     }
 
-    pub fn handle_new_connection<'a>(
+    pub fn handle_new_connection(
         &mut self,
-        tcp: &'a TcpPacket,
+        tcp: &TcpPacket,
         to_server: bool,
         pcap_index: usize,
     ) -> Result<Option<Vec<TcpSegment>>, TcpStreamError> {
@@ -331,9 +331,9 @@ impl TcpStream {
         Ok(None)
     }
 
-    pub fn handle_established_connection<'a>(
+    pub fn handle_established_connection(
         &mut self,
-        tcp: &'a TcpPacket,
+        tcp: &TcpPacket,
         to_server: bool,
         pcap_index: usize,
     ) -> Result<Option<Vec<TcpSegment>>, TcpStreamError> {

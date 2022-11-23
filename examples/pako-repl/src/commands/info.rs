@@ -1,4 +1,4 @@
-use std::io::{Read, Seek, SeekFrom};
+use std::io::{Read, Seek};
 
 use pcap_parser::{create_reader, pcapng::Block, PcapBlockOwned};
 
@@ -29,7 +29,7 @@ impl Command for InfoCmd {
                     }
                 }
             }
-            let _ = f.seek(SeekFrom::Start(0));
+            let _ = f.rewind();
         } else {
             println!("no file loaded");
         }
