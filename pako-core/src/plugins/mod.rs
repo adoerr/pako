@@ -88,6 +88,8 @@ impl PluginsFactory {
 impl Default for PluginsFactory {
     /// Create a new plugin factory, with all default plugins
     fn default() -> Self {
+        // we need `v` to be mutable, so we can push additional plugins
+        #[allow(unused_mut)]
         let mut v: Vec<Box<dyn PluginBuilder>> = vec![
             Box::new(basic_stats::BasicStatsBuilder),
             Box::new(flows::FlowsInfoBuilder),
@@ -95,17 +97,22 @@ impl Default for PluginsFactory {
 
         #[cfg(feature = "plugin_community_id")]
         v.push(Box::new(community_id::CommunityIDBuilder));
+
         #[cfg(feature = "plugins_debug")]
         v.push(Box::new(hexdump::HexDumpBuilder));
+
         #[cfg(feature = "plugin_tls_stats")]
         v.push(Box::new(tls_stats::TlsStatsBuilder));
+
         #[cfg(feature = "plugin_rusticata")]
         v.push(Box::new(rusticata::RusticataBuilder));
+
         #[cfg(feature = "plugin_examples")]
         {
             v.push(Box::new(examples::EmptyBuilder));
             v.push(Box::new(examples::EmptyWithConfigBuilder));
         }
+
         #[cfg(feature = "plugin_ospf")]
         v.push(Box::new(ospf::OspfLogBuilder));
 

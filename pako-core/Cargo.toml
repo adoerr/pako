@@ -11,7 +11,7 @@ keywords = ["pcap", "network", "tools"]
 categories = ["network-programming"]
 
 [features]
-default = ["release"]
+default = []
 release = ["plugin_community_id", "plugin_ospf", "plugin_rusticata", "plugin_tls_stats"]
 all = ["release", "plugins_debug", "plugin_examples"]
 plugin_community_id = ["sha1", "base16ct", "base64ct"]
