@@ -1,5 +1,7 @@
 use std::{cmp::Ordering, collections::HashMap};
 
+use log::{error, warn};
+
 /// Defragmentation engine
 pub trait DefragEngine: Send + Sync {
     /// This function updates the engine with a new Fragment

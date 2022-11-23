@@ -6,6 +6,7 @@ use std::{
 };
 
 use crossbeam_channel::{unbounded, Receiver, Sender};
+use log::{debug, info, trace, warn};
 use pako_tools::*;
 use pcap_parser::data::PacketData;
 use pnet_packet::ethernet::{EtherType, EtherTypes, EthernetPacket};

@@ -2,6 +2,7 @@
 // use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 
+use log::trace;
 // use libpcap_tools::{Packet, ThreeTuple};
 use multimap::MultiMap;
 

@@ -1,6 +1,7 @@
 use std::{any::Any, collections::HashMap};
 
 use fnv::{FnvHashMap, FnvHashSet};
+use log::{debug, info, trace, warn};
 use pako_tools::{Flow, FlowID, Packet};
 use rusticata::prologue::*;
 use serde_json::{Map, Value};

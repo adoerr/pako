@@ -1,5 +1,6 @@
 use std::{any::Any, collections::HashMap};
 
+use log::debug;
 use pako_tools::{FiveTuple, Packet};
 use rusticata::{tls::*, tls_parser::TlsVersion, *};
 use serde_json::{self, json, Value};

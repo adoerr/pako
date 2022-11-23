@@ -1,7 +1,8 @@
+use log::info;
 use pako_tools::Config;
 
 use crate::{
-    default_plugin_builder,
+    build_safeplugin, default_plugin_builder,
     plugin::{Plugin, PluginBuilderError, PLUGIN_NONE},
     plugin_registry::PluginRegistry,
 };

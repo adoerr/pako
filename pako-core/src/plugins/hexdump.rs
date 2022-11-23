@@ -1,5 +1,6 @@
 //! Plugin to debug packets/flows/layers by displaying hex data
 
+use log::{debug, info};
 use pako_tools::{pcap_parser::nom::HexDisplay, Packet, ThreeTuple};
 
 use crate::{

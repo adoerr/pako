@@ -10,7 +10,7 @@ use serde_json::json;
 use sha1::{Digest, Sha1};
 
 use crate::{
-    output,
+    build_safeplugin, output,
     packet_info::PacketInfo,
     plugin::{Plugin, PluginBuilderError, PluginResult, PLUGIN_L4},
     plugin_registry::PluginRegistry,

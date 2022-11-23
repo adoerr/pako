@@ -6,6 +6,7 @@ use std::{
     num::Wrapping,
 };
 
+use log::{debug, info, trace, warn};
 use pako_tools::{Duration, Flow, FlowID};
 use pnet_macros_support::packet::Packet as PnetPacket;
 use pnet_packet::tcp::{TcpFlags, TcpPacket};
