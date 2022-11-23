@@ -19,7 +19,6 @@ mod vxlan;
 
 pub mod output;
 pub mod plugins;
-pub mod toeplitz;
 
 pub use analyzer::*;
 pub use erspan::*;
