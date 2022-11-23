@@ -1,3 +1,4 @@
+///! Support for Multiprotocol Label Switching (MPLS)
 use pnet_macros_support::types::{u1, u19be, u3};
 
 #[derive(Debug)]

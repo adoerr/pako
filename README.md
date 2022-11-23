@@ -1,6 +1,9 @@
 
 # 📦 pako - Fun with packet analysis 📦
 
+`pako` is a toolkit for building customized package introspection and analysis tools.
+<br>
+<br>
 `pako` started as a mirror of the awesome [Pcap Analysis Library](https://github.com/rusticata/pcap-analyzer).
 
 
