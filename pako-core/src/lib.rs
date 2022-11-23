@@ -1,9 +1,6 @@
 #![warn(clippy::all)]
 #![allow(clippy::upper_case_acronyms)]
 
-//#[macro_use]
-//extern crate log;
-
 mod analyzer;
 mod erspan;
 mod flow_map;

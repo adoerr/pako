@@ -18,7 +18,7 @@ pub trait DefragEngine: Send + Sync {
 pub enum Fragment<'a> {
     /// Data is not fragmented - return original slice
     NoFrag(&'a [u8]),
-    /// Data was defragmented - return buffer
+    /// Data was de-fragmented - return buffer
     Complete(Vec<u8>),
     /// Fragment is part of a (yet) unfinished buffer
     Incomplete,

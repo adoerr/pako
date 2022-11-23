@@ -21,7 +21,7 @@ use pnet_packet::{
 };
 
 use crate::{
-    erspan::ErspanPacket,
+    erspan::ERSPANPacket,
     flow_map::FlowMap,
     geneve::*,
     ip_defrag::{DefragEngine, Fragment, IPDefragEngine},
@@ -210,7 +210,7 @@ pub(crate) fn handle_l3(
 
     // see https://www.iana.org/assignments/ieee-802-numbers/ieee-802-numbers.xhtml
     match ethertype {
-        // Transparent Ethernet Bridging (RFC 1701)
+        // Transparent Ethernet Bridging / Generic Routing Encapsulation (RFC 1701)
         EtherType(0x6558) => handle_l2(packet, ctx, data, analyzer),
         EtherTypes::Ipv4 => handle_l3_ipv4(packet, ctx, data, analyzer),
         EtherTypes::Ipv6 => handle_l3_ipv6(packet, ctx, data, analyzer),
@@ -226,9 +226,11 @@ pub(crate) fn handle_l3(
         EtherTypes::PppoeSession => handle_l3_pppoesession(packet, ctx, data, analyzer),
 
         e => {
-            warn!(
-                "Unsupported ethertype {} (0x{:x}) (idx={})",
-                e, e.0, ctx.pcap_index
+            trace!(
+                "unsupported ethertype {} (0x{:x}) (idx={})",
+                e,
+                e.0,
+                ctx.pcap_index
             );
             Ok(())
         }
@@ -463,7 +465,7 @@ fn handle_l3_erspan(
     analyzer: &mut Analyzer,
 ) -> Result<(), Error> {
     trace!("handle_l3_erspan (idx={})", ctx.pcap_index);
-    let erspan = ErspanPacket::new(data).ok_or("Could not build Erspan packet from data")?;
+    let erspan = ERSPANPacket::new(data).ok_or("Could not build Erspan packet from data")?;
     trace!(
         "    erspan: VLAN id={} span ID={}",
         erspan.get_vlan(),

@@ -2,18 +2,20 @@ use pnet_macros_support::types::{u1, u10be, u12be, u3, u4};
 
 #[derive(PartialEq)]
 /// A structure enabling manipulation of on the wire packets
-pub struct ErspanPacket<'p> {
+/// Encapsulated Remote Switched Port Analyzer (ERSPAN) s a Cisco proprietary
+/// feature and is available only on specific routers and switches
+pub struct ERSPANPacket<'p> {
     packet: ::pnet_macros_support::packet::PacketData<'p>,
 }
 
-impl<'a> ErspanPacket<'a> {
+impl<'a> ERSPANPacket<'a> {
     /// Constructs a new ErspanPacket. If the provided buffer is less than the minimum required
     /// packet size, this will return None.
     #[inline]
-    pub fn new(packet: &[u8]) -> Option<ErspanPacket> {
-        if packet.len() >= ErspanPacket::minimum_packet_size() {
+    pub fn new(packet: &[u8]) -> Option<ERSPANPacket> {
+        if packet.len() >= ERSPANPacket::minimum_packet_size() {
             use ::pnet_macros_support::packet::PacketData;
-            Some(ErspanPacket {
+            Some(ERSPANPacket {
                 packet: PacketData::Borrowed(packet),
             })
         } else {
@@ -84,7 +86,7 @@ impl<'a> ErspanPacket<'a> {
         b0 | b1
     }
 }
-impl<'a> ::pnet_macros_support::packet::Packet for ErspanPacket<'a> {
+impl<'a> ::pnet_macros_support::packet::Packet for ERSPANPacket<'a> {
     #[inline]
     fn packet(&self) -> &[u8] {
         &self.packet[..]
@@ -105,11 +107,11 @@ impl<'a> ::pnet_macros_support::packet::Packet for ErspanPacket<'a> {
 mod tests {
     use pnet_macros_support::packet::Packet;
 
-    use super::ErspanPacket;
+    use super::ERSPANPacket;
     const DATA: &[u8] = b"\x10\x17\x08\x64\x00\x00\x00\x00\x12\x34";
     #[test]
     fn erspan_test() {
-        let packet = ErspanPacket::new(DATA).expect("ErspanPacket");
+        let packet = ERSPANPacket::new(DATA).expect("ErspanPacket");
         assert_eq!(packet.get_version(), 1);
         assert_eq!(packet.get_vlan(), 23);
         assert_eq!(packet.get_cos(), 0);
