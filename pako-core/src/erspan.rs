@@ -1,11 +1,16 @@
+//!
+//! Support for Encapsulated Remote Switched Port Analyzer (ERSPAN)
+//!
+
 use pnet_macros_support::types::{u1, u10be, u12be, u3, u4};
 
 #[derive(PartialEq)]
-/// A structure enabling manipulation of on the wire packets
-/// Encapsulated Remote Switched Port Analyzer (ERSPAN) s a Cisco proprietary
-/// feature and is available only on specific routers and switches
+/// ERSPAN packet support
+///
+/// ERSPAN is a Cisco proprietary feature and is available only
+/// on specific routers and switches
 pub struct ERSPANPacket<'p> {
-    packet: ::pnet_macros_support::packet::PacketData<'p>,
+    packet: pnet_macros_support::packet::PacketData<'p>,
 }
 
 impl<'a> ERSPANPacket<'a> {

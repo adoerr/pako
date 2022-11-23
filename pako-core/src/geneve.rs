@@ -1,21 +1,23 @@
-//! Generic Network Virtualization Encapsulation (GENEVE)
+//!
+//! Support for Generic Network Virtualization Encapsulation (GENEVE)
+//!
 
 use pnet_macros_support::types::{u1, u16be, u2, u24be, u5, u6};
 
 #[derive(PartialEq)]
 /// A structure enabling manipulation of on the wire packets
-pub struct GenevePacket<'p> {
+pub struct GENEVEPacket<'p> {
     packet: ::pnet_macros_support::packet::PacketData<'p>,
 }
 
-impl<'a> GenevePacket<'a> {
+impl<'a> GENEVEPacket<'a> {
     /// Constructs a new GENEVE packet. If the provided buffer is less than the minimum required
     /// packet size, this will return None.
     #[inline]
-    pub fn new(packet: &[u8]) -> Option<GenevePacket> {
-        if packet.len() >= GenevePacket::minimum_packet_size() {
+    pub fn new(packet: &[u8]) -> Option<GENEVEPacket> {
+        if packet.len() >= GENEVEPacket::minimum_packet_size() {
             use ::pnet_macros_support::packet::PacketData;
-            Some(GenevePacket {
+            Some(GENEVEPacket {
                 packet: PacketData::Borrowed(packet),
             })
         } else {
@@ -88,7 +90,7 @@ impl<'a> GenevePacket<'a> {
     #[inline]
     #[allow(trivial_numeric_casts)]
     #[cfg_attr(feature = "clippy", allow(used_underscore_binding))]
-    pub fn get_options(&self) -> Vec<GeneveOption> {
+    pub fn get_options(&self) -> Vec<GENEVEOption> {
         use pnet_packet::FromPacket;
         let buf = self.get_options_raw();
         GeneveOptionIterable { buf }
@@ -105,7 +107,7 @@ impl<'a> GenevePacket<'a> {
     }
 }
 
-impl<'a> ::pnet_macros_support::packet::Packet for GenevePacket<'a> {
+impl<'a> ::pnet_macros_support::packet::Packet for GENEVEPacket<'a> {
     #[inline]
     fn packet(&self) -> &[u8] {
         &self.packet[..]
@@ -123,14 +125,14 @@ impl<'a> ::pnet_macros_support::packet::Packet for GenevePacket<'a> {
 /// Represents the Geneve Option field.
 #[derive(Clone, Debug)]
 #[allow(unused_attributes)]
-pub struct GeneveOption {
+pub struct GENEVEOption {
     option_class: u16be,
     option_type: u8,
     length: u5,
     data: Vec<u8>,
 }
 
-impl GeneveOption {
+impl GENEVEOption {
     #[inline]
     pub fn option_class(&self) -> u16be {
         self.option_class
@@ -192,7 +194,7 @@ impl<'a> GeneveOptionPacket<'a> {
     }
 }
 
-impl<'a> ::pnet_macros_support::packet::Packet for GeneveOptionPacket<'a> {
+impl<'a> pnet_macros_support::packet::Packet for GeneveOptionPacket<'a> {
     #[inline]
     fn packet(&self) -> &[u8] {
         &self.packet[..]
@@ -207,20 +209,20 @@ impl<'a> ::pnet_macros_support::packet::Packet for GeneveOptionPacket<'a> {
     }
 }
 
-impl<'a> ::pnet_macros_support::packet::PacketSize for GeneveOptionPacket<'a> {
+impl<'a> pnet_macros_support::packet::PacketSize for GeneveOptionPacket<'a> {
     #[cfg_attr(feature = "clippy", allow(used_underscore_binding))]
     fn packet_size(&self) -> usize {
         4 + 4 * (self.get_option_length() as usize)
     }
 }
 
-impl<'p> ::pnet_macros_support::packet::FromPacket for GeneveOptionPacket<'p> {
-    type T = GeneveOption;
+impl<'p> pnet_macros_support::packet::FromPacket for GeneveOptionPacket<'p> {
+    type T = GENEVEOption;
     #[inline]
-    fn from_packet(&self) -> GeneveOption {
+    fn from_packet(&self) -> GENEVEOption {
         use pnet_macros_support::packet::Packet;
         let _self = self;
-        GeneveOption {
+        GENEVEOption {
             option_class: _self.get_option_class(),
             option_type: _self.get_option_type(),
             length: _self.get_option_length(),

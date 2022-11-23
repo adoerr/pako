@@ -1,11 +1,14 @@
-///! Support for Multiprotocol Label Switching (MPLS)
+//!
+//! Support for Multiprotocol Label Switching (MPLS)
+//!
+
 use pnet_macros_support::types::{u1, u19be, u3};
 
 #[derive(Debug)]
 #[repr(transparent)]
-pub struct MplsLabel(u32);
+pub struct MPLSLabel(u32);
 
-impl MplsLabel {
+impl MPLSLabel {
     /// Get the label value
     #[inline]
     pub fn get_label(&self) -> u19be {
@@ -35,17 +38,17 @@ impl MplsLabel {
 
 #[derive(PartialEq)]
 /// A structure enabling manipulation of on the wire packets
-pub struct MplsPacket<'p> {
+pub struct MPLSPacket<'p> {
     packet: ::pnet_macros_support::packet::PacketData<'p>,
     stack_size: usize,
 }
 
-impl<'a> MplsPacket<'a> {
+impl<'a> MPLSPacket<'a> {
     /// Constructs a new PPP packet. If the provided buffer is less than the minimum required
     /// packet size, this will return None.
     #[inline]
-    pub fn new(packet: &[u8]) -> Option<MplsPacket> {
-        if packet.len() >= MplsPacket::minimum_packet_size() {
+    pub fn new(packet: &[u8]) -> Option<MPLSPacket> {
+        if packet.len() >= MPLSPacket::minimum_packet_size() {
             let mut stack_size = 0;
             let mut ptr = packet;
             while ptr.len() >= 4 {
@@ -61,7 +64,7 @@ impl<'a> MplsPacket<'a> {
                 return None;
             }
             use ::pnet_macros_support::packet::PacketData;
-            Some(MplsPacket {
+            Some(MPLSPacket {
                 packet: PacketData::Borrowed(packet),
                 stack_size,
             })
@@ -88,18 +91,18 @@ impl<'a> MplsPacket<'a> {
     /// The size (in bytes) of the label stack.
     #[inline]
     #[cfg_attr(feature = "clippy", allow(used_underscore_binding))]
-    pub fn get_top_label(&self) -> MplsLabel {
+    pub fn get_top_label(&self) -> MPLSLabel {
         let _self = self;
         let label = (_self.packet[0] as u32) << 24
             | (_self.packet[1] as u32) << 16
             | (_self.packet[2] as u32) << 8
             | _self.packet[3] as u32;
-        MplsLabel(label)
+        MPLSLabel(label)
     }
     /// The label stack (top element is first).
     #[cfg_attr(feature = "clippy", allow(used_underscore_binding))]
-    pub fn get_label_stack(&self) -> Vec<MplsLabel> {
-        assert!(self.stack_size % 4 == 0);
+    pub fn get_label_stack(&self) -> Vec<MPLSLabel> {
+        assert_eq!(self.stack_size % 4, 0);
         let _self = self;
         let mut data = _self.packet.as_slice();
         let n = _self.stack_size / 4;
@@ -110,13 +113,13 @@ impl<'a> MplsPacket<'a> {
                 | (data[2] as u32) << 8
                 | data[3] as u32;
             data = &data[4..];
-            v.push(MplsLabel(label));
+            v.push(MPLSLabel(label));
         }
         v
     }
 }
 
-impl<'a> ::pnet_macros_support::packet::Packet for MplsPacket<'a> {
+impl<'a> pnet_macros_support::packet::Packet for MPLSPacket<'a> {
     #[inline]
     fn packet(&self) -> &[u8] {
         &self.packet[..]

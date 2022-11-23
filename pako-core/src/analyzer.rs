@@ -481,7 +481,7 @@ fn handle_l3_mpls(
     analyzer: &mut Analyzer,
 ) -> Result<(), Error> {
     trace!("handle_l2_mpls (idx={})", ctx.pcap_index);
-    let mpls = MplsPacket::new(data).ok_or("Could not build MPLS packet from data")?;
+    let mpls = MPLSPacket::new(data).ok_or("Could not build MPLS packet from data")?;
 
     let payload = mpls.payload();
     trace!("    MPLS # labels: {}", mpls.get_num_labels());
@@ -805,7 +805,7 @@ fn handle_l4_geneve(
     analyzer: &mut Analyzer,
 ) -> Result<(), Error> {
     trace!("handle_l4_geneve (idx={})", ctx.pcap_index);
-    let geneve = GenevePacket::new(l4_data).ok_or("Could not build GENEVE packet from data")?;
+    let geneve = GENEVEPacket::new(l4_data).ok_or("Could not build GENEVE packet from data")?;
     let payload = geneve.payload();
     let next_proto = geneve.get_protocol_type();
 
