@@ -6,7 +6,7 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.0.26", features = ["cargo", "derive"] }
-flate2 = { version = "1.0.24", features = ["zlib"], default-features = false }
+flate2 = { version = "1.0.25", features = ["zlib"], default-features = false }
 log = { version = "0.4.17", features = ["max_level_trace", "release_max_level_warn"] }
 lz4 = { version = "1.23.3" }
 serde_json = { version = "1.0.89" }
