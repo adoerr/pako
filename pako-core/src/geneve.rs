@@ -88,15 +88,15 @@ impl<'a> GENEVEPacket<'a> {
     pub fn get_options(&self) -> Vec<GENEVEOption> {
         use pnet_packet::FromPacket;
         let buf = self.get_options_raw();
-        GeneveOptionIterable { buf }
+        GENEVEOptionIterable { buf }
             .map(|packet| packet.from_packet())
             .collect::<Vec<_>>()
     }
 
     /// Get the value of the options field as iterator
-    pub fn get_options_iter(&self) -> GeneveOptionIterable {
+    pub fn get_options_iter(&self) -> GENEVEOptionIterable {
         let buf = self.get_options_raw();
-        GeneveOptionIterable { buf }
+        GENEVEOptionIterable { buf }
     }
 }
 
@@ -218,11 +218,11 @@ impl<'p> pnet_macros_support::packet::FromPacket for GENEVEOptionPacket<'p> {
     }
 }
 
-pub struct GeneveOptionIterable<'a> {
+pub struct GENEVEOptionIterable<'a> {
     buf: &'a [u8],
 }
 
-impl<'a> Iterator for GeneveOptionIterable<'a> {
+impl<'a> Iterator for GENEVEOptionIterable<'a> {
     type Item = GENEVEOptionPacket<'a>;
     fn next(&mut self) -> Option<GENEVEOptionPacket<'a>> {
         use std::cmp::min;
