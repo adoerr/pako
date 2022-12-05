@@ -89,7 +89,7 @@ fn main() -> io::Result<()> {
     // check if asked to list plugin builders
     if matches.contains_id("list-builders") {
         println!("pako-analyzer available plugin builders:");
-        factory.iter_builders(|name| println!("    {}", name));
+        factory.iter_builders(|name| println!("    {name}"));
         std::process::exit(0);
     }
     // load config

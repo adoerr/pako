@@ -39,7 +39,7 @@ fn main() -> Result<(), io::Error> {
 }
 
 fn display_pcap_info(name: &str, info: &PcapInfo) {
-    println!("File name: {}", name);
+    println!("File name: {name}");
 
     if name != "-" {
         let metadata = fs::metadata(name).unwrap();
@@ -49,7 +49,7 @@ fn display_pcap_info(name: &str, info: &PcapInfo) {
         FileType::Pcap => "Legacy Pcap",
         FileType::PcapNG => "Pcap-NG",
     };
-    println!("Type: {}", file_type_s);
+    println!("Type: {file_type_s}");
     println!("Version: {}.{}", info.version_major, info.version_minor);
 
     println!("{:<20}: {:x}", "SHA256", info.sha256());
@@ -97,7 +97,7 @@ fn display_pcap_info(name: &str, info: &PcapInfo) {
     );
 
     for (idx, section_info) in info.sections.iter().enumerate() {
-        println!("Section #{}", idx);
+        println!("Section #{idx}");
         display_section_info(section_info);
     }
 }
@@ -108,7 +108,7 @@ fn display_section_info(info: &SectionInfo) {
     } else {
         "Reverse"
     };
-    println!("  Byte Ordering: {}", native_s);
+    println!("  Byte Ordering: {native_s}");
 
     for (opt_code, opt_value) in &info.options {
         print!("    ");
@@ -170,24 +170,24 @@ fn pretty_print_shb_option(code: OptionCode, value: &[u8]) {
     match code {
         OptionCode::Comment => {
             let s = str::from_utf8(value).unwrap_or("<Invalid UTF-8>");
-            println!("Hardware: {}", s);
+            println!("Hardware: {s}");
         }
         OptionCode::EndOfOpt => println!("End of Options"),
         OptionCode::ShbHardware => {
             let s = str::from_utf8(value).unwrap_or("<Invalid UTF-8>");
-            println!("Hardware Description: {}", s);
+            println!("Hardware Description: {s}");
         }
         OptionCode::ShbOs => {
             let s = str::from_utf8(value).unwrap_or("<Invalid UTF-8>");
-            println!("OS Description: {}", s);
+            println!("OS Description: {s}");
         }
         OptionCode::ShbUserAppl => {
             let s = str::from_utf8(value).unwrap_or("<Invalid UTF-8>");
-            println!("User Application: {}", s);
+            println!("User Application: {s}");
         }
         OptionCode(_) => {
             let s = str::from_utf8(value).unwrap_or("<Invalid UTF-8>");
-            println!("Option {}: {}", code, s);
+            println!("Option {code}: {s}");
         }
     }
 }
@@ -196,16 +196,16 @@ fn pretty_print_idb_option(code: OptionCode, value: &[u8]) {
     match code {
         OptionCode::Comment => {
             let s = str::from_utf8(value).unwrap_or("<Invalid UTF-8>");
-            println!("Hardware: {}", s);
+            println!("Hardware: {s}");
         }
         OptionCode::EndOfOpt => println!("End of Options"),
         OptionCode(2) => {
             let s = str::from_utf8(value).unwrap_or("<Invalid UTF-8>");
-            println!("Name: {}", s);
+            println!("Name: {s}");
         }
         OptionCode(3) => {
             let s = str::from_utf8(value).unwrap_or("<Invalid UTF-8>");
-            println!("if_description: {}", s);
+            println!("if_description: {s}");
         }
         OptionCode(4) => {
             if value.len() == 8 {
@@ -213,9 +213,9 @@ fn pretty_print_idb_option(code: OptionCode, value: &[u8]) {
                 let mask_bytes: [u8; 4] = (&value[4..8]).try_into().unwrap();
                 let ipv4 = Ipv4Addr::from(ipv4_bytes);
                 let mask = Ipv4Addr::from(mask_bytes);
-                println!("if_IPv4addr: {} / {}", ipv4, mask);
+                println!("if_IPv4addr: {ipv4} / {mask}");
             } else {
-                eprintln!("INVALID if_IPv4addr: {:x?}", value);
+                eprintln!("INVALID if_IPv4addr: {value:x?}");
             }
         }
         OptionCode(5) => {
@@ -225,7 +225,7 @@ fn pretty_print_idb_option(code: OptionCode, value: &[u8]) {
                 let ipv6 = Ipv6Addr::from(ipv6_bytes);
                 println!("if_IPv6addr: {} / {}", ipv6, rest[0]);
             } else {
-                eprintln!("INVALID if_IPv4addr: {:x?}", value);
+                eprintln!("INVALID if_IPv4addr: {value:x?}");
             }
         }
         OptionCode(8) => {
@@ -233,7 +233,7 @@ fn pretty_print_idb_option(code: OptionCode, value: &[u8]) {
                 let int_bytes: [u8; 8] = value.try_into().unwrap();
                 println!("if_speed: {}", u64::from_le_bytes(int_bytes));
             } else {
-                eprintln!("INVALID if_speed: {:x?}", value);
+                eprintln!("INVALID if_speed: {value:x?}");
             }
         }
         OptionCode::IfTsresol => {
@@ -245,15 +245,15 @@ fn pretty_print_idb_option(code: OptionCode, value: &[u8]) {
         }
         OptionCode(11) => {
             let s = str::from_utf8(value).unwrap_or("<Invalid UTF-8>");
-            println!("Filter string: {}", s);
+            println!("Filter string: {s}");
         }
         OptionCode(12) => {
             let s = str::from_utf8(value).unwrap_or("<Invalid UTF-8>");
-            println!("Operating System: {}", s);
+            println!("Operating System: {s}");
         }
         OptionCode(_) => {
             let s = str::from_utf8(value).unwrap_or("<Invalid UTF-8>");
-            println!("Option {}: {}", code, s);
+            println!("Option {code}: {s}");
         }
     }
 }

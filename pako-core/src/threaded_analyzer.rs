@@ -54,7 +54,7 @@ impl<'a> ThreadedAnalyzer<'a> {
         let mut workers = Vec::new();
         let mut local_jobs = Vec::new();
         for idx in 0..n_workers {
-            let n = format!("worker {}", idx);
+            let n = format!("worker {idx}");
             let a = Analyzer::new(registry.clone(), config);
             let (sender, receiver) = unbounded();
             // NOTE: remove job queue from lifetime management, it must be made 'static

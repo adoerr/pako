@@ -40,7 +40,7 @@ impl Command for EngineCmd {
                         if let Some(res) = res {
                             if let Ok(v) = res.downcast::<serde_json::Value>() {
                                 //
-                                println!("{}", v);
+                                println!("{v}");
                             } else {
                                 println!();
                                 eprintln!("value is not a known result type");
