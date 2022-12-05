@@ -84,7 +84,7 @@ impl<Container, Key> FragmentationFilter<Container, Key> {
                 match ether_type {
                     EtherTypes::Ipv4 => (fragmentation_test::is_ipv4_first_fragment)(data)?,
                     EtherTypes::Ipv6 => (fragmentation_test::is_ipv6_first_fragment)(data)?,
-                    _ => return Err(format!("{} is not implmented", ether_type)),
+                    _ => return Err(format!("{ether_type} is not implmented")),
                 }
             }
             PacketData::L4(_, _) => unimplemented!(),

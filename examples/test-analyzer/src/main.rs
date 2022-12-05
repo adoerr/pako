@@ -39,7 +39,7 @@ fn env_get_log_level() -> LevelFilter {
             "info" => LevelFilter::Info,
             "debug" => LevelFilter::Debug,
             "trace" => LevelFilter::Trace,
-            _ => panic!("Invalid log level '{}'", key),
+            _ => panic!("Invalid log level '{key}'"),
         },
         _ => LevelFilter::Debug,
     }

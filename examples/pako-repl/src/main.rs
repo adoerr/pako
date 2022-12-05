@@ -61,7 +61,7 @@ fn main() {
                 CommandResult::Ok => (),
                 CommandResult::Error { errmsg, fatal } => {
                     if let Some(e) = errmsg {
-                        eprintln!("{}", e);
+                        eprintln!("{e}");
                     }
                     if fatal {
                         std::process::exit(-1);
@@ -90,7 +90,7 @@ fn main() {
                     CommandResult::Ok => (),
                     CommandResult::Error { errmsg, fatal } => {
                         if let Some(e) = errmsg {
-                            eprintln!("{}", e);
+                            eprintln!("{e}");
                         }
                         if fatal {
                             break;
@@ -111,7 +111,7 @@ fn main() {
                 break;
             }
             Err(err) => {
-                eprintln!("Error: {:?}", err);
+                eprintln!("Error: {err:?}");
                 break;
             }
         }

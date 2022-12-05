@@ -155,7 +155,7 @@ impl PcapAnalyzer for Rewriter {
             Ok(Verdict::Drop) => {
                 return Ok(());
             }
-            Err(e) => panic!("Filter fatal error: {}", e),
+            Err(e) => panic!("Filter fatal error: {e}"),
         };
         // convert data
         let data = convert_layer(&data, self.output_layer).map_err(Error::Generic)?;
@@ -192,8 +192,7 @@ impl PcapAnalyzer for Rewriter {
             for filter in self.filters.iter_mut() {
                 if let Err(e) = filter.preanalysis_done() {
                     panic!(
-                        "Pre-analysis filter returned fatal error in post preanalysis function {}",
-                        e
+                        "Pre-analysis filter returned fatal error in post preanalysis function {e}"
                     );
                 }
             }

@@ -12,7 +12,7 @@ impl Command for BuildersCmd {
         match args[1] {
             "list" => {
                 println!("Available plugin builders:");
-                ctx.factory.iter_builders(|name| println!("  {}", name));
+                ctx.factory.iter_builders(|name| println!("  {name}"));
                 CommandResult::Ok
             }
             _ => CommandResult::Error {

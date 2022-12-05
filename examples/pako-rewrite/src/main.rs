@@ -99,7 +99,7 @@ fn main() -> io::Result<()> {
     };
 
     for name in &filter_names {
-        eprintln!("adding filter: {}", name);
+        eprintln!("adding filter: {name}");
         let args: Vec<_> = name.splitn(2, ':').collect();
         match args[0] {
             "IP" => {
