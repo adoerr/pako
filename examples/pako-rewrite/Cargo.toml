@@ -29,5 +29,5 @@ xz2 = { version = "0.1.7" }
 pako-tools = { version = "0.1.0", path = "../../pako-tools" }
 
 [dev-dependencies]
-anyhow = { version = "1.0.66" }
+anyhow = { version = "1.0.68" }
 assert_cmd = { version = "2.0" }
