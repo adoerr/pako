@@ -14,5 +14,5 @@ simplelog = { version = "0.12.0", default-features = false }
 xz2 = { version = "0.1.7" }
 
 explugin-example = { path = "../../plugins/explugin-example" }
-pako-tools = { path = "../../pako-tools" }
+pako-tools = { version = "0.1.2" }
 pako-core = { path = "../../pako-core" }

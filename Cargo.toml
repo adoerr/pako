@@ -1,8 +1,8 @@
 [workspace]
 members = [
   "examples/pako-analyzer",
-  "examples/pako-repl",
   "examples/pako-info",
+  "examples/pako-repl",
   "examples/pako-rewrite",
   "examples/test-analyzer",
   "pako-core",
@@ -11,5 +11,5 @@ members = [
 ]
 
 [patch.crates-io]
-# pcap-parser = { git="https://github.com/rusticata/pcap-parser" }
-# pcap-parser = { path="../pcap-parser" }
+pako-tools = { git = "https://github.com/adoerr/pako" }
+

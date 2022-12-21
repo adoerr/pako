@@ -11,7 +11,7 @@ clap = { version = "4.0.29", features = ["cargo", "derive"] }
 fern = { version = "0.6.1" }
 lazy_static = { version = "1.2.0" }
 pako-core = { version = "0.1.0", path= "../../pako-core" }
-pako-tools = { version = "0.1.0", path= "../../pako-tools" }
+pako-tools = { version = "0.1.2" }
 log = { version = "0.4.17", features = ["max_level_trace", "release_max_level_warn"] }
 pcap-parser = { version = "0.14.0" }
 rustyline = { version = "10.0.0" }

@@ -6,5 +6,5 @@ authors = ["Pierre Chifflier <chifflier@wzdftpd.net>", "Andreas Doerr <0xad@gmx.
 edition = "2021"
 
 [dependencies]
-pako-tools = { path = "../../pako-tools" }
+pako-tools = { version = "0.1.2" }
 pako-core = { path = "../../pako-core" }

@@ -482,7 +482,7 @@ name = "explugin-example"
 version = "0.1.0"
 dependencies = [
  "pako-core",
- "pako-tools",
+ "pako-tools 0.1.2 (git+https://github.com/adoerr/pako)",
 ]
 
 [[package]]
@@ -977,14 +977,14 @@ dependencies = [
  "log",
  "lz4",
  "pako-core",
- "pako-tools",
+ "pako-tools 0.1.2 (git+https://github.com/adoerr/pako)",
  "simplelog",
  "xz2",
 ]
 
 [[package]]
 name = "pako-core"
-version = "0.1.0"
+version = "0.1.2"
 dependencies = [
  "base16ct",
  "base64ct",
@@ -996,7 +996,7 @@ dependencies = [
  "multimap",
  "num_cpus",
  "ospf-parser",
- "pako-tools",
+ "pako-tools 0.1.2 (git+https://github.com/adoerr/pako)",
  "pnet_base",
  "pnet_macros_support",
  "pnet_packet",
@@ -1036,7 +1036,7 @@ dependencies = [
  "lazy_static",
  "log",
  "pako-core",
- "pako-tools",
+ "pako-tools 0.1.2 (git+https://github.com/adoerr/pako)",
  "pcap-parser",
  "rustyline",
  "serde_json",
@@ -1053,7 +1053,7 @@ dependencies = [
  "csv",
  "flate2",
  "log",
- "pako-tools",
+ "pako-tools 0.1.2 (git+https://github.com/adoerr/pako)",
  "pcap-parser",
  "pnet_packet",
  "simplelog",
@@ -1062,7 +1062,19 @@ dependencies = [
 
 [[package]]
 name = "pako-tools"
-version = "0.1.1"
+version = "0.1.2"
+dependencies = [
+ "log",
+ "pcap-parser",
+ "serde",
+ "thiserror",
+ "toml",
+]
+
+[[package]]
+name = "pako-tools"
+version = "0.1.2"
+source = "git+https://github.com/adoerr/pako#aca262337dc5a0822382ead750b4d093282f8f0b"
 dependencies = [
  "log",
  "pcap-parser",
@@ -1634,7 +1646,7 @@ dependencies = [
  "log",
  "lz4",
  "pako-core",
- "pako-tools",
+ "pako-tools 0.1.2 (git+https://github.com/adoerr/pako)",
  "serde_json",
  "simplelog",
  "xz2",
