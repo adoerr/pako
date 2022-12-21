@@ -1,6 +1,6 @@
 [package]
 name = "pako-tools"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Pierre Chifflier <chifflier@wzdftpd.net>", "Andreas Doerr <0xad@gmx.net>"]
 edition = "2021"
 description = "Library for creating of Pcap file analyzers"
