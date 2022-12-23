@@ -5,7 +5,7 @@ authors = ["Pierre Chifflier <chifflier@wzdftpd.net>", "Andreas Doerr <0xad@gmx.
 edition = "2021"
 
 [dependencies]
-clap = { version = "4.0.29", features = ["cargo", "derive"] }
+clap = { version = "4.0.32", features = ["cargo", "derive"] }
 flate2 = { version = "1.0.25", features = ["zlib"], default-features = false }
 log = { version = "0.4.17", features = ["max_level_trace", "release_max_level_warn"] }
 lz4 = { version = "1.23.3" }
