@@ -18,7 +18,7 @@ doc = false
 
 [dependencies]
 blake2 = { version = "0.10.6" }
-clap = { version = "4.0.32", features = ["cargo", "derive"] }
+clap = { version = "4.1.1", features = ["cargo", "derive"] }
 digest = { version = "0.10.6" }
 flate2 = { version = "1.0", features = ["zlib"], default-features = false }
 pcap-parser = { version = "0.14.0", features = ["data", "serialize"] }
