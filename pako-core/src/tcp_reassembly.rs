@@ -13,9 +13,10 @@ use pnet_packet::tcp::{TcpFlags, TcpPacket};
 
 const EARLY_DETECT_OVERLAP: bool = false;
 
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug, Default, Eq, PartialEq)]
 #[allow(dead_code)]
 pub enum TcpStatus {
+    #[default]
     Closed = 0,
     Listen,
     SynSent,
@@ -27,12 +28,6 @@ pub enum TcpStatus {
     FinWait2,
     LastAck,
     TimeWait,
-}
-
-impl Default for TcpStatus {
-    fn default() -> Self {
-        TcpStatus::Closed
-    }
 }
 
 #[derive(Debug)]
