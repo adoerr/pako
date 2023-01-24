@@ -7,7 +7,7 @@ license = "MIT or Apache-2.0"
 edition = "2021"
 
 [dependencies]
-clap = { version = "4.1.1", features = ["cargo", "derive"] }
+clap = { version = "4.1.3", features = ["cargo", "derive"] }
 flate2 = { version = "1.0.25", features = ["zlib"], default-features = false }
 log = { version = "0.4.17", features = ["max_level_debug", "release_max_level_warn"] }
 lz4 = { version = "1.23.3" }
