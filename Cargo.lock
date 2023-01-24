@@ -344,8 +344,8 @@ dependencies = [
 name = "explugin-example"
 version = "0.1.0"
 dependencies = [
- "pako-core",
- "pako-tools 0.1.2 (git+https://github.com/adoerr/pako)",
+ "pako-core 0.1.3-dev",
+ "pako-tools 0.1.2",
 ]
 
 [[package]]
@@ -722,8 +722,8 @@ dependencies = [
  "flate2",
  "log",
  "lz4",
- "pako-core",
- "pako-tools 0.1.2 (git+https://github.com/adoerr/pako)",
+ "pako-core 0.1.2",
+ "pako-tools 0.1.2",
  "simplelog",
  "xz2",
 ]
@@ -731,6 +731,31 @@ dependencies = [
 [[package]]
 name = "pako-core"
 version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cbaf211cd2574e71e8263a48dc01589bdcd85373ef2580e75b3662467225bc95"
+dependencies = [
+ "crossbeam-channel",
+ "fnv",
+ "indexmap",
+ "lazy_static",
+ "log",
+ "multimap",
+ "num_cpus",
+ "pako-tools 0.1.2",
+ "pnet_base",
+ "pnet_macros_support",
+ "pnet_packet",
+ "rand",
+ "rand_chacha",
+ "seahash",
+ "serde",
+ "serde_json",
+ "thiserror",
+]
+
+[[package]]
+name = "pako-core"
+version = "0.1.3-dev"
 dependencies = [
  "base16ct",
  "base64ct",
@@ -742,7 +767,7 @@ dependencies = [
  "multimap",
  "num_cpus",
  "ospf-parser",
- "pako-tools 0.1.2 (git+https://github.com/adoerr/pako)",
+ "pako-tools 0.1.2",
  "pnet_base",
  "pnet_macros_support",
  "pnet_packet",
@@ -780,8 +805,8 @@ dependencies = [
  "fern",
  "lazy_static",
  "log",
- "pako-core",
- "pako-tools 0.1.2 (git+https://github.com/adoerr/pako)",
+ "pako-core 0.1.2",
+ "pako-tools 0.1.2",
  "pcap-parser",
  "rustyline",
  "serde_json",
@@ -798,22 +823,11 @@ dependencies = [
  "csv",
  "flate2",
  "log",
- "pako-tools 0.1.2 (git+https://github.com/adoerr/pako)",
+ "pako-tools 0.1.2",
  "pcap-parser",
  "pnet_packet",
  "simplelog",
  "xz2",
-]
-
-[[package]]
-name = "pako-tools"
-version = "0.1.2"
-dependencies = [
- "log",
- "pcap-parser",
- "serde",
- "thiserror",
- "toml 0.6.0",
 ]
 
 [[package]]
@@ -826,6 +840,17 @@ dependencies = [
  "serde",
  "thiserror",
  "toml 0.5.11",
+]
+
+[[package]]
+name = "pako-tools"
+version = "0.1.3-dev"
+dependencies = [
+ "log",
+ "pcap-parser",
+ "serde",
+ "thiserror",
+ "toml 0.6.0",
 ]
 
 [[package]]
@@ -1313,8 +1338,8 @@ dependencies = [
  "flate2",
  "log",
  "lz4",
- "pako-core",
- "pako-tools 0.1.2 (git+https://github.com/adoerr/pako)",
+ "pako-core 0.1.3-dev",
+ "pako-tools 0.1.2",
  "serde_json",
  "simplelog",
  "xz2",

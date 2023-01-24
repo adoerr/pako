@@ -1,6 +1,6 @@
 [package]
 name = "pako-core"
-version = "0.1.2"
+version = "0.1.3-dev"
 authors = ["Pierre Chifflier <chifflier@wzdftpd.net>", "Andreas Doerr <0xad@gmx.net>"]
 edition = "2021"
 description = "pako (main library)"
