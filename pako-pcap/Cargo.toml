@@ -1,0 +1,13 @@
+[package]
+name = "pako-pcap"
+version = "0.1.3-dev"
+authors = ["Andreas Doerr <0xad@gmx.net>"]
+edition = "2021"
+description = "pako PCAPNG file format parser"
+readme  = "../README.md"
+repository = "https://github.com/adoerr/pako.git"
+license  = "Apache-2.0 OR MIT"
+keywords = ["pcap", "pcapng", "network", "tools"]
+categories = ["network-programming"]
+
+[dependencies]

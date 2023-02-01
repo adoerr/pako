@@ -6,6 +6,7 @@ members = [
   "examples/pako-rewrite",
   "examples/test-analyzer",
   "pako-core",
+  "pako-pcap",
   "pako-tools",
   "plugins/explugin-example",
 ]
