@@ -20,3 +20,6 @@
 
 # Ignore API key files
 **/*.key
+
+#Ignore MacOs stuff
+**/.DS_store
