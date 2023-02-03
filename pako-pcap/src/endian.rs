@@ -11,3 +11,6 @@ pub enum LittleEndian {}
 /// System native endianness
 #[cfg(target_endian = "little")]
 pub type NativeEndian = LittleEndian;
+
+/// Network byte order
+pub type NetworkEndian = BigEndian;
