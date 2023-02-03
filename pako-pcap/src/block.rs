@@ -1,5 +1,7 @@
 #![allow(dead_code)]
 
+use nom::{bytes::complete::take, error::ParseError, number::complete::be_u32, IResult};
+
 // The writing application writes `0x1A2B3C4D` with it's native byte ordering
 // format into the byte order magic field. The reading application will read
 // either `0x1A2B3C4D` (identical) or `0x4D3C2B1A` (swapped). If the reading
@@ -28,4 +30,38 @@ pub struct SectionHeader<'a> {
     pub section_length: i64,
     pub options: &'a [u8],
     pub total_length_dup: u32,
+}
+
+pub fn section_header<'a, E>(input: &'a [u8]) -> IResult<&'a [u8], u32, E>
+where
+    E: ParseError<&'a [u8]>,
+{
+    let (input, _) = take(8usize)(input)?;
+    let (input, byte_order) = be_u32(input)?;
+
+    Ok((input, byte_order))
+}
+
+#[cfg(test)]
+mod tests {
+    use anyhow::Result;
+    use nom::error::VerboseError;
+
+    use crate::block::{section_header, BYTE_ORDER_MAGIC};
+
+    #[test]
+    fn byte_order_be_works() -> Result<()> {
+        let pcap = include_bytes!("../assets/test002_be.pcapng");
+        let (_, byte_order) = section_header::<VerboseError<&[u8]>>(pcap)?;
+        assert_eq!(BYTE_ORDER_MAGIC, byte_order);
+        Ok(())
+    }
+
+    #[test]
+    fn byte_order_le_fails() -> Result<()> {
+        let pcap = include_bytes!("../assets/test002_le.pcapng");
+        let (_, byte_order) = section_header::<VerboseError<&[u8]>>(pcap)?;
+        assert_ne!(BYTE_ORDER_MAGIC, byte_order);
+        Ok(())
+    }
 }

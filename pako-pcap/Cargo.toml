@@ -11,3 +11,5 @@ keywords = ["pcap", "pcapng", "network", "tools"]
 categories = ["network-programming"]
 
 [dependencies]
+anyhow = { version = "1.0.68" }
+nom = { version = "7.1.3" }
