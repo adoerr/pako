@@ -1,6 +1,10 @@
 #![allow(dead_code)]
 
-use nom::{bytes::complete::take, error::ParseError, number::complete::be_u32, IResult};
+use nom::{
+    error::ParseError,
+    number::complete::{be_i64, be_u16, be_u32},
+    IResult,
+};
 
 // The writing application writes `0x1A2B3C4D` with it's native byte ordering
 // format into the byte order magic field. The reading application will read
@@ -28,18 +32,34 @@ pub struct SectionHeader<'a> {
     pub major: u16,
     pub minor: u16,
     pub section_length: i64,
-    pub options: &'a [u8],
+    pub options: Option<&'a [u8]>,
     pub total_length_dup: u32,
 }
 
-pub fn section_header<'a, E>(input: &'a [u8]) -> IResult<&'a [u8], u32, E>
+pub fn section_header<'a, E>(input: &'a [u8]) -> IResult<&'a [u8], SectionHeader, E>
 where
     E: ParseError<&'a [u8]>,
 {
-    let (input, _) = take(8usize)(input)?;
+    let (input, _) = be_u32(input)?;
+    let (input, total_length) = be_u32(input)?;
     let (input, byte_order) = be_u32(input)?;
+    let (input, major) = be_u16(input)?;
+    let (input, minor) = be_u16(input)?;
+    let (input, section_length) = be_i64(input)?;
 
-    Ok((input, byte_order))
+    Ok((
+        input,
+        SectionHeader {
+            block_type: BlockType::SectionHeader,
+            total_length,
+            byte_order,
+            major,
+            minor,
+            section_length,
+            options: None,
+            total_length_dup: total_length,
+        },
+    ))
 }
 
 #[cfg(test)]
@@ -52,16 +72,16 @@ mod tests {
     #[test]
     fn byte_order_be_works() -> Result<()> {
         let pcap = include_bytes!("../assets/test002_be.pcapng");
-        let (_, byte_order) = section_header::<VerboseError<&[u8]>>(pcap)?;
-        assert_eq!(BYTE_ORDER_MAGIC, byte_order);
+        let (_, shb) = section_header::<VerboseError<&[u8]>>(pcap)?;
+        assert_eq!(BYTE_ORDER_MAGIC, shb.byte_order);
         Ok(())
     }
 
     #[test]
     fn byte_order_le_fails() -> Result<()> {
         let pcap = include_bytes!("../assets/test002_le.pcapng");
-        let (_, byte_order) = section_header::<VerboseError<&[u8]>>(pcap)?;
-        assert_ne!(BYTE_ORDER_MAGIC, byte_order);
+        let (_, shb) = section_header::<VerboseError<&[u8]>>(pcap)?;
+        assert_ne!(BYTE_ORDER_MAGIC, shb.byte_order);
         Ok(())
     }
 }
