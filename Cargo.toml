@@ -12,5 +12,6 @@ members = [
 ]
 
 [patch.crates-io]
+pako-core = { git = "https://github.com/adoerr/pako"}
 pako-tools = { git = "https://github.com/adoerr/pako" }
 
