@@ -1,12 +1,14 @@
 #![warn(clippy::all)]
 
+use std::{fs::File, io, path::PathBuf, sync::Arc};
+
 use anyhow::Result;
 use clap::{command, Parser, Subcommand};
 use pako_core::{
-    plugins::PluginsFactory, Plugin, PLUGIN_FLOW_DEL, PLUGIN_FLOW_NEW, PLUGIN_L2, PLUGIN_L3,
-    PLUGIN_L4,
+    plugins::PluginsFactory, Analyzer, Plugin, PLUGIN_FLOW_DEL, PLUGIN_FLOW_NEW, PLUGIN_L2,
+    PLUGIN_L3, PLUGIN_L4,
 };
-use pako_tools::Config;
+use pako_tools::{Config, PcapDataEngine, PcapEngine};
 
 #[derive(Parser, Debug)]
 #[command(version, about = "Pako Demo Analyzer")]
@@ -21,6 +23,11 @@ enum Commands {
     Builders,
     /// List available plugins
     Plugins,
+    /// Analyze the given Pcap file
+    Analyze {
+        /// Pcap input file
+        file: PathBuf,
+    },
 }
 
 fn main() -> Result<()> {
@@ -64,6 +71,12 @@ fn main() -> Result<()> {
         }
         Commands::Plugins => {
             registry.run_plugins(|_| true, plugins);
+        }
+        Commands::Analyze { file } => {
+            let analyzer = Analyzer::new(Arc::new(registry), &Config::default());
+            let mut engine = PcapDataEngine::new(analyzer, &Config::default());
+            let mut input = Box::new(File::open(file)?) as Box<dyn io::Read>;
+            engine.run(&mut input)?;
         }
     }
 
