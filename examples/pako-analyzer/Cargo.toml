@@ -7,12 +7,12 @@ license = "MIT or Apache-2.0"
 edition = "2021"
 
 [dependencies]
+anyhow = "1.0.68"
 clap = { version = "4.1.4", features = ["cargo", "derive"] }
+env_logger = "0.10.0"
 flate2 = { version = "1.0.25", features = ["zlib"], default-features = false }
 log = { version = "0.4.17", features = ["max_level_debug", "release_max_level_warn"] }
 lz4 = { version = "1.23.3" }
-simplelog = { version="0.12.0", default-features = false }
+pako-core = { version = "0.1.2" }
+pako-tools = { version = "0.1.2" }
 xz2 = { version = "0.1.7" }
-
-pako-core = { version="0.1.2" }
-pako-tools = { version="0.1.2" }

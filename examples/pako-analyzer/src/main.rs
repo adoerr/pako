@@ -5,9 +5,11 @@ use std::{
     io,
     io::{Error, ErrorKind},
     path::{Path, PathBuf},
+    process,
     sync::Arc,
 };
 
+use anyhow::Result;
 use clap::{crate_version, Arg, Command};
 use flate2::read::GzDecoder;
 use log::{debug, info, warn};
@@ -18,14 +20,16 @@ use pako_core::{
 use pako_tools::{Config, PcapDataEngine, PcapEngine};
 use xz2::read::XzDecoder;
 
-fn load_config(config: &mut Config, filename: &str) -> Result<(), io::Error> {
+fn load_config(config: &mut Config, filename: &str) -> Result<(), Error> {
     debug!("Loading configuration {}", filename);
     let path = Path::new(&filename);
     let file = File::open(path)?;
     config.load_config(file)
 }
 
-fn main() -> io::Result<()> {
+fn main() -> Result<()> {
+    env_logger::try_init()?;
+
     let matches = Command::new("Pcap analyzer")
         .version(crate_version!())
         .about("Pcap file analysis tool")
@@ -90,7 +94,7 @@ fn main() -> io::Result<()> {
     if matches.contains_id("list-builders") {
         println!("pako-analyzer available plugin builders:");
         factory.iter_builders(|name| println!("    {name}"));
-        std::process::exit(0);
+        process::exit(0);
     }
     // load config
     let mut config = Config::default();
@@ -124,18 +128,11 @@ fn main() -> io::Result<()> {
         path_log.push(dir);
     }
     path_log.push(log_file);
-    let f = OpenOptions::new()
+    OpenOptions::new()
         .append(true)
         .create(true)
         .open(&path_log)
         .unwrap();
-
-    // let _ = simplelog::SimpleLogger::init(simplelog::LevelFilter::Info, simplelog::Config::default());
-    let _ = simplelog::WriteLogger::init(
-        simplelog::LevelFilter::Info,
-        simplelog::Config::default(),
-        f,
-    );
 
     // Now, really start
     info!("Pcap analyser {}", crate_version!());
@@ -160,7 +157,7 @@ fn main() -> io::Result<()> {
     };
     // check if asked to list plugins
     if matches.contains_id("list-plugins") {
-        println!("pako-analyzer instanciated plugins:");
+        println!("pako-analyzer plugin instances:");
         registry.run_plugins(
             |_| true,
             |p| {
@@ -187,7 +184,7 @@ fn main() -> io::Result<()> {
                 println!();
             },
         );
-        ::std::process::exit(0);
+        process::exit(0);
     }
     if registry.num_plugins() == 0 {
         warn!("No plugins loaded");
