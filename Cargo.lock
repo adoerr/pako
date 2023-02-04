@@ -762,9 +762,9 @@ dependencies = [
  "multimap",
  "num_cpus",
  "pako-tools 0.1.2",
- "pnet_base",
- "pnet_macros_support",
- "pnet_packet",
+ "pnet_base 0.31.0",
+ "pnet_macros_support 0.31.0",
+ "pnet_packet 0.31.0",
  "rand",
  "rand_chacha",
  "seahash",
@@ -788,9 +788,9 @@ dependencies = [
  "num_cpus",
  "ospf-parser",
  "pako-tools 0.1.2",
- "pnet_base",
- "pnet_macros_support",
- "pnet_packet",
+ "pnet_base 0.33.0",
+ "pnet_macros_support 0.33.0",
+ "pnet_packet 0.33.0",
  "rand",
  "rand_chacha",
  "seahash",
@@ -854,7 +854,7 @@ dependencies = [
  "log",
  "pako-tools 0.1.2",
  "pcap-parser",
- "pnet_packet",
+ "pnet_packet 0.33.0",
  "simplelog",
  "xz2",
 ]
@@ -949,10 +949,31 @@ dependencies = [
 ]
 
 [[package]]
+name = "pnet_base"
+version = "0.33.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "872e46346144ebf35219ccaa64b1dffacd9c6f188cd7d012bd6977a2a838f42e"
+dependencies = [
+ "no-std-net",
+]
+
+[[package]]
 name = "pnet_macros"
 version = "0.31.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "48dd52a5211fac27e7acb14cfc9f30ae16ae0e956b7b779c8214c74559cef4c3"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "regex",
+ "syn",
+]
+
+[[package]]
+name = "pnet_macros"
+version = "0.33.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2a780e80005c2e463ec25a6e9f928630049a10b43945fea83207207d4a7606f4"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -966,7 +987,16 @@ version = "0.31.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "89de095dc7739349559913aed1ef6a11e73ceade4897dadc77c5e09de6740750"
 dependencies = [
- "pnet_base",
+ "pnet_base 0.31.0",
+]
+
+[[package]]
+name = "pnet_macros_support"
+version = "0.33.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e6d932134f32efd7834eb8b16d42418dac87086347d1bc7d142370ef078582bc"
+dependencies = [
+ "pnet_base 0.33.0",
 ]
 
 [[package]]
@@ -976,9 +1006,21 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bc3b5111e697c39c8b9795b9fdccbc301ab696699e88b9ea5a4e4628978f495f"
 dependencies = [
  "glob",
- "pnet_base",
- "pnet_macros",
- "pnet_macros_support",
+ "pnet_base 0.31.0",
+ "pnet_macros 0.31.0",
+ "pnet_macros_support 0.31.0",
+]
+
+[[package]]
+name = "pnet_packet"
+version = "0.33.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8bde678bbd85cb1c2d99dc9fc596e57f03aa725f84f3168b0eaf33eeccb41706"
+dependencies = [
+ "glob",
+ "pnet_base 0.33.0",
+ "pnet_macros 0.33.0",
+ "pnet_macros_support 0.33.0",
 ]
 
 [[package]]
