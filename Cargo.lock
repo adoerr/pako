@@ -751,6 +751,7 @@ dependencies = [
  "lz4",
  "pako-core 0.1.2",
  "pako-tools 0.1.2",
+ "serde_json",
  "xz2",
 ]
 

@@ -9,6 +9,7 @@ use pako_core::{
     PLUGIN_L3, PLUGIN_L4,
 };
 use pako_tools::{Config, PcapDataEngine, PcapEngine};
+use serde_json::Value;
 
 #[derive(Parser, Debug)]
 #[command(version, about = "Pako Demo Analyzer")]
@@ -77,6 +78,20 @@ fn main() -> Result<()> {
             let mut engine = PcapDataEngine::new(analyzer, &Config::default());
             let mut input = Box::new(File::open(file)?) as Box<dyn io::Read>;
             engine.run(&mut input)?;
+
+            let analyzer = engine.data_analyzer();
+
+            analyzer.registry().run_plugins(
+                |_| true,
+                |p| {
+                    if let Some(res) = p.get_results() {
+                        if "BasicStats" == p.name() {
+                            let res = res.downcast::<Value>().expect("invalid plugin result");
+                            println!("BasicStats: total packets {}", res["total_l3_packets"]);
+                        }
+                    }
+                },
+            );
         }
     }
 
