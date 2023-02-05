@@ -15,5 +15,5 @@ pako-tools = { version = "0.1.2" }
 log = { version = "0.4.17", features = ["max_level_trace", "release_max_level_warn"] }
 pcap-parser = { version = "0.14.0" }
 rustyline = { version = "10.1.1" }
-serde_json = { version = "1.0.91" }
+serde_json = { version = "1.0.92" }
 time = { version = "0.3.17", features = ["local-offset"] }

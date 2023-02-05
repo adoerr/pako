@@ -11,6 +11,6 @@ keywords = ["pcap", "pcapng", "network", "tools"]
 categories = ["network-programming"]
 
 [dependencies]
-anyhow = { version = "1.0.68" }
+anyhow = { version = "1.0.69" }
 nom = { version = "7.1.3" }
 thiserror = { version = "1.0.38" }
