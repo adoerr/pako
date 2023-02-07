@@ -70,9 +70,8 @@ fn main() -> Result<()> {
         println!()
     };
 
-    let _config = if let Some(_config) = cli.config {
-        // load config file
-        todo!()
+    let _config = if let Some(path) = cli.config {
+        load_config(path)?
     } else {
         Config::default()
     };
@@ -110,7 +109,6 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-#[allow(dead_code)]
 /// Load configuration file from [`filepath`]
 fn load_config(filepath: PathBuf) -> Result<Config> {
     debug!("loading config {:?}", filepath);
@@ -131,7 +129,7 @@ mod tests {
     fn load_config_works() -> Result<()> {
         let path = PathBuf::from(concat!(
             env!("CARGO_MANIFEST_DIR"),
-            "/../conf/pcap-analyzer.conf"
+            "/../conf/pako-analyzer.conf"
         ));
 
         let config = load_config(path)?;
