@@ -14,6 +14,10 @@ use serde_json::Value;
 #[derive(Parser, Debug)]
 #[command(version, about = "Pako Demo Analyzer")]
 struct Cli {
+    /// Configuration file
+    #[arg(short, long)]
+    config: Option<PathBuf>,
+
     #[command(subcommand)]
     command: Commands,
 }
@@ -63,6 +67,13 @@ fn main() -> Result<()> {
             print!("  FLOW_DEL")
         }
         println!()
+    };
+
+    let _config = if let Some(_config) = cli.config {
+        // load config file
+        todo!()
+    } else {
+        Config::default()
     };
 
     match cli.command {
