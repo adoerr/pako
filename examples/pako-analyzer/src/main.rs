@@ -4,6 +4,7 @@ use std::{fs::File, io, path::PathBuf, sync::Arc};
 
 use anyhow::Result;
 use clap::{command, Parser, Subcommand};
+use log::debug;
 use pako_core::{
     plugins::PluginsFactory, Analyzer, Plugin, PLUGIN_FLOW_DEL, PLUGIN_FLOW_NEW, PLUGIN_L2,
     PLUGIN_L3, PLUGIN_L4,
@@ -107,4 +108,13 @@ fn main() -> Result<()> {
     }
 
     Ok(())
+}
+
+#[allow(dead_code)]
+/// Load configuration file from [`filepath`]
+fn load_config(filepath: PathBuf) -> Result<Config> {
+    debug!("loading config {:?}", filepath);
+    let mut config = Config::default();
+    config.load_config(File::open(filepath)?)?;
+    Ok(config)
 }
