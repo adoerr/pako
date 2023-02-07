@@ -118,3 +118,25 @@ fn load_config(filepath: PathBuf) -> Result<Config> {
     config.load_config(File::open(filepath)?)?;
     Ok(config)
 }
+
+#[cfg(test)]
+mod tests {
+    use std::path::PathBuf;
+
+    use anyhow::Result;
+
+    use crate::load_config;
+
+    #[test]
+    fn load_config_works() -> Result<()> {
+        let path = PathBuf::from(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/../conf/pcap-analyzer.conf"
+        ));
+
+        let config = load_config(path)?;
+        assert_eq!(4, config.get_usize("num_threads").unwrap());
+
+        Ok(())
+    }
+}

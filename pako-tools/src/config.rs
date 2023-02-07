@@ -1,5 +1,6 @@
 use std::{io, str::FromStr};
 
+#[derive(Debug)]
 pub struct Config {
     value: toml::Value,
 }
