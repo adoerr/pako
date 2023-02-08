@@ -109,7 +109,7 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-/// Load configuration file from [`filepath`]
+/// Load configuration file from `filepath`
 fn load_config(filepath: PathBuf) -> Result<Config> {
     debug!("loading config {:?}", filepath);
     let mut config = Config::default();
