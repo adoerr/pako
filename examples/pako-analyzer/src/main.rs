@@ -6,11 +6,10 @@ use anyhow::Result;
 use clap::{command, Parser, Subcommand};
 use log::debug;
 use pako_core::{
-    plugins::PluginsFactory, Analyzer, Plugin, PLUGIN_FLOW_DEL, PLUGIN_FLOW_NEW, PLUGIN_L2,
-    PLUGIN_L3, PLUGIN_L4,
+    plugins::PluginsFactory, Analyzer, Plugin, ThreadedAnalyzer, PLUGIN_FLOW_DEL, PLUGIN_FLOW_NEW,
+    PLUGIN_L2, PLUGIN_L3, PLUGIN_L4,
 };
 use pako_tools::{Config, PcapDataEngine, PcapEngine};
-use serde_json::Value;
 
 #[derive(Parser, Debug)]
 #[command(version, about = "Pako Demo Analyzer")]
@@ -44,11 +43,14 @@ fn main() -> Result<()> {
     let factory = PluginsFactory::default();
     let registry = factory.build_plugins(&Config::default())?;
 
-    let _config = if let Some(path) = cli.config {
+    let config = if let Some(path) = cli.config {
         load_config(path)?
     } else {
         Config::default()
     };
+
+    // determine number of worker threads
+    let num_threads = config.get_usize("num_threads").unwrap_or(1);
 
     match cli.command {
         Commands::Builders => {
@@ -59,24 +61,17 @@ fn main() -> Result<()> {
             registry.run_plugins(|_| true, plugin_info);
         }
         Commands::Analyze { file } => {
-            let analyzer = Analyzer::new(Arc::new(registry), &Config::default());
-            let mut engine = PcapDataEngine::new(analyzer, &Config::default());
             let mut input = Box::new(File::open(file)?) as Box<dyn io::Read>;
+
+            let mut engine = if num_threads == 1 {
+                let analyzer = Analyzer::new(Arc::new(registry), &config);
+                Box::new(PcapDataEngine::new(analyzer, &config)) as Box<dyn PcapEngine>
+            } else {
+                let analyzer = ThreadedAnalyzer::new(registry, &config);
+                Box::new(PcapDataEngine::new(analyzer, &config)) as Box<dyn PcapEngine>
+            };
+
             engine.run(&mut input)?;
-
-            let analyzer = engine.data_analyzer();
-
-            analyzer.registry().run_plugins(
-                |_| true,
-                |p| {
-                    if let Some(res) = p.get_results() {
-                        if "BasicStats" == p.name() {
-                            let res = res.downcast::<Value>().expect("invalid plugin result");
-                            println!("BasicStats: total packets {}", res["total_l3_packets"]);
-                        }
-                    }
-                },
-            );
         }
     }
 
