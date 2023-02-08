@@ -44,32 +44,6 @@ fn main() -> Result<()> {
     let factory = PluginsFactory::default();
     let registry = factory.build_plugins(&Config::default())?;
 
-    let plugins = |p: &mut dyn Plugin| {
-        println!("  {}", p.name());
-
-        let t = p.plugin_type();
-        print!("    layers:");
-        if t & PLUGIN_L2 != 0 {
-            print!("  L2");
-        }
-        if t & PLUGIN_L3 != 0 {
-            print!("  L3");
-        }
-        if t & PLUGIN_L4 != 0 {
-            print!("  L4");
-        }
-        println!();
-
-        print!("    events:");
-        if t & PLUGIN_FLOW_NEW != 0 {
-            print!("  FLOW_NEW");
-        }
-        if t & PLUGIN_FLOW_DEL != 0 {
-            print!("  FLOW_DEL")
-        }
-        println!()
-    };
-
     let _config = if let Some(path) = cli.config {
         load_config(path)?
     } else {
@@ -82,7 +56,7 @@ fn main() -> Result<()> {
             factory.iter_builders(|b| println!("    {b}"));
         }
         Commands::Plugins => {
-            registry.run_plugins(|_| true, plugins);
+            registry.run_plugins(|_| true, plugin_info);
         }
         Commands::Analyze { file } => {
             let analyzer = Analyzer::new(Arc::new(registry), &Config::default());
@@ -107,6 +81,33 @@ fn main() -> Result<()> {
     }
 
     Ok(())
+}
+
+/// Show plugin info
+fn plugin_info(plugin: &mut dyn Plugin) {
+    println!("  {}", plugin.name());
+
+    let t = plugin.plugin_type();
+    print!("    layers:");
+    if t & PLUGIN_L2 != 0 {
+        print!("  L2");
+    }
+    if t & PLUGIN_L3 != 0 {
+        print!("  L3");
+    }
+    if t & PLUGIN_L4 != 0 {
+        print!("  L4");
+    }
+    println!();
+
+    print!("    events:");
+    if t & PLUGIN_FLOW_NEW != 0 {
+        print!("  FLOW_NEW");
+    }
+    if t & PLUGIN_FLOW_DEL != 0 {
+        print!("  FLOW_DEL")
+    }
+    println!()
 }
 
 /// Load configuration file from `filepath`
