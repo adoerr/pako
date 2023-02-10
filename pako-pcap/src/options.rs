@@ -14,6 +14,9 @@ macro_rules! align {
 pub enum Code {
     EndOfOpt = 0,
     Comment = 1,
+    Hardware = 2,
+    OS = 3,
+    UserAppl = 4,
     Custom2988 = 2988,
     Custom2989 = 2989,
     Custom19372 = 19372,
