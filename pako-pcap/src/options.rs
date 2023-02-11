@@ -57,7 +57,7 @@ pub struct Option<'a> {
 mod tests {
     use anyhow::Result;
 
-    use crate::options::Code;
+    use crate::{options::Code, Error};
 
     #[test]
     fn align_works() {
@@ -82,5 +82,13 @@ mod tests {
         assert_eq!(Code::try_from(19373).unwrap(), Code::Custom19373);
 
         Ok(())
+    }
+
+    #[test]
+    fn code_try_from_fails() {
+        assert!(matches!(Code::try_from(42), Err(Error::Option(42))));
+        assert!(matches!(Code::try_from(5), Err(Error::Option(5))));
+        assert!(matches!(Code::try_from(2990), Err(Error::Option(2990))));
+        assert!(matches!(Code::try_from(19374), Err(Error::Option(19374))));
     }
 }
