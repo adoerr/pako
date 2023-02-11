@@ -9,6 +9,10 @@ where
     #[error("Invalid block type {0:?}")]
     Type(u32),
 
+    /// Invalid option type
+    #[error("Invalid option type {0:?}")]
+    Option(u16),
+
     /// Input parse error
     #[error("Input parse error {0:?}")]
     Parse(#[from] nom::error::VerboseError<I>),
