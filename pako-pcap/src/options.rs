@@ -1,10 +1,10 @@
 #![allow(dead_code)]
 
-/// Align input value to the next multiple of n bytes, where n is a power of two.
+/// Align input value to 32-bit boundary
 #[macro_export]
-macro_rules! align {
-    ($val:expr, $n:expr) => {
-        ($val + ($n - 1)) & !($val - 1)
+macro_rules! align32 {
+    ($val:expr) => {
+        ($val + 3) & !($val - 1)
     };
 }
 
@@ -37,11 +37,11 @@ pub struct Option<'a> {
 mod tests {
     #[test]
     fn align_works() {
-        assert_eq!(align!(3, 4), 4);
-        assert_eq!(align!(4, 4), 4);
-        assert_eq!(align!(5, 4), 8);
-        assert_eq!(align!(5u32, 4), 8);
-        assert_eq!(align!(5i32, 4), 8);
-        assert_eq!(align!(5usize, 4), 8);
+        assert_eq!(align32!(3), 4);
+        assert_eq!(align32!(4), 4);
+        assert_eq!(align32!(5), 8);
+        assert_eq!(align32!(5u32), 8);
+        assert_eq!(align32!(5i32), 8);
+        assert_eq!(align32!(5usize), 8);
     }
 }
