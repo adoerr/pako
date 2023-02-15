@@ -1,5 +1,7 @@
 #![allow(dead_code)]
 
+use nom::{error::ParseError, IResult};
+
 use crate::Error;
 /// Align input value to 32-bit boundary
 #[macro_export]
@@ -51,6 +53,14 @@ pub struct Option<'a> {
     pub code: Code,
     pub len: u16,
     pub value: &'a [u8],
+}
+
+/// Parse an [`Option`}
+pub(crate) fn option<'a, E>(_input: &'a [u8]) -> IResult<&'a [u8], Option, E>
+where
+    E: ParseError<&'a [u8]>,
+{
+    todo!()
 }
 
 #[cfg(test)]
