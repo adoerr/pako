@@ -84,4 +84,16 @@ mod tests {
         assert_ne!(BYTE_ORDER_MAGIC, shb.byte_order);
         Ok(())
     }
+
+    #[test]
+    /// TODO: complete this test
+    fn section_header_works() -> Result<()> {
+        let pcap = include_bytes!("../assets/test002_be.pcapng");
+        let (_, shb) = section_header::<VerboseError<&[u8]>>(pcap)?;
+
+        assert_eq!(96, shb.total_length);
+        assert_eq!(-1, shb.section_length);
+
+        Ok(())
+    }
 }
