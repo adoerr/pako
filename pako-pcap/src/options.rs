@@ -3,6 +3,7 @@
 use nom::{error::ParseError, IResult};
 
 use crate::Error;
+
 /// Align input value to 32-bit boundary
 #[macro_export]
 macro_rules! align32 {
