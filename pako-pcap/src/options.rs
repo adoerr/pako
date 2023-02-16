@@ -4,11 +4,11 @@ use nom::{bytes::complete::take, number::complete::be_u16, IResult};
 
 use crate::Error;
 
-/// Align input value to 32-bit boundary
+/// Align input value `val` to a power of 2 alignment `align`
 #[macro_export]
-macro_rules! align32 {
-    ($val:expr) => {
-        ($val + 3) & !($val - 1)
+macro_rules! align {
+    ($val:expr, $align:expr) => {
+        ($val + ($align - 1)) & !($align - 1)
     };
 }
 
@@ -60,7 +60,7 @@ pub struct Option<'a> {
 pub(crate) fn option(input: &[u8]) -> IResult<&[u8], Option, Error<&[u8]>> {
     let (input, code) = be_u16(input)?;
     let (input, len) = be_u16(input)?;
-    let (input, value) = take(align32!(len))(input)?;
+    let (input, value) = take(align!(len, 4))(input)?;
 
     Ok((
         input,
@@ -76,16 +76,20 @@ pub(crate) fn option(input: &[u8]) -> IResult<&[u8], Option, Error<&[u8]>> {
 mod tests {
     use anyhow::Result;
 
-    use crate::{options::Code, Error};
+    use crate::{
+        options::{option, Code},
+        Error,
+    };
 
     #[test]
     fn align_works() {
-        assert_eq!(align32!(3), 4);
-        assert_eq!(align32!(4), 4);
-        assert_eq!(align32!(5), 8);
-        assert_eq!(align32!(5u32), 8);
-        assert_eq!(align32!(5i32), 8);
-        assert_eq!(align32!(5usize), 8);
+        assert_eq!(align!(3, 4), 4);
+        assert_eq!(align!(4, 4), 4);
+        assert_eq!(align!(5, 4), 8);
+        assert_eq!(align!(9, 4), 12);
+        assert_eq!(align!(5u32, 4), 8);
+        assert_eq!(align!(5i32, 4), 8);
+        assert_eq!(align!(5usize, 4), 8);
     }
 
     #[test]
@@ -109,5 +113,25 @@ mod tests {
         assert!(matches!(Code::try_from(5), Err(Error::Option(5))));
         assert!(matches!(Code::try_from(2990), Err(Error::Option(2990))));
         assert!(matches!(Code::try_from(19374), Err(Error::Option(19374))));
+    }
+
+    #[test]
+    fn option_works() -> Result<()> {
+        let input = vec![
+            0x00, 0x02, 0x00, 0x09, 0x41, 0x70, 0x70, 0x6C, 0x65, 0x20, 0x4D, 0x42, 0x50, 0x00,
+            0x00, 0x00,
+        ];
+
+        let (input, option) = option(input.leak())?;
+
+        assert_eq!(0, input.len());
+        assert_eq!(Code::Hardware, option.code);
+        assert_eq!(9, option.len);
+        assert_eq!(
+            "Apple MBP",
+            String::from_utf8(option.value.split_at(9).0.to_vec())?
+        );
+
+        Ok(())
     }
 }

@@ -1,5 +1,3 @@
-extern crate core;
-
 mod block;
 mod endian;
 mod error;
