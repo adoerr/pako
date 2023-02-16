@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use nom::{error::ParseError, IResult};
+use nom::{bytes::complete::take, number::complete::be_u16, IResult};
 
 use crate::Error;
 
@@ -57,11 +57,19 @@ pub struct Option<'a> {
 }
 
 /// Parse an [`Option`}
-pub(crate) fn option<'a, E>(_input: &'a [u8]) -> IResult<&'a [u8], Option, E>
-where
-    E: ParseError<&'a [u8]>,
-{
-    todo!()
+pub(crate) fn option(input: &[u8]) -> IResult<&[u8], Option, Error<&[u8]>> {
+    let (input, code) = be_u16(input)?;
+    let (input, len) = be_u16(input)?;
+    let (input, value) = take(align32!(len))(input)?;
+
+    Ok((
+        input,
+        Option {
+            code: Code::try_from(code).map_err(nom::Err::Error)?,
+            len,
+            value,
+        },
+    ))
 }
 
 #[cfg(test)]
