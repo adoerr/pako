@@ -137,4 +137,16 @@ mod tests {
 
         Ok(())
     }
+
+    #[test]
+    fn option_fails() {
+        let input = vec![
+            0x00, 0x42, 0x00, 0x09, 0x41, 0x70, 0x70, 0x6C, 0x65, 0x20, 0x4D, 0x42, 0x50, 0x00,
+            0x00, 0x00,
+        ];
+        assert!(matches!(
+            option(input.leak()).err(),
+            Some(nom::Err::Error(Error::Option(66)))
+        ));
+    }
 }
