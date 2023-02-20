@@ -1,22 +1,23 @@
+mod commands;
+mod context;
+
 use std::{
     env,
     fs::File,
     io::{BufRead, BufReader},
 };
 
+use anyhow::Result;
 use clap::crate_version;
-use log::LevelFilter;
-use rustyline::{error::ReadlineError, Editor};
-
-mod commands;
-mod context;
 use commands::CommandResult;
+use log::LevelFilter;
+use rustyline::{error::ReadlineError, DefaultEditor};
 
-fn main() {
+fn main() -> Result<()> {
     println!("pako-repl {}", crate_version!());
 
     // Create an Editor with the default configuration options.
-    let mut repl = Editor::<()>::new().expect("could not create repl editor");
+    let mut repl = DefaultEditor::new().expect("could not create repl editor");
     // Load a file with the history of commands
     // If the file does not exists, it creates one.
     if repl.load_history("history.txt").is_err() {
@@ -70,15 +71,16 @@ fn main() {
                 CommandResult::Exit { rc } => std::process::exit(rc),
             }
         }
-        return;
+        return Ok(());
     }
 
     loop {
         let readline = repl.readline(">> ");
+
         match readline {
             Ok(line) => {
                 if !line.is_empty() {
-                    repl.add_history_entry(line.as_str());
+                    repl.add_history_entry(line.as_str())?;
                 }
                 let line = line.trim_end();
                 if line.starts_with('#') {
@@ -117,4 +119,6 @@ fn main() {
         }
         repl.save_history("history.txt").unwrap();
     }
+
+    Ok(())
 }

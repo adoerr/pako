@@ -818,6 +818,7 @@ dependencies = [
 name = "pako-repl"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "clap",
  "fern",
  "lazy_static",
