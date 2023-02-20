@@ -7,6 +7,7 @@ license = "MIT or Apache-2.0"
 edition = "2021"
 
 [dependencies]
+anyhow = { versuib = "1.0.69" }
 clap = { version = "4.1.6", features = ["cargo", "derive"] }
 fern = { version = "0.6.1" }
 lazy_static = { version = "1.2.0" }
@@ -14,6 +15,6 @@ pako-core = { version = "0.1.2" }
 pako-tools = { version = "0.1.2" }
 log = { version = "0.4.17", features = ["max_level_trace", "release_max_level_warn"] }
 pcap-parser = { version = "0.14.0" }
-rustyline = { version = "10.1.1" }
+rustyline = { version = "11.0.0" }
 serde_json = { version = "1.0.93" }
 time = { version = "0.3.19", features = ["local-offset"] }
