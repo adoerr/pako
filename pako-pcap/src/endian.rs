@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 use nom::{error::ParseError, IResult};
 
 pub enum BigEndian {}

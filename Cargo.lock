@@ -1677,9 +1677,9 @@ dependencies = [
 [[patch.unused]]
 name = "pako-core"
 version = "0.1.3-dev"
-source = "git+https://github.com/adoerr/pako#5492edfc26b7c12d9a2f0f7a2452e713fc867e1e"
+source = "git+https://github.com/adoerr/pako#64ed3dc47825a897392f75c9a694904e61bdee47"
 
 [[patch.unused]]
 name = "pako-tools"
 version = "0.1.3-dev"
-source = "git+https://github.com/adoerr/pako#5492edfc26b7c12d9a2f0f7a2452e713fc867e1e"
+source = "git+https://github.com/adoerr/pako#64ed3dc47825a897392f75c9a694904e61bdee47"

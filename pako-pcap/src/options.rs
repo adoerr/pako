@@ -1,4 +1,6 @@
-#![allow(dead_code)]
+//!
+//! Optional fields support
+//!
 
 use nom::{bytes::complete::take, number::complete::be_u16, IResult};
 
