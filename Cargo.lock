@@ -81,9 +81,9 @@ dependencies = [
 
 [[package]]
 name = "bstr"
-version = "1.2.0"
+version = "1.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b7f0778972c64420fdedc63f09919c8a88bda7b25135357fd25a5d9f3257e832"
+checksum = "5ffdb39cb703212f3c11973452c2861b972f757b021158f3516ba10f2fa8b2c1"
 dependencies = [
  "memchr",
  "once_cell",
@@ -1684,9 +1684,9 @@ dependencies = [
 [[patch.unused]]
 name = "pako-core"
 version = "0.1.3-dev"
-source = "git+https://github.com/adoerr/pako#64ed3dc47825a897392f75c9a694904e61bdee47"
+source = "git+https://github.com/adoerr/pako#aaf47f004d5346e0bfc329345b25fb851310248a"
 
 [[patch.unused]]
 name = "pako-tools"
 version = "0.1.3-dev"
-source = "git+https://github.com/adoerr/pako#64ed3dc47825a897392f75c9a694904e61bdee47"
+source = "git+https://github.com/adoerr/pako#aaf47f004d5346e0bfc329345b25fb851310248a"
