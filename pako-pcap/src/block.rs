@@ -16,6 +16,8 @@
 //!    |                      Block Total Length                       |
 //!    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
+use nom::IResult;
+
 /// The block type uniquely identifies a block.
 #[repr(u32)]
 #[derive(Debug)]
@@ -29,4 +31,22 @@ pub enum BlockType {
     SystemJournalExport = 0x0000_0009,
     DecryptionSecretsBlock = 0x0000_000A,
     Custom = 0x0000_0BAD,
+}
+
+/// [`BlockParser`] is implemented by each block type in order to parse the
+/// block type specific block body
+trait BlockParser<O> {
+    /// Block header size
+    const HEADER_SIZE: usize;
+
+    /// Block type identifier
+    const BLOCK_TYPE: BlockType;
+
+    /// Block body parser
+    fn parse_body<E>(
+        blk_type: BlockType,
+        blk_len1: u32,
+        blk_body: &[u8],
+        blk_len2: u32,
+    ) -> IResult<&[u8], O, E>;
 }

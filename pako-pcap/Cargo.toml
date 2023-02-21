@@ -10,6 +10,9 @@ license  = "Apache-2.0 OR MIT"
 keywords = ["pcap", "pcapng", "network", "tools"]
 categories = ["network-programming"]
 
+[lib]
+doctest = false
+
 [dependencies]
 anyhow = { version = "1.0.69" }
 nom = { version = "7.1.3" }
