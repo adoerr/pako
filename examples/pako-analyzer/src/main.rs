@@ -1,5 +1,3 @@
-#![warn(clippy::all)]
-
 use std::{fs::File, io, path::PathBuf, sync::Arc};
 
 use anyhow::Result;
@@ -11,7 +9,7 @@ use pako_core::{
 };
 use pako_tools::{Config, PcapDataEngine, PcapEngine};
 
-#[derive(Parser, Debug)]
+#[derive(Debug, Parser)]
 #[command(version, about = "Pako Demo Analyzer")]
 struct Cli {
     /// Configuration file
@@ -22,7 +20,7 @@ struct Cli {
     command: Commands,
 }
 
-#[derive(Subcommand, Debug)]
+#[derive(Debug, Subcommand)]
 enum Commands {
     /// List plugin builders
     Builders,
