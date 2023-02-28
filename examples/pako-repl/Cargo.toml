@@ -8,7 +8,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = { versuib = "1.0.69" }
-clap = { version = "4.1.6", features = ["cargo", "derive"] }
+clap = { version = "4.1.8", features = ["cargo", "derive"] }
 fern = { version = "0.6.1" }
 lazy_static = { version = "1.2.0" }
 pako-core = { version = "0.1.2" }
