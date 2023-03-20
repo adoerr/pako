@@ -7,7 +7,7 @@ license = "MIT or Apache-2.0"
 edition = "2021"
 
 [dependencies]
-anyhow = { versuib = "1.0.70" }
+anyhow = { version = "1.0.70" }
 clap = { version = "4.1.11", features = ["cargo", "derive"] }
 fern = { version = "0.6.1" }
 lazy_static = { version = "1.2.0" }
