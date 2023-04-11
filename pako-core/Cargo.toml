@@ -37,7 +37,7 @@ pnet_packet = { version = "0.33.0" }
 rand = { version = "0.8.5" }
 rand_chacha = { version = "0.3.1" }
 seahash = { version = "4.1.0" }
-serde = { version = "1.0.159", features = ["derive"] }
+serde = { version = "1.0.160", features = ["derive"] }
 serde_json = { version = "1.0.95" }
 sha1 = { version = "0.10", features = ["std"], optional = true }
 thiserror = { version = "1.0.40" }
