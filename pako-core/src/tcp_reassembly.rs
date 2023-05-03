@@ -167,7 +167,7 @@ impl TcpStream {
         let ack = Wrapping(tcp.get_acknowledgement());
         let tcp_flags = tcp.get_flags();
 
-        let (mut src, mut dst) = if to_server {
+        let (src, dst) = if to_server {
             (&mut self.client, &mut self.server)
         } else {
             (&mut self.server, &mut self.client)
@@ -392,7 +392,7 @@ impl TcpStream {
         to_server: bool,
         pcap_index: usize,
     ) -> Option<Vec<TcpSegment>> {
-        let (mut origin, destination) = if to_server {
+        let (origin, destination) = if to_server {
             (&mut self.client, &mut self.server)
         } else {
             (&mut self.server, &mut self.client)
@@ -904,7 +904,7 @@ impl TcpStreamReassembly {
             tcp.get_acknowledgement()
         );
 
-        let mut stream = self
+        let stream = self
             .m
             .entry(flow.flow_id)
             .or_insert_with(|| TcpStream::new(flow));
