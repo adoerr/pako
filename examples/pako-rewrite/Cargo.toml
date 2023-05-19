@@ -17,7 +17,7 @@ path = "src/main.rs"
 doc = false
 
 [dependencies]
-clap = { version = "4.2.7", features = ["cargo", "derive"] }
+clap = { version = "4.3.0", features = ["cargo", "derive"] }
 csv = { version = "1.2.1" }
 flate2 = { version = "1.0.26", features = ["zlib"], default-features = false }
 log = { version = "0.4", features = ["max_level_debug", "release_max_level_warn"] }
