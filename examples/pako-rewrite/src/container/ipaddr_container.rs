@@ -1,7 +1,4 @@
-use std::{
-    collections::HashSet, error::Error, fs::File, iter::FromIterator, net::IpAddr, path::Path,
-    str::FromStr,
-};
+use std::{collections::HashSet, error::Error, fs::File, net::IpAddr, path::Path, str::FromStr};
 
 use csv::ReaderBuilder;
 

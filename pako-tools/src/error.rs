@@ -1,4 +1,4 @@
-use std::{convert::From, io};
+use std::io;
 
 use pcap_parser::{
     nom::{error::ErrorKind, Err},
@@ -33,7 +33,7 @@ impl From<ErrorKind> for Error {
 impl<'a> From<Err<PcapError<&'a [u8]>>> for Error {
     fn from(err: Err<PcapError<&'a [u8]>>) -> Self {
         match err {
-            Err::Incomplete(_) => Error::Pcap(PcapError::Incomplete),
+            Err::Incomplete(_) => Error::Pcap(PcapError::Incomplete(0)),
             Err::Error(e) | Err::Failure(e) => Error::Pcap(e.to_owned_vec()),
         }
     }

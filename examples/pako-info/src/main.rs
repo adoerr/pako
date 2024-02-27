@@ -1,7 +1,6 @@
 #![warn(clippy::all)]
 
 use std::{
-    convert::TryInto,
     fs, io,
     net::{Ipv4Addr, Ipv6Addr},
     process, str,

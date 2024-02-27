@@ -22,23 +22,23 @@ plugin_ospf = ["ospf-parser"]
 [dependencies]
 base16ct = { version = "0.2.0", features = ["alloc"], optional = true }
 base64ct = { version = "1.6.0", features = ["alloc"], optional = true }
-crossbeam-channel = { version = "0.5.8" }
+crossbeam-channel = { version = "0.5.11" }
 fnv = { version = "1.0.7" }
 indexmap = { version = "1.9.3", features = ["serde-1"] }
-lazy_static = { version = "1.2.0" }
-log = { version = "0.4.19" }
-multimap = { version = "0.9.0" }
-num_cpus = { version = "1.14.0" }
+lazy_static = { version = "1.4.0" }
+log = { version = "0.4.20" }
+multimap = { version = "0.10.0" }
+num_cpus = { version = "1.16.0" }
 ospf-parser = { version = "0.5.0", optional = true }
 pako-tools = { version = "0.1.2" }
-pnet_base = { version = "0.33.0" }
-pnet_macros_support = { version = "0.33.0" }
-pnet_packet = { version = "0.33.0" }
+pnet_base = { version = "0.34.0" }
+pnet_macros_support = { version = "0.34.0" }
+pnet_packet = { version = "0.34.0" }
 rand = { version = "0.8.5" }
 rand_chacha = { version = "0.3.1" }
 seahash = { version = "4.1.0" }
-serde = { version = "1.0.164", features = ["derive"] }
-serde_json = { version = "1.0.97" }
+serde = { version = "1.0.197", features = ["derive"] }
+serde_json = { version = "1.0.114" }
 sha1 = { version = "0.10", features = ["std"], optional = true }
-thiserror = { version = "1.0.40" }
+thiserror = { version = "1.0.57" }
 tls-parser = { version = "0.11.0", optional = true }

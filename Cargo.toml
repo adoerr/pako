@@ -9,7 +9,8 @@ members = [
   "plugins/explugin-example",
 ]
 
-[patch.crates-io]
-pako-core = { git = "https://github.com/adoerr/pako"}
-pako-tools = { git = "https://github.com/adoerr/pako" }
+resolver = "2"
 
+[patch.crates-io]
+#pako-core = { git = "https://github.com/adoerr/pako"}
+#pako-tools = { git = "https://github.com/adoerr/pako" }

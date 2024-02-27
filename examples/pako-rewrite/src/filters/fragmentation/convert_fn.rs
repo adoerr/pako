@@ -1,4 +1,4 @@
-use std::{collections::HashSet, iter::FromIterator};
+use std::collections::HashSet;
 
 use pako_tools::FiveTuple;
 use pnet_packet::ip::IpNextHeaderProtocol;

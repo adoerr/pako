@@ -9,7 +9,7 @@ use std::{
 use blake2::Blake2s256;
 use digest::{generic_array::GenericArray, Digest};
 use flate2::read::GzDecoder;
-use pcap_parser::{create_reader, pcapng::*, Block, PcapBlockOwned, PcapError};
+use pcap_parser::{create_reader, pcapng::*, PcapBlockOwned, PcapError};
 use sha1::Sha1;
 use sha2::Sha256;
 use smart_default::SmartDefault;

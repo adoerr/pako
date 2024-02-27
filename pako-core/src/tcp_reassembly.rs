@@ -200,7 +200,7 @@ impl TcpStream {
                         let segment = TcpSegment {
                             rel_seq: Wrapping(0),
                             rel_ack: Wrapping(0),
-                            flags: tcp_flags,
+                            flags: tcp_flags as u16,
                             data: tcp.payload().to_vec(), // XXX data cloned here
                             pcap_index,
                         };
@@ -237,7 +237,7 @@ impl TcpStream {
                     let segment = TcpSegment {
                         rel_seq: seq - src.isn,
                         rel_ack: ack - dst.isn,
-                        flags: tcp_flags,
+                        flags: tcp_flags as u16,
                         data: tcp.payload().to_vec(), // XXX data cloned here
                         pcap_index,
                     };
@@ -301,7 +301,7 @@ impl TcpStream {
                     let segment = TcpSegment {
                         rel_seq: seq - src.isn,
                         rel_ack: ack - dst.isn,
-                        flags: tcp_flags,
+                        flags: tcp_flags as u16,
                         data: tcp.payload().to_vec(), // XXX data cloned here
                         pcap_index,
                     };
@@ -362,7 +362,7 @@ impl TcpStream {
         let segment = TcpSegment {
             rel_seq,
             rel_ack,
-            flags: tcp_flags,
+            flags: tcp_flags as u16,
             data: tcp.payload().to_vec(), // XXX data cloned here
             pcap_index,
         };
@@ -444,7 +444,7 @@ impl TcpStream {
         let segment = TcpSegment {
             rel_seq,
             rel_ack,
-            flags: tcp_flags,
+            flags: tcp_flags as u16,
             data: tcp.payload().to_vec(), // XXX data cloned here
             pcap_index,
         };
@@ -535,7 +535,7 @@ impl TcpStream {
 
 fn queue_segment(peer: &mut TcpPeer, segment: TcpSegment) {
     // only store segments with data, except FIN
-    if segment.data.is_empty() && segment.flags & TcpFlags::FIN == 0 {
+    if segment.data.is_empty() && segment.flags & TcpFlags::FIN as u16 == 0 {
         return;
     }
     // // DEBUG
@@ -559,7 +559,7 @@ fn queue_segment(peer: &mut TcpPeer, segment: TcpSegment) {
         let mut before = None;
         let mut after = None;
         // let mut opt_pos = None;
-        for (_n, s) in peer.segments.iter().enumerate() {
+        for s in peer.segments.iter() {
             if s.rel_seq < segment.rel_seq {
                 before = Some(s);
             } else {
@@ -882,7 +882,7 @@ fn adjust_seq_numbers(origin: &mut TcpPeer, segment: &TcpSegment) {
         origin.next_rel_seq = segment.rel_seq + Wrapping(segment.data.len() as u32);
     }
 
-    if segment.flags & TcpFlags::FIN != 0 {
+    if segment.flags & TcpFlags::FIN as u16 != 0 {
         // trace!("Segment has FIN");
         origin.next_rel_seq += Wrapping(1);
     }
@@ -933,7 +933,7 @@ impl TcpStreamReassembly {
             origin.port,
             origin.status
         );
-        debug_print_tcp_flags(tcp.get_flags());
+        debug_print_tcp_flags(tcp.get_flags() as u16);
 
         match origin.status {
             TcpStatus::Closed | TcpStatus::Listen | TcpStatus::SynSent | TcpStatus::SynRcv => {
@@ -982,22 +982,22 @@ pub(crate) fn finalize_tcp_streams(analyzer: &mut crate::analyzer::Analyzer) {
 fn debug_print_tcp_flags(tcp_flags: u16) {
     if log::Level::Debug <= log::STATIC_MAX_LEVEL {
         let mut s = String::from("tcp_flags: [");
-        if tcp_flags & TcpFlags::SYN != 0 {
+        if tcp_flags & TcpFlags::SYN as u16 != 0 {
             s += "S"
         }
-        if tcp_flags & TcpFlags::FIN != 0 {
+        if tcp_flags & TcpFlags::FIN as u16 != 0 {
             s += "F"
         }
-        if tcp_flags & TcpFlags::RST != 0 {
+        if tcp_flags & TcpFlags::RST as u16 != 0 {
             s += "R"
         }
-        if tcp_flags & TcpFlags::URG != 0 {
+        if tcp_flags & TcpFlags::URG as u16 != 0 {
             s += "U"
         }
-        if tcp_flags & TcpFlags::PSH != 0 {
+        if tcp_flags & TcpFlags::PSH as u16 != 0 {
             s += "P"
         }
-        if tcp_flags & TcpFlags::ACK != 0 {
+        if tcp_flags & TcpFlags::ACK as u16 != 0 {
             s += "A"
         }
         s += "]";

@@ -1,5 +1,3 @@
-use std::convert::TryFrom;
-
 use pcap_parser::*;
 
 /// Information related to a network interface used for capture
