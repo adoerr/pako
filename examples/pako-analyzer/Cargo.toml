@@ -7,13 +7,13 @@ license = "MIT or Apache-2.0"
 edition = "2021"
 
 [dependencies]
-anyhow = { version = "1.0.71" }
-clap = { version = "4.3.4", features = ["cargo", "derive"] }
-env_logger = { version = "0.10.0" }
-flate2 = { version = "1.0.26", features = ["zlib"], default-features = false }
-log = { version = "0.4.19", features = ["max_level_debug", "release_max_level_warn"] }
-lz4 = { version = "1.23.3" }
+anyhow = { version = "1.0.80" }
+clap = { version = "4.5.1", features = ["cargo", "derive"] }
+env_logger = { version = "0.11.2" }
+flate2 = { version = "1.0.28", features = ["zlib"], default-features = false }
+log = { version = "0.4.20", features = ["max_level_debug", "release_max_level_warn"] }
+lz4 = { version = "1.24.0" }
 pako-core = { version = "0.1.2" }
 pako-tools = { version = "0.1.2" }
-serde_json = "1.0.97"
+serde_json = "1.0.114"
 xz2 = { version = "0.1.7" }
