@@ -11,8 +11,8 @@ keywords = ["pcap", "network", "tools"]
 categories = ["network-programming"]
 
 [dependencies]
-log = { version = "0.4.20" }
+log = { version = "0.4.21" }
 pcap-parser = { version = "0.15.0", features = ["data"] }
 serde = { version = "1.0.197", features = ["derive"] }
-thiserror = { version = "1.0.57" }
-toml = { version = "0.8.10" }
+thiserror = { version = "1.0.58" }
+toml = { version = "0.8.12" }
