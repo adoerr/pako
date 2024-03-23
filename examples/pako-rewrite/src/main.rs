@@ -92,11 +92,7 @@ fn main() -> io::Result<()> {
 
     let mut filters: Vec<Box<dyn filters::filter::Filter>> = Vec::new();
 
-    let filter_names = if let Some(filters) = cli.filters {
-        filters
-    } else {
-        vec![]
-    };
+    let filter_names = cli.filters.unwrap_or_default();
 
     for name in &filter_names {
         eprintln!("adding filter: {name}");

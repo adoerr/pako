@@ -12,7 +12,7 @@ fn packet_count(file: &Path) -> Result<u32> {
     let packets = fs::read(file)?;
 
     // empty file -> zero packets
-    if packets.len() == 0 {
+    if packets.is_empty() {
         return Ok(0);
     }
 
